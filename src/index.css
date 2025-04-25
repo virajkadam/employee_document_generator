@@ -1,0 +1,8 @@
+body ,*,html{
+  margin: 0;
+  font-family: 'Callibri', sans-serif; /* Only Calibri font */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
