@@ -9,6 +9,9 @@ import AppraisalLetter from "./pages/AppraisalLetter";
 import IncrementLetter from "./pages/IncrementLetter";
 import ManageCompany from "./pages/ManageCompany";
 import ManageStudent from "./pages/ManageStudent";
+// Import our v2 PDF components
+import OfferLetterV2 from "./pages/v2/OfferLetter";
+
 function App() {
   return (
     <Router>
@@ -22,6 +25,10 @@ function App() {
         <Route path="/relieving-letter" element={<RelievingLetter />} />
         <Route path="/appraisal-letter" element={<AppraisalLetter />} />
         <Route path="/increment-letter" element={<IncrementLetter />} />
+        
+        {/* v2 Routes with React-PDF Implementation */}
+        <Route path="/v2/offer-letter" element={<OfferLetterV2 />} />
+        
         <Route
           path="*"
           element={
