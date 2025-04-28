@@ -33,6 +33,7 @@ import {
 // Offer Letter PDF Document Component
 const OfferLetterPDF = ({ formData }) => (
   <Document>
+    {/* Page 1 - Joining Cum Appointment Letter */}
     <Page size="A4" style={offerLetterStyles.page}>
       {/* Company Header */}
       <CompanyHeader 
@@ -46,58 +47,180 @@ const OfferLetterPDF = ({ formData }) => (
       <FormattedDate date={formData.joiningDate || new Date()} />
       
       {/* Letter Title */}
-      <LetterTitle title="OFFER LETTER" />
+      <LetterTitle title="Joining Cum Appointment Letter" />
       
       {/* Addressee */}
-      <Addressee name={formData.employeeName || 'Candidate Name'} />
+      <View style={{ marginBottom: 15 }}>
+        <Text style={{ fontSize: 12 }}>Dear {formData.employeeName || 'Candidate Name'},</Text>
+      </View>
       
       {/* Letter Content */}
       <View style={offerLetterStyles.letterContent}>
         <Paragraph>
-          We are pleased to offer you the position of {formData.designation || 'Position'} at {formData.companyName || 'Company Name'}. 
-          Your employment will commence on {formData.joiningDate ? new Date(formData.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '[Date]'}.
+          We pleased in appointing you as {formData.designation || 'Position'} in {formData.companyName || 'Company Name'}, 
+          at our Office in our organization, effective from {formData.joiningDate ? new Date(formData.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '[Date]'} on the following terms and conditions:
         </Paragraph>
         
         <Paragraph>
-          Your compensation package will be {formData.lpa || '0'} LPA ({formData.ctcInWords || 'Zero'}). 
-          The detailed break-up of your salary is provided below:
-        </Paragraph>
-        
-        {/* Salary Table */}
-        {formData.salaryComponents && (
-          <View style={offerLetterStyles.salaryTable}>
-            <SalaryTable 
-              data={prepareSalaryTableData(formData.salaryComponents)} 
-              showMonthly={true}
-              showAnnual={true}
-            />
-          </View>
-        )}
-        
-        <Paragraph>
-          This offer is subject to the successful completion of your background check, 
-          reference verification, and submission of all required documents. Your employment 
-          will be governed by the company policies, rules, and regulations, which may change from time to time.
+          You will be placed in the appropriate responsibility level of the Company, and will be entitled to compensation (salary and other applicable benefits) as discussed. Compensation will be governed by the rules of the Company on the subject, as applicable and/or amended hereafter.
         </Paragraph>
         
         <Paragraph>
-          Please sign and return a copy of this letter to indicate your acceptance of this offer.
+          You will be eligible to the benefits of the Company's Leave Rules on your confirmation in the Company's Service as discussed. During the period of your employment you will devote full time to the work of the Company. Further, you will not take any other employment or assignment or any office honorary or for any consideration in cash or in kind or otherwise, without the prior written permission of the Company.
         </Paragraph>
         
         <Paragraph>
-          We look forward to welcoming you to our team.
+          You will be on a Probation period for the Three months based on your performance. During the probation period your services can be terminated with seven day's notice on either side and without any reasons whatsoever. If your services are found satisfactory during the probation period, you will be confirmed in the present position and thereafter your services can be terminated on one month's notice on either side. The period of probation can be extended at the discretion of the Management and you will continue to be on probation till an order of confirmation has been issued in writing.
         </Paragraph>
         
-        {/* Signature */}
-        <Signature 
-          name="HR Manager"
-          companyName={formData.companyName || 'Company Name'}
-        />
+        <Paragraph>
+          Your salary package will be Rs. {formData.lpa ? new Intl.NumberFormat().format(formData.lpa * 100000) : '0'}/- ({formData.ctcInWords || 'Zero'}) and no other allowance is provided in that period.
+        </Paragraph>
       </View>
       
       {/* Footer */}
       <Footer 
-        companyContact={`${formData.companyName || 'Company Name'} | ${formData.companyEmail || 'Email'} | ${formData.companyPhone || 'Phone'} | ${formData.companyWebsite || 'Website'}`}
+        companyContact={`${formData.companyName || 'Company Name'}\n${formData.companyAddressLine1 || 'Address'}\n${formData.companyPhone || 'Phone'}\n${formData.companyWebsite || 'Website'}`}
+      />
+    </Page>
+
+    {/* Page 2 - Additional Terms */}
+    <Page size="A4" style={offerLetterStyles.page}>
+      {/* Company Header */}
+      <CompanyHeader 
+        companyName={formData.companyName || 'COMPANY NAME'} 
+        companyAddress={formData.companyAddressLine1 || 'Company Address'} 
+        companyLogo={formData.companyLogo}
+        companyColor={formData.companyColor}
+      />
+      
+      {/* Letter Title */}
+      <LetterTitle title="Additional Terms" />
+      
+      {/* Letter Content */}
+      <View style={offerLetterStyles.letterContent}>
+        <Paragraph>
+          You will not disclose any of our technical or other important information which might come into your possession during the continuation of your service with us shall not be disclosed, divulged or made public by you even thereafter.
+        </Paragraph>
+        
+        <Paragraph>
+          If you conceive any new or advanced method of improving designs / processes / formulae / systems, etc. related to the interest / business of the Company, such developments will be fully communicated to the company and will be and will remain the sole right/property of the Company. Also includes Technology, Software packages license, Company's policy, Company's platform & Trade Mark and Company's human assets profile. Also the usage of personal USB Drives and CD-ROM's are strictly prohibited.
+        </Paragraph>
+        
+        <Paragraph>
+          If any declaration given or information furnished by you, to the Company proves to be false, or if you are found to have willfully suppressed any material information, in such cases you will be liable to removal from services without any notice.
+        </Paragraph>
+        
+        <Paragraph>
+          During the probationary period and any extension thereof, your service may be terminated on either side by giving one week's notice or salary in lieu thereof. Upon confirmation the services can be terminated from either side by giving one-month (30 Days) notice or salary in lieu thereof. Upon termination of employment you will immediately hand over to the Company all correspondence, specifications, formulae, books, documents, market data, cost data, drawings, affects or records belonging to the Company or relating to its business and shall not retain or make copies of these items.
+        </Paragraph>
+        
+        <Paragraph>
+          If at any time in our opinion which is final in this matter you are found non-performer or guilty of fraud, dishonest, disobedience, disorderly behavior, negligence, indiscipline, absence from duty without permission or any other conduct considered by us deterrent to our interest or of violation of one or more terms of this letter, your services may be terminated without notice.
+        </Paragraph>
+        
+        <Paragraph>
+          You will be responsible for safekeeping and return in good condition and order of all Company property which may be in your use, custody or charge.
+        </Paragraph>
+        
+        <Paragraph>
+          All legal matters are subject to Pune Jurisdiction.
+        </Paragraph>
+        
+        <Paragraph>
+          Please confirm your acceptance of the appointment on the above terms and conditions by signing and returning this letter to us for our records.
+        </Paragraph>
+        
+        <Paragraph>
+          Enclosure:- Attaching herewith your salary annexure.
+        </Paragraph>
+      </View>
+      
+      {/* Footer */}
+      <Footer 
+        companyContact={`${formData.companyName || 'Company Name'}\n${formData.companyAddressLine1 || 'Address'}\n${formData.companyPhone || 'Phone'}\n${formData.companyWebsite || 'Website'}`}
+      />
+    </Page>
+
+    {/* Page 3 - Salary Annexure */}
+    <Page size="A4" style={offerLetterStyles.page}>
+      {/* Company Header */}
+      <CompanyHeader 
+        companyName={formData.companyName || 'COMPANY NAME'} 
+        companyAddress={formData.companyAddressLine1 || 'Company Address'} 
+        companyLogo={formData.companyLogo}
+        companyColor={formData.companyColor}
+      />
+      
+      {/* Letter Title */}
+      <LetterTitle title="Salary Annexure" />
+      
+      {/* Letter Content */}
+      <View style={offerLetterStyles.letterContent}>
+        {/* Date */}
+        <FormattedDate date={new Date()} />
+        
+        {/* Addressee */}
+        <View style={{ marginBottom: 15 }}>
+          <Text style={{ fontSize: 12 }}>Dear {formData.employeeName || 'Candidate Name'},</Text>
+        </View>
+        
+        <Paragraph>
+          As per mentioned in the offer letter, here with attaching your salary structure which includes your Basic salary and other benefits received by you from the company.
+        </Paragraph>
+        
+        <Text style={{ fontWeight: 'bold', marginTop: 15, fontSize: 12 }}>
+          Your salary structure as follows:
+        </Text>
+        
+        <Text style={{ fontWeight: 'bold', marginTop: 15, marginBottom: 5, fontSize: 12 }}>
+          Compensation Heads
+        </Text>
+        
+        {/* Salary Table */}
+        {formData.salaryComponents && (
+          <View style={offerLetterStyles.salaryTable}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
+              <Text style={{ flex: 2, fontSize: 12 }}>Basic</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.basic).toFixed(2)}</Text>
+            </View>
+            
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
+              <Text style={{ flex: 2, fontSize: 12 }}>Dearness Allowance</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.hra).toFixed(2)}</Text>
+            </View>
+            
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
+              <Text style={{ flex: 2, fontSize: 12 }}>Conveyance Allowance</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.monthlyReimbursement).toFixed(2)}</Text>
+            </View>
+            
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
+              <Text style={{ flex: 2, fontSize: 12 }}>Other Allowance</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.specialAllowance).toFixed(2)}</Text>
+            </View>
+            
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, marginTop: 10, borderTop: '2pt solid #000', borderBottom: '1pt solid #000', fontWeight: 'bold' }}>
+              <Text style={{ flex: 2, fontSize: 12 }}>Annual Total</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.total).toFixed(2)}</Text>
+            </View>
+          </View>
+        )}
+        
+        <Paragraph>
+          We expect you to keep up your performance in the years to come and grow with the organization and we will expect you will get happy and enthusiastic environment for work at the organization.
+        </Paragraph>
+        
+        <Text style={{ marginTop: 10, fontSize: 12 }}>Wish you all the best.</Text>
+        
+        <Text style={{ marginTop: 20, fontSize: 12 }}>Signature</Text>
+        
+        <Text style={{ marginTop: 15, fontSize: 12 }}>Head - HR Dept</Text>
+      </View>
+      
+      {/* Footer */}
+      <Footer 
+        companyContact={`${formData.companyName || 'Company Name'}\n${formData.companyAddressLine1 || 'Address'}\n${formData.companyPhone || 'Phone'}\n${formData.companyWebsite || 'Website'}`}
       />
     </Page>
   </Document>
