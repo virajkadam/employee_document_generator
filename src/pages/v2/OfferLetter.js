@@ -22,13 +22,13 @@ import {
   Addressee,
   Paragraph,
   Signature,
-  Footer,
-  SalaryTable
+  Footer
 } from '../../components/pdf/PDFComponents';
 import { 
-  calculateSalaryComponents,
-  prepareSalaryTableData
-} from '../../components/pdf/SalaryUtils';
+  calculateSalaryComponentsV2,
+  formatIndianCurrency,
+  numberToWords
+} from '../../components/pdf/SalaryUtilsV2';
 
 // Offer Letter PDF Document Component
 const OfferLetterPDF = ({ formData }) => (
@@ -74,7 +74,7 @@ const OfferLetterPDF = ({ formData }) => (
         </Paragraph>
         
         <Paragraph>
-          Your salary package will be Rs. {formData.lpa ? new Intl.NumberFormat().format(formData.lpa * 100000) : '0'}/- ({formData.ctcInWords || 'Zero'}) and no other allowance is provided in that period.
+          Your salary package will be Rs. {formData.lpa ? formatIndianCurrency(formData.lpa * 100000) : '0'}/- ({formData.lpa ? `${numberToWords(formData.lpa)} Lakh` : 'Zero'} Rupees Only) and no other allowance is provided in that period.
         </Paragraph>
       </View>
       
@@ -178,31 +178,31 @@ const OfferLetterPDF = ({ formData }) => (
         </Text>
         
         {/* Salary Table */}
-        {formData.salaryComponents && (
+        {formData.salaryComponentsV2 && (
           <View style={offerLetterStyles.salaryTable}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
               <Text style={{ flex: 2, fontSize: 12 }}>Basic</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.basic).toFixed(2)}</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.basic.toFixed(2))}</Text>
             </View>
             
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
               <Text style={{ flex: 2, fontSize: 12 }}>Dearness Allowance</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.hra).toFixed(2)}</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.dearnessAllowance.toFixed(2))}</Text>
             </View>
             
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
               <Text style={{ flex: 2, fontSize: 12 }}>Conveyance Allowance</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.monthlyReimbursement).toFixed(2)}</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.conveyanceAllowance.toFixed(2))}</Text>
             </View>
             
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
               <Text style={{ flex: 2, fontSize: 12 }}>Other Allowance</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.specialAllowance).toFixed(2)}</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.otherAllowance.toFixed(2))}</Text>
             </View>
             
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, marginTop: 10, borderTop: '2pt solid #000', borderBottom: '1pt solid #000', fontWeight: 'bold' }}>
               <Text style={{ flex: 2, fontSize: 12 }}>Annual Total</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12 }}>: ₹{(formData.salaryComponents.annual.total).toFixed(2)}</Text>
+              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.total.toFixed(2))}</Text>
             </View>
           </View>
         )}
@@ -292,24 +292,22 @@ function OfferLetterV2() {
     } else if (name === "employeeName") {
       const selectedCandidate = candidates.find(candidate => candidate.candidateName === value);
       if (selectedCandidate) {
-        const salaryComponents = calculateSalaryComponents(selectedCandidate.packageLPA);
+        const salaryComponentsV2 = calculateSalaryComponentsV2(selectedCandidate.packageLPA);
         setFormData(prev => ({
           ...prev,
           employeeName: selectedCandidate.candidateName,
           designation: selectedCandidate.designation,
           joiningDate: selectedCandidate.DateOfJoining,
           lpa: selectedCandidate.packageLPA,
-          salaryComponents,
-          ctcInWords: salaryComponents.ctcInWords
+          salaryComponentsV2
         }));
       }
     } else if (name === 'lpa') {
-      const salaryComponents = calculateSalaryComponents(value);
+      const salaryComponentsV2 = calculateSalaryComponentsV2(value);
       setFormData(prev => ({
         ...prev,
         lpa: value,
-        salaryComponents,
-        ctcInWords: salaryComponents.ctcInWords
+        salaryComponentsV2
       }));
     } else {
       setFormData(prev => ({
