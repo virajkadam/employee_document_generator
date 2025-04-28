@@ -19,17 +19,17 @@ Our PDF generation should meet the following criteria:
 
 | Title | Link | Description |
 |-------|------|-------------|
-| Create PDF Files in React in 5 Minutes | [Watch on YouTube](https://www.youtube.com/watch?v=t46VoCKlK5c) | Beginner-friendly tutorial on using @react-pdf/renderer to create vector-based PDFs with selectable text |
-| React PDF Library Tutorial | [Watch on YouTube](https://www.youtube.com/watch?v=mueKKrsFu_M) | Comprehensive tutorial showing how to create complex PDFs with selectable text using React-PDF |
-| PDF Generation in React with @react-pdf/renderer | [Watch on YouTube](https://www.youtube.com/watch?v=DSHJpR_Azhs) | Advanced techniques for creating sophisticated PDFs with text selection support |
-| React Invoice Generator with Vector Text | [Watch on YouTube](https://www.youtube.com/watch?v=Za8O-Sd7qps) | Real-world example of creating an invoice generator with selectable text |
+| How to generate PDF in React using React-PDF | [Watch on YouTube](https://www.youtube.com/watch?v=nD5SAX7EJAc) | Comprehensive tutorial on using @react-pdf/renderer to create PDFs with selectable text (2023) |
+| Generate a PDF in React | [Watch on YouTube](https://www.youtube.com/watch?v=4V5HbqYJCVI) | Step-by-step tutorial for creating vector-based PDFs with React (2024) |
+| Using @react-pdf/renderer v3.0.1 with React 18 | [Watch on YouTube](https://www.youtube.com/watch?v=YZP5r7Uy_bU) | Tutorial showing the latest version integration with React 18 for selectable text PDFs |
+| React PDF Viewer & Renderer | [Watch on YouTube](https://www.youtube.com/watch?v=b7g60hGb9S8) | Real-world implementation of PDF generation and viewing with text selection support |
 
-### Advanced Vector-Based PDF Generation
+### Advanced PDF Techniques
 
 | Title | Link | Description |
 |-------|------|-------------|
-| Creating Accessible PDFs with React | [Watch on YouTube](https://www.youtube.com/watch?v=c_2jrxRGIJw) | Focus on accessibility features in PDF generation, including text selection and screen reader support |
-| Dynamic PDF Reports in React | [Watch on YouTube](https://www.youtube.com/watch?v=Q5VrFJf_DNA) | Creating data-driven reports with proper text selection capabilities |
+| Building a PDF Summarizer using AI - React & Next.js | [Watch on YouTube](https://www.youtube.com/watch?v=OIYevBOSMxY) | Advanced example showing PDF processing with selectable text capabilities |
+| Expo Documents - Mobile PDF Generation | [Watch on YouTube](https://www.youtube.com/watch?v=PsMlDhq_kCw) | Creating PDFs with selectable text in React Native/Expo applications |
 
 ## Community Feedback on Vector-Based PDF Generation
 
@@ -71,9 +71,9 @@ Based on developer feedback, here are some alternative approaches for text-selec
    - Using Draft.js and Redraft to convert user-generated content to React-PDF components
    - "We use a combination of React PDF, DraftJS, and Redraft to craft a PDF from user-generated content that is instantly available in the user's browser" - Chad Wilken, Medium
 
-3. **Server-Side Rendering with Puppeteer**
-   - While requiring a server, this approach can create true vector PDFs with selectable text
-   - "When compared to html2pdf, React PDF provides us with embedded text" - Space Jelly
+3. **HTMLDocs Library (New)**
+   - A newer approach that blends React components with PDF generation
+   - "What if we could treat PDFs like React components? htmldocs is a new library that brings the great DX of the modern web to building documents" - Kelvin Zhang, Dev.to
 
 ## Implementation Recommendations for Text-Selectable PDFs
 
@@ -125,10 +125,11 @@ Based on our research, we recommend:
    );
    ```
 
-## Videos and Resources
+## Additional Resources
 
-Based on our Playwright MCP research, we found these additional resources:
+Based on our research, here are reliable sources for learning more about text-selectable PDF generation:
 
 1. [React-PDF Documentation](https://react-pdf.org/) - Official documentation with examples of text-selectable PDF generation
-2. [Reddit Discussion on PDF Generation in React](https://www.reddit.com/r/reactjs/comments/11zgzb9/best_way_to_generate_pdfs_with_react/) - Community recommendations on vector-based options
-3. [GitHub Issues on Text Selection in PDFs](https://github.com/diegomura/react-pdf/issues?q=is%3Aissue+selectable+text) - Technical discussions about text selection implementation 
+2. [How to build a React PDF viewer using react-pdf](https://www.nutrient.io/blog/how-to-build-a-reactjs-pdf-viewer-with-react-pdf/) - Comprehensive tutorial on PDF rendering with selectable text
+3. [How to Automate Generating PDF Documents With React and TypeScript](https://dev.to/kelvinzhang/how-to-automate-generating-pdf-documents-with-react-and-typescript-3hml) - Modern approach using HTMLDocs library
+4. [GitHub Repository for react-pdf](https://github.com/diegomura/react-pdf) - Source code and examples for the React-PDF library 
