@@ -43,7 +43,7 @@ const OfferLetterPDF = ({ formData }) => (
       />
       
       {/* Letter Date */}
-      <FormattedDate date={new Date()} />
+      <FormattedDate date={formData.joiningDate || new Date()} />
       
       {/* Letter Title */}
       <LetterTitle title="OFFER LETTER" />
@@ -55,7 +55,7 @@ const OfferLetterPDF = ({ formData }) => (
       <View style={offerLetterStyles.letterContent}>
         <Paragraph>
           We are pleased to offer you the position of {formData.designation || 'Position'} at {formData.companyName || 'Company Name'}. 
-          Your employment will commence on {formData.joiningDate ? new Date(formData.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : '[Date]'}.
+          Your employment will commence on {formData.joiningDate ? new Date(formData.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '[Date]'}.
         </Paragraph>
         
         <Paragraph>

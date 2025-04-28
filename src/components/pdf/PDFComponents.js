@@ -4,25 +4,28 @@ import { commonStyles } from './PDFStyles';
 
 // Company Header Component
 export const CompanyHeader = ({ companyName, companyAddress, companyLogo, companyColor }) => (
-  <View style={commonStyles.companyHeader}>
-    <View>
-      <Text 
-        style={[
-          commonStyles.companyName, 
-          companyColor ? { color: companyColor } : {}
-        ]}
-      >
-        {companyName}
-      </Text>
-      <Text style={commonStyles.companyAddress}>{companyAddress}</Text>
+  <>
+    <View style={commonStyles.companyHeader}>
+      <View>
+        <Text 
+          style={[
+            commonStyles.companyName, 
+            { color: companyColor || '#FF0000' } // Default to red
+          ]}
+        >
+          {companyName}
+        </Text>
+        <Text style={commonStyles.companyAddress}>{companyAddress}</Text>
+      </View>
+      {companyLogo && (
+        <Image 
+          src={companyLogo} 
+          style={commonStyles.companyLogo} 
+        />
+      )}
     </View>
-    {companyLogo && (
-      <Image 
-        src={companyLogo} 
-        style={commonStyles.companyLogo} 
-      />
-    )}
-  </View>
+    <View style={commonStyles.separatorLine} />
+  </>
 );
 
 // Letter Title Component
@@ -54,8 +57,8 @@ export const FormattedDate = ({ date, style }) => {
 // Addressee Component
 export const Addressee = ({ name, designation }) => (
   <View style={{ marginBottom: 15 }}>
-    <Text>{name}</Text>
-    {designation && <Text>{designation}</Text>}
+    <Text style={{ fontSize: 12 }}>{name}</Text>
+    {designation && <Text style={{ fontSize: 12 }}>{designation}</Text>}
   </View>
 );
 
@@ -78,8 +81,9 @@ export const Signature = ({ name, designation, companyName }) => (
 // Footer Component
 export const Footer = ({ companyContact }) => (
   <View style={commonStyles.footer}>
+    <View style={commonStyles.footerSeparator} />
     {companyContact && (
-      <Text style={{ fontSize: 10 }}>
+      <Text style={{ fontSize: 9 }}>
         {companyContact}
       </Text>
     )}
@@ -95,27 +99,32 @@ const tableStyles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     borderBottom: '1pt solid #ddd',
-    paddingVertical: 8,
+    paddingVertical: 6,
   },
   headerRow: {
     flexDirection: 'row',
-    borderBottom: '1pt solid #000',
-    paddingVertical: 8,
+    borderBottom: '2pt solid #000',
+    paddingVertical: 6,
     fontWeight: 'bold',
+    fontSize: 12,
   },
   tableCell: {
     flex: 1,
+    fontSize: 12,
   },
   tableCellRight: {
     flex: 1,
     textAlign: 'right',
+    fontSize: 12,
+    fontFamily: 'Courier', // Use monospace font for numbers
   },
   totalRow: {
     flexDirection: 'row',
     borderTop: '2pt solid #000',
     borderBottom: '2pt solid #000',
-    paddingVertical: 8,
+    paddingVertical: 6,
     fontWeight: 'bold',
+    fontSize: 12,
   },
 });
 
