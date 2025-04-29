@@ -41,6 +41,7 @@ const OfferLetterPDF = ({ formData }) => {
     if (!formData.salaryComponentsV2) return null;
     
     // Format with exact spacing and formatting as in current PDF
+    // Use "Rs." prefix instead of rupee symbol to ensure proper rendering
     return [
       {
         label: 'Basic',

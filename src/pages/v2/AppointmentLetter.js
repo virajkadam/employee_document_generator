@@ -164,6 +164,13 @@ const tableStyles = StyleSheet.create({
     marginTop: 4,
     fontWeight: 'bold',
   },
+  subtotalRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    borderBottomStyle: 'solid',
+    padding: 4,
+  },
 });
 
 // Function to calculate salary components
@@ -233,6 +240,18 @@ const formatSalaryValues = (salaryComponents, includePF) => {
     { label: 'Special Allowance', value: formatIndianCurrency(salaryComponents.specialAllowance) },
   ];
 
+  // Calculate subtotal (same components as in original implementation)
+  const subtotal = salaryComponents.basic + 
+                   salaryComponents.hra + 
+                   salaryComponents.educationAllowance + 
+                   salaryComponents.monthlyReimbursement + 
+                   salaryComponents.lta + 
+                   salaryComponents.statutoryBonus + 
+                   salaryComponents.specialAllowance;
+                   
+  // Add subtotal line
+  items.push({ label: 'SUB TOTAL', value: formatIndianCurrency(subtotal) });
+
   // Add PF and Gratuity if required
   if (includePF) {
     items.push(
@@ -245,7 +264,7 @@ const formatSalaryValues = (salaryComponents, includePF) => {
   items.push(
     { label: 'Monthly Wellness', value: formatIndianCurrency(salaryComponents.monthlyWellness) },
     { label: 'Health Insurance', value: formatIndianCurrency(salaryComponents.healthInsurance) },
-    { total: formatIndianCurrency(salaryComponents.total) }
+    { label: 'TOTAL', value: formatIndianCurrency(salaryComponents.total) }
   );
 
   return items;
@@ -702,7 +721,7 @@ const AppointmentLetterPDF = ({ formData }) => {
                   <Text style={[tableStyles.tableHeader, { flex: 2, textAlign: 'right' }]}>YEARLY</Text>
                 </View>
                 
-                {salaryComponents.slice(0, -1).map((item, index) => {
+                {salaryComponents.map((item, index) => {
                   // Calculate monthly from annual
                   const annualValue = parseFloat(item.value.replace(/,/g, ''));
                   const monthlyValue = (annualValue / 12).toFixed(2);
@@ -714,24 +733,19 @@ const AppointmentLetterPDF = ({ formData }) => {
                     return parts.join('.');
                   };
                   
+                  // Apply special styling to SUB TOTAL and TOTAL rows
+                  const isSubtotal = item.label === 'SUB TOTAL';
+                  const isTotal = item.label === 'TOTAL';
+                  const rowStyle = isTotal ? tableStyles.totalRow : (isSubtotal ? tableStyles.subtotalRow : tableStyles.tableRow);
+                  
                   return (
-                    <View key={index} style={tableStyles.tableRow}>
+                    <View key={index} style={rowStyle}>
                       <Text style={tableStyles.tableCell}>{item.label}</Text>
                       <Text style={tableStyles.tableCellValue}>Rs. {formatWithCommas(monthlyValue)}</Text>
                       <Text style={tableStyles.tableCellValue}>Rs. {item.value}</Text>
                     </View>
                   );
                 })}
-                
-                {salaryComponents.length > 0 && (
-                  <View style={tableStyles.totalRow}>
-                    <Text style={tableStyles.tableCell}>TOTAL</Text>
-                    <Text style={tableStyles.tableCellValue}>
-                      Rs. {(parseFloat(salaryComponents[salaryComponents.length - 1].total.replace(/,/g, '')) / 12).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    </Text>
-                    <Text style={tableStyles.tableCellValue}>Rs. {salaryComponents[salaryComponents.length - 1].total}</Text>
-                  </View>
-                )}
               </View>
               
               {/* Notes */}
