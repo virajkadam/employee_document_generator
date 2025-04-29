@@ -82,28 +82,24 @@ export const formatIndianCurrency = (amount) => {
   // Convert to integer to avoid decimal formatting issues
   const amountInt = Math.round(Number(amount));
   
-  // Format the whole part with commas for Indian number system
-  let formattedWhole = '';
-  const wholePartStr = amountInt.toString();
+  // Use a simpler approach to format the Indian currency
+  const numStr = amountInt.toString();
+  let result = '';
   
-  // First add comma after first 3 digits from right
-  let remaining = wholePartStr;
-  if (wholePartStr.length > 3) {
-    formattedWhole = ',' + wholePartStr.substring(wholePartStr.length - 3);
-    remaining = wholePartStr.substring(0, wholePartStr.length - 3);
+  // Handle numbers less than 1000
+  if (numStr.length <= 3) {
+    result = numStr;
   } else {
-    formattedWhole = wholePartStr;
-    remaining = '';
-  }
-  
-  // Then add comma after every 2 digits
-  while (remaining.length > 0) {
-    const chunkSize = remaining.length > 2 ? 2 : remaining.length;
-    const chunk = remaining.substring(remaining.length - chunkSize);
-    formattedWhole = chunk + (formattedWhole.length > 0 ? ',' + formattedWhole : formattedWhole);
-    remaining = remaining.substring(0, remaining.length - chunkSize);
+    // Add comma after the first 3 digits from right
+    const lastThree = numStr.substring(numStr.length - 3);
+    const remaining = numStr.substring(0, numStr.length - 3);
+    
+    // Add comma after every 2 digits for the remaining part
+    const formattedRemaining = remaining.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+    
+    result = formattedRemaining + ',' + lastThree;
   }
   
   // Add the decimal part for better alignment with original PDF
-  return formattedWhole + '.00';
+  return result + '.00';
 }; 
