@@ -15,13 +15,13 @@ const payslipStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   subtitle: {
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 8,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   section: {
     marginBottom: 10,
@@ -37,14 +37,14 @@ const payslipStyles = StyleSheet.create({
     flex: 1,
     padding: 5,
     fontSize: 10,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   headerCell: {
     flex: 1,
     padding: 5,
     fontSize: 11,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     backgroundColor: '#f0f0f0',
   },
   bold: {
@@ -68,12 +68,12 @@ const payslipStyles = StyleSheet.create({
     flex: 1,
     fontSize: 10,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   infoValue: {
     flex: 2,
     fontSize: 10,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   earningsDeductionsContainer: {
     flexDirection: 'row',
@@ -100,13 +100,13 @@ const payslipStyles = StyleSheet.create({
     flex: 1,
     fontSize: 11,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   amountColumnHeader: {
     flex: 1,
     fontSize: 11,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'right',
   },
   item: {
@@ -118,12 +118,12 @@ const payslipStyles = StyleSheet.create({
   itemName: {
     flex: 1,
     fontSize: 10,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   itemAmount: {
     flex: 1,
     fontSize: 10,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'right',
   },
   totalRow: {
@@ -137,13 +137,13 @@ const payslipStyles = StyleSheet.create({
     flex: 1,
     fontSize: 11,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   totalAmount: {
     flex: 1,
     fontSize: 11,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'right',
   },
   netPayContainer: {
@@ -160,19 +160,19 @@ const payslipStyles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   netPayAmount: {
     flex: 1,
     fontSize: 12,
     fontWeight: 'bold',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'right',
   },
   netPayWords: {
     padding: 8,
     fontSize: 11,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     fontStyle: 'italic',
   },
   signature: {
@@ -185,7 +185,7 @@ const payslipStyles = StyleSheet.create({
   },
   signatureText: {
     fontSize: 11,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     marginTop: 20,
   },
 });
@@ -410,7 +410,7 @@ const PaySlipPDF = ({ formData }) => {
         </View>
         
         {/* This is a computer generated payslip */}
-        <Text style={{ fontSize: 9, marginTop: 30, textAlign: 'center', fontFamily: 'Times New Roman' }}>
+        <Text style={{ fontSize: 9, marginTop: 30, textAlign: 'center', fontFamily: 'Calibri' }}>
           This is a computer-generated Pay slip. No Signature is required.
         </Text>
         
