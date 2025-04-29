@@ -227,7 +227,11 @@ const calculateSalaryComponents = (lpa) => {
 
 // Function to format salary values for display
 const formatSalaryValues = (salaryComponents, includePF) => {
+  // Guard against null or undefined inputs
   if (!salaryComponents) return [];
+
+  // Ensure includePF is a boolean
+  const shouldIncludePF = includePF === true;
 
   // Format values for display with proper decimal places
   const items = [
@@ -253,7 +257,7 @@ const formatSalaryValues = (salaryComponents, includePF) => {
   items.push({ label: 'SUB TOTAL', value: formatIndianCurrency(subtotal) });
 
   // Add PF and Gratuity if required
-  if (includePF) {
+  if (shouldIncludePF) {
     items.push(
       { label: 'PF - Employer', value: formatIndianCurrency(salaryComponents.employerPF) },
       { label: 'Employee Gratuity contribution', value: formatIndianCurrency(salaryComponents.gratuity) }
@@ -317,7 +321,16 @@ const AppointmentLetterPDF = ({ formData }) => {
     }
   };
 
-  const salaryComponents = formData.salaryComponents ? formatSalaryValues(formData.salaryComponents, formData.showPF) : [];
+  // Ensure formData is always an object
+  const safeFormData = formData || {};
+  
+  // Explicitly handle showPF to ensure it's a boolean
+  const showPF = safeFormData.showPF === true;
+  
+  // Calculate salary components
+  const salaryComponents = safeFormData.salaryComponents 
+    ? formatSalaryValues(safeFormData.salaryComponents, showPF) 
+    : [];
 
   return (
     <Document>
@@ -325,41 +338,41 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={{marginTop: 10}}>
           {/* Addressee */}
           <Text style={appointmentStyles.to}>To,</Text>
-          <Text style={appointmentStyles.addresseeName}>{formData.employeeName || '[Employee Name]'}</Text>
+          <Text style={appointmentStyles.addresseeName}>{safeFormData.employeeName || '[Employee Name]'}</Text>
           
           {/* Subject */}
           <Text style={appointmentStyles.subject}>Subject: Appointment Letter</Text>
           
           {/* Introduction */}
           <Text style={appointmentStyles.listItem}>
-            Dear {formData.employeeName || '[Employee Name]'},
+            Dear {safeFormData.employeeName || '[Employee Name]'},
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            We welcome you to {formData.companyName || 'our company'}. Your appointment is subject to the Terms & Conditions contained in this letter & Company policy.
+            We welcome you to {safeFormData.companyName || 'our company'}. Your appointment is subject to the Terms & Conditions contained in this letter & Company policy.
           </Text>
           
           {/* Appointment Details */}
           <Text style={appointmentStyles.appointmentHeading}>Appointment</Text>
           
           <AppointmentTable 
-            joiningDate={formatDate(formData.joiningDate)}
-            designation={formData.designation || '[Designation]'}
-            department={formData.department || '[Department]'}
-            reportingAuthority={formData.reportingAuthority || '[Authority]'}
-            ctc={formData.ctc || ''}
-            ctcInWords={formData.ctcInWords || ''}
+            joiningDate={formatDate(safeFormData.joiningDate)}
+            designation={safeFormData.designation || '[Designation]'}
+            department={safeFormData.department || '[Department]'}
+            reportingAuthority={safeFormData.reportingAuthority || '[Authority]'}
+            ctc={safeFormData.ctc || ''}
+            ctcInWords={safeFormData.ctcInWords || ''}
           />
           
           {/* Salary & Benefits - Combined on first page if space allows */}
@@ -380,11 +393,11 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
 
@@ -392,12 +405,12 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={{marginTop: 10}}>
@@ -418,7 +431,7 @@ const AppointmentLetterPDF = ({ formData }) => {
           <Text style={appointmentStyles.sectionHeading}>Posting</Text>
           
           <Text style={appointmentStyles.listItem}>
-            7. At present, you would be posted at {formData.location || 'Pune'}, however, you may be required to travel to or work at other locations, including interstate or overseas. Your services are liable to be transferred to any other division, activity, geographical location, branch, Group Company, sister concern or subsidiary of this Company or any of its associates, clients, customers, presently in existence & operational or will be operational in future. In such an eventuality, you will be governed by the terms and conditions and the remunerations as applicable to such new place to which your services may be temporarily or permanently transferred and that you will, therefore, not be entitled to any additional compensation.
+            7. At present, you would be posted at {safeFormData.location || 'Pune'}, however, you may be required to travel to or work at other locations, including interstate or overseas. Your services are liable to be transferred to any other division, activity, geographical location, branch, Group Company, sister concern or subsidiary of this Company or any of its associates, clients, customers, presently in existence & operational or will be operational in future. In such an eventuality, you will be governed by the terms and conditions and the remunerations as applicable to such new place to which your services may be temporarily or permanently transferred and that you will, therefore, not be entitled to any additional compensation.
           </Text>
 
           {/* Responsibility Section */}
@@ -443,11 +456,11 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
 
@@ -455,12 +468,12 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={{marginTop: 10}}>
@@ -493,11 +506,11 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
 
@@ -505,12 +518,12 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={{marginTop: 10}}>
@@ -529,7 +542,7 @@ const AppointmentLetterPDF = ({ formData }) => {
           </View>
           
           <Text style={appointmentStyles.listItem}>
-            18. This appointment shall be valid only if accepted on or before {formData.acceptanceDate || 'ACCEPTANCE DATE'}.
+            18. This appointment shall be valid only if accepted on or before {safeFormData.acceptanceDate || 'ACCEPTANCE DATE'}.
           </Text>
 
           <Text style={appointmentStyles.listItem}>
@@ -537,33 +550,33 @@ const AppointmentLetterPDF = ({ formData }) => {
           </Text>
           
           <Text style={appointmentStyles.paragraph}>
-            We place on record your joining in the Company on {formData.joiningDate || 'JOINING DATE'} and look forward to your long & purposeful association with the Company.
+            We place on record your joining in the Company on {safeFormData.joiningDate || 'JOINING DATE'} and look forward to your long & purposeful association with the Company.
           </Text>
           
           <View style={appointmentStyles.signatureContainer}>
             <View style={appointmentStyles.signatureBox}>
-              <Text style={appointmentStyles.signatureTitle}>FOR {formData.companyName?.toUpperCase() || 'COMPANY NAME'}</Text>
+              <Text style={appointmentStyles.signatureTitle}>FOR {safeFormData.companyName?.toUpperCase() || 'COMPANY NAME'}</Text>
               <View style={appointmentStyles.signatureSpace}></View>
-              <Text style={appointmentStyles.signatureName}>{formData.companyHR || 'HR Manager'}</Text>
+              <Text style={appointmentStyles.signatureName}>{safeFormData.companyHR || 'HR Manager'}</Text>
               <Text style={appointmentStyles.signatureRole}>Head - HR Dept</Text>
             </View>
             
             <View style={appointmentStyles.signatureBox}>
               <Text style={appointmentStyles.signatureTitle}>ACCEPTED & AGREED</Text>
               <View style={appointmentStyles.signatureSpace}></View>
-              <Text style={appointmentStyles.signatureName}>{formData.employeeName?.toUpperCase() || 'EMPLOYEE NAME'}</Text>
-              <Text style={appointmentStyles.signatureDate}>DATE: {formData.joiningDate || 'JOINING DATE'}</Text>
+              <Text style={appointmentStyles.signatureName}>{safeFormData.employeeName?.toUpperCase() || 'EMPLOYEE NAME'}</Text>
+              <Text style={appointmentStyles.signatureDate}>DATE: {safeFormData.joiningDate || 'JOINING DATE'}</Text>
             </View>
           </View>
         </View>
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
 
@@ -571,12 +584,12 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={{marginTop: 10}}>
@@ -617,11 +630,11 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
 
@@ -629,12 +642,12 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={commonStyles.contentContainer}>
@@ -652,7 +665,7 @@ const AppointmentLetterPDF = ({ formData }) => {
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            30. Any dispute between yourself and the Company concerning or relating to or arising out of your appointment/employment shall be subject to the jurisdiction of {formData.location || 'Pune'}.
+            30. Any dispute between yourself and the Company concerning or relating to or arising out of your appointment/employment shall be subject to the jurisdiction of {safeFormData.location || 'Pune'}.
           </Text>
 
           <Text style={[appointmentStyles.listItem, { marginTop: 15 }]}>
@@ -672,13 +685,13 @@ const AppointmentLetterPDF = ({ formData }) => {
           </Text>
           
           <Text style={[appointmentStyles.listItem, { fontWeight: 'bold', marginTop: 20 }]}>
-            {formData.companyName || 'COMPANY NAME'}
+            {safeFormData.companyName || 'COMPANY NAME'}
           </Text>
           
           {/* Signature Section */}
           <View style={{ marginTop: 40 }}>
             <Text style={appointmentStyles.listItem}>
-              {formData.companyHR || 'HR Manager'}
+              {safeFormData.companyHR || 'HR Manager'}
             </Text>
             <Text style={appointmentStyles.listItem}>
               Head - HR Dept
@@ -688,11 +701,11 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
 
@@ -700,17 +713,17 @@ const AppointmentLetterPDF = ({ formData }) => {
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyLogo={formData.companyLogo}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyLogo={safeFormData.companyLogo}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
         
         <View style={commonStyles.contentContainer}>
           {/* Salary Table */}
-          {formData.salaryComponents && (
+          {safeFormData.salaryComponents && (
             <View>
               <View style={tableStyles.table}>
                 <View style={tableStyles.headerRow}>
@@ -766,11 +779,11 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         {/* Footer */}
         <Footer
-          companyName={formData.companyName || 'COMPANY NAME'}
-          companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-          companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-          companyWebsite={formData.companyWebsite || 'WEBSITE'}
-          companyColor={formData.companyColor || '#FF0000'}
+          companyName={safeFormData.companyName || 'COMPANY NAME'}
+          companyAddress={safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+          companyPhone={safeFormData.companyPhone || 'PHONE NUMBER'}
+          companyWebsite={safeFormData.companyWebsite || 'WEBSITE'}
+          companyColor={safeFormData.companyColor || '#FF0000'}
         />
       </Page>
     </Document>
@@ -802,6 +815,11 @@ function AppointmentLetterV2() {
     companyLogo: "",
     companyHR: ""
   });
+
+  // Use React.useMemo to memoize the PDF document to prevent unnecessary re-renders
+  const memoizedPdfDocument = React.useMemo(() => (
+    <AppointmentLetterPDF formData={{...formData, showPF}} />
+  ), [formData, showPF]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -975,7 +993,7 @@ function AppointmentLetterV2() {
             <h3 className="text-xl font-bold text-gray-800">PDF Preview</h3>
             
             <PDFDownloadLink 
-              document={<AppointmentLetterPDF formData={{...formData, showPF}} />}
+              document={memoizedPdfDocument}
               fileName="appointment-letter.pdf"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
@@ -985,7 +1003,7 @@ function AppointmentLetterV2() {
           
           <div className="border rounded-lg" style={{ height: '80vh' }}>
             <PDFViewer width="100%" height="100%" className="rounded-lg">
-              <AppointmentLetterPDF formData={{...formData, showPF}} />
+              {memoizedPdfDocument}
             </PDFViewer>
           </div>
         </div>
