@@ -8,7 +8,8 @@ import {
   PDFViewer,
   Text, 
   View, 
-  Image 
+  Image,
+  StyleSheet
 } from '@react-pdf/renderer';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -33,6 +34,38 @@ import {
   formatIndianCurrency,
   numberToWords
 } from '../../components/pdf/SalaryUtilsV2';
+
+// Create watermark styles
+const watermarkStyles = StyleSheet.create({
+  watermarkContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  watermarkImage: {
+    width: '70%',
+    height: 'auto',
+    opacity: 0.3, // 70% opacity (0.3 = 30% opacity, 70% transparent)
+  }
+});
+
+// Watermark Component
+const Watermark = ({ logoSrc }) => {
+  // Only render if logo exists
+  if (!logoSrc) return null;
+  
+  return (
+    <View style={watermarkStyles.watermarkContainer}>
+      <Image src={logoSrc} style={watermarkStyles.watermarkImage} />
+    </View>
+  );
+};
 
 // Offer Letter PDF Document Component
 const OfferLetterPDF = ({ formData }) => {
@@ -69,6 +102,9 @@ const OfferLetterPDF = ({ formData }) => {
     <Document>
       {/* Page 1 - Joining Cum Appointment Letter */}
       <Page size="A4" style={offerLetterStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={formData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader 
           companyName={formData.companyName || 'COMPANY NAME'} 
@@ -124,6 +160,9 @@ const OfferLetterPDF = ({ formData }) => {
 
       {/* Page 2 - Split of Additional Terms and Salary Annexure to fit content properly */}
       <Page size="A4" style={offerLetterStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={formData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader 
           companyName={formData.companyName || 'COMPANY NAME'} 
@@ -172,6 +211,9 @@ const OfferLetterPDF = ({ formData }) => {
 
       {/* Page 3 - Continuation of Additional Terms and Salary Annexure */}
       <Page size="A4" style={offerLetterStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={formData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader 
           companyName={formData.companyName || 'COMPANY NAME'} 
