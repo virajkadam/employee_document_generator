@@ -52,31 +52,31 @@ Font.register({
 // Common styles for all PDF documents
 export const commonStyles = StyleSheet.create({
   page: {
-    padding: '15mm 20mm',
+    padding: '12mm 20mm',
     backgroundColor: 'white',
     width: '210mm',
     height: '297mm',
     position: 'relative',
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 8,
   },
   companyHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   companyName: {
     fontSize: 18,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    marginBottom: 3,
+    marginBottom: 2,
     color: '#FF0000',
   },
   companyAddress: {
     fontSize: 10,
-    lineHeight: 1.3,
+    lineHeight: 1.2,
   },
   companyLogo: {
     width: 60,
@@ -86,24 +86,24 @@ export const commonStyles = StyleSheet.create({
   separatorLine: {
     borderBottom: '1pt solid #FF0000',
     width: '100%',
-    marginTop: 3,
-    marginBottom: 15,
+    marginTop: 2,
+    marginBottom: 12,
   },
   letterTitle: {
     fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 15,
+    marginVertical: 10,
   },
   letterDate: {
-    marginBottom: 12,
+    marginBottom: 8,
     fontSize: 12,
   },
   letterParagraph: {
     textAlign: 'justify',
-    marginBottom: 12,
+    marginBottom: 8,
     fontSize: 12,
-    lineHeight: 1.5,
+    lineHeight: 1.4,
   },
   footer: {
     position: 'absolute',
@@ -116,14 +116,14 @@ export const commonStyles = StyleSheet.create({
   footerSeparator: {
     borderTop: '1pt solid #FF0000',
     width: '100%',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   signatureSection: {
-    marginTop: 25,
+    marginTop: 15,
     fontSize: 12,
   },
   signatureLine: {
-    marginTop: 25,
+    marginTop: 20,
     borderTop: '1pt solid black',
     width: 200,
   },
@@ -135,23 +135,23 @@ export const offerLetterStyles = StyleSheet.create({
     ...commonStyles.page,
     fontFamily: 'Arial',
     fontSize: 12,
-    lineHeight: 1.5,
+    lineHeight: 1.4,
   },
   letterContent: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   letterSalutation: {
-    marginBottom: 12,
+    marginBottom: 8,
     fontSize: 12,
   },
   salaryTable: {
-    margin: '10px 0',
+    margin: '8px 0',
     fontSize: 12,
   },
   compensationRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 5,
+    paddingVertical: 4,
     borderBottom: '1pt solid #ddd',
   },
   compensationLabel: {

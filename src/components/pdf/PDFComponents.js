@@ -58,12 +58,12 @@ export const FormattedDate = ({ date, style }) => {
 
 // Addressee Component
 export const Addressee = ({ name, style }) => (
-  <View style={{ marginBottom: 15, ...style }}>
+  <View style={{ marginBottom: 8, ...style }}>
     <Text style={{ fontSize: 12 }}>Dear {name},</Text>
   </View>
 );
 
-// Paragraph Component
+// Paragraph Component - Optimized with less margin for better content fit
 export const Paragraph = ({ children, style }) => (
   <Text style={[commonStyles.letterParagraph, style]}>{children}</Text>
 );
@@ -91,13 +91,13 @@ export const Footer = ({ companyName, companyAddress, companyPhone, companyWebsi
 const tableStyles = StyleSheet.create({
   table: {
     width: '100%',
-    marginVertical: 10,
+    marginVertical: 8,
   },
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottom: '1pt solid #ddd',
-    paddingVertical: 5,
+    paddingVertical: 4,
   },
   headerRow: {
     flexDirection: 'row',
@@ -119,10 +119,10 @@ const tableStyles = StyleSheet.create({
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 5,
+    marginTop: 4,
     borderTop: '2pt solid #000',
     borderBottom: '2pt solid #000',
-    paddingVertical: 5,
+    paddingVertical: 4,
     fontWeight: 'bold',
     fontSize: 12,
   },
@@ -130,7 +130,7 @@ const tableStyles = StyleSheet.create({
 
 export const SalaryTable = ({ components }) => (
   <View style={tableStyles.table}>
-    <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Compensation Heads</Text>
+    <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>Compensation Heads</Text>
     
     {components.map((item, index) => (
       <View key={index} style={tableStyles.tableRow}>

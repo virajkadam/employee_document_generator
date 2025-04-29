@@ -92,7 +92,7 @@ const OfferLetterPDF = ({ formData }) => (
       />
     </Page>
 
-    {/* Page 2 - Additional Terms */}
+    {/* Page 2 - Split of Additional Terms and Salary Annexure to fit content properly */}
     <Page size="A4" style={offerLetterStyles.page}>
       {/* Company Header */}
       <CompanyHeader 
@@ -128,7 +128,32 @@ const OfferLetterPDF = ({ formData }) => (
         <Paragraph>
           If at any time in our opinion which is final in this matter you are found non-performer or guilty of fraud, dishonest, disobedience, disorderly behavior, negligence, indiscipline, absence from duty without permission or any other conduct considered by us deterrent to our interest or of violation of one or more terms of this letter, your services may be terminated without notice.
         </Paragraph>
-        
+      </View>
+      
+      {/* Footer */}
+      <Footer
+        companyName={formData.companyName || 'COMPANY NAME'}
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
+        companyColor={formData.companyColor || '#FF0000'}
+      />
+    </Page>
+
+    {/* Page 3 - Continuation of Additional Terms and Salary Annexure */}
+    <Page size="A4" style={offerLetterStyles.page}>
+      {/* Company Header */}
+      <CompanyHeader 
+        companyName={formData.companyName || 'COMPANY NAME'} 
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
+        companyLogo={formData.companyLogo}
+        companyColor={formData.companyColor || '#FF0000'}
+      />
+      
+      {/* Additional Terms Continuation */}
+      <View style={{marginBottom: 10}}>
         <Paragraph>
           You will be responsible for safekeeping and return in good condition and order of all Company property which may be in your use, custody or charge.
         </Paragraph>
@@ -146,33 +171,10 @@ const OfferLetterPDF = ({ formData }) => (
         </Paragraph>
       </View>
       
-      {/* Footer */}
-      <Footer
-        companyName={formData.companyName || 'COMPANY NAME'}
-        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-        companyWebsite={formData.companyWebsite || 'WEBSITE'}
-        companyColor={formData.companyColor || '#FF0000'}
-      />
-    </Page>
-
-    {/* Page 3 - Salary Annexure */}
-    <Page size="A4" style={offerLetterStyles.page}>
-      {/* Company Header */}
-      <CompanyHeader 
-        companyName={formData.companyName || 'COMPANY NAME'} 
-        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
-        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
-        companyWebsite={formData.companyWebsite || 'WEBSITE'}
-        companyLogo={formData.companyLogo}
-        companyColor={formData.companyColor || '#FF0000'}
-      />
-      
-      {/* Letter Title */}
-      <LetterTitle title="Salary Annexure" />
-      
-      {/* Letter Content */}
-      <View style={offerLetterStyles.letterContent}>
+      {/* Salary Annexure Section */}
+      <View style={{marginTop: 10}}>
+        <LetterTitle title="Salary Annexure" />
+        
         {/* Date - Hardcoded like in the sample */}
         <Text style={commonStyles.letterDate}>Date: 28/04/2025</Text>
         
@@ -183,7 +185,7 @@ const OfferLetterPDF = ({ formData }) => (
           As per mentioned in the offer letter, here with attaching your salary structure which includes your Basic salary and other benefits received by you from the company.
         </Paragraph>
         
-        <Text style={{ fontWeight: 'bold', marginTop: 10, marginBottom: 5, fontSize: 12 }}>
+        <Text style={{ fontWeight: 'bold', marginTop: 8, marginBottom: 4, fontSize: 12 }}>
           Your salary structure as follows:
         </Text>
         
@@ -193,19 +195,19 @@ const OfferLetterPDF = ({ formData }) => (
             components={[
               {
                 label: 'Basic',
-                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.basic.toFixed(2)) : '0,00,000.00',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.basic) : '0,00,000',
               },
               {
                 label: 'Dearness Allowance',
-                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.dearnessAllowance.toFixed(2)) : '0,00,000.00',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.dearnessAllowance) : '0,00,000',
               },
               {
                 label: 'Conveyance Allowance',
-                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.conveyanceAllowance.toFixed(2)) : '0,00,000.00',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.conveyanceAllowance) : '0,00,000',
               },
               {
                 label: 'Other Allowance',
-                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.otherAllowance.toFixed(2)) : '0,00,000.00',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.otherAllowance) : '0,00,000',
               },
               {
                 total: formData.lpa ? formatIndianCurrency(formData.lpa * 100000) : '0,00,000',
@@ -221,7 +223,7 @@ const OfferLetterPDF = ({ formData }) => (
         <Text style={{ marginTop: 8, fontSize: 12 }}>Wish you all the best.</Text>
         
         {/* Signature */}
-        <Signature designation="Head - HR Dept" style={{ marginTop: 20 }} />
+        <Signature designation="Head - HR Dept" style={{ marginTop: 15 }} />
       </View>
       
       {/* Footer */}
