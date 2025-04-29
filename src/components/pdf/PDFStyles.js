@@ -1,37 +1,19 @@
 import { StyleSheet, Font } from '@react-pdf/renderer';
 
 // Register fonts - using standard fonts for simplicity
-// Default font (Times New Roman for PDF)
+// Default font (Calibri for PDF)
 Font.register({
-  family: 'Times New Roman',
+  family: 'Calibri',
   fonts: [
     {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/times-new-roman@1.0.4/Times New Roman.ttf',
+      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/calibri@1.0.4/Calibri.ttf',
     },
     {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/times-new-roman-bold@1.0.4/Times New Roman Bold.ttf',
+      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/calibri-bold@1.0.4/Calibri Bold.ttf',
       fontWeight: 'bold',
     },
     {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/times-new-roman-italic@1.0.4/Times New Roman Italic.ttf',
-      fontStyle: 'italic',
-    },
-  ],
-});
-
-// Sans-serif font (Helvetica is built-in to PDF, similar to Arial)
-Font.register({
-  family: 'Arial',
-  fonts: [
-    {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/arial@1.0.4/Arial.ttf',
-    },
-    {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/arial-bold@1.0.4/Arial Bold.ttf',
-      fontWeight: 'bold',
-    },
-    {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/arial-italic@1.0.4/Arial Italic.ttf',
+      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/calibri-italic@1.0.4/Calibri Italic.ttf',
       fontStyle: 'italic',
     },
   ],
@@ -57,7 +39,7 @@ export const commonStyles = StyleSheet.create({
     width: '210mm',
     height: '297mm',
     position: 'relative',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   section: {
     marginBottom: 6,
@@ -74,12 +56,12 @@ export const commonStyles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 2,
     color: '#FF0000',
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   companyAddress: {
     fontSize: 10,
     lineHeight: 1.2,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   companyLogo: {
     width: 60,
@@ -97,19 +79,19 @@ export const commonStyles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 8,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   letterDate: {
     marginBottom: 6,
     fontSize: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   letterParagraph: {
     textAlign: 'justify',
     marginBottom: 6,
     fontSize: 11.5,
     lineHeight: 1.5,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   footer: {
     position: 'absolute',
@@ -122,7 +104,7 @@ export const commonStyles = StyleSheet.create({
   footerText: {
     fontSize: 10,
     marginBottom: 2,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'center',
   },
   footerSeparator: {
@@ -133,7 +115,7 @@ export const commonStyles = StyleSheet.create({
   signatureSection: {
     marginTop: 12,
     fontSize: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   signatureLine: {
     marginTop: 15,
@@ -150,7 +132,7 @@ export const commonStyles = StyleSheet.create({
 export const offerLetterStyles = StyleSheet.create({
   page: {
     ...commonStyles.page,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     fontSize: 11.5,
     lineHeight: 1.5,
   },
@@ -160,12 +142,12 @@ export const offerLetterStyles = StyleSheet.create({
   letterSalutation: {
     marginBottom: 8,
     fontSize: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   salaryTable: {
     margin: '8px 0',
     fontSize: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   compensationRow: {
     flexDirection: 'row',
@@ -175,17 +157,17 @@ export const offerLetterStyles = StyleSheet.create({
   },
   compensationLabel: {
     flex: 3,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   compensationValue: {
     flex: 2,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'right',
   },
   footerText: {
     fontSize: 10,
     lineHeight: 1.2,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
 });
 
@@ -193,7 +175,7 @@ export const offerLetterStyles = StyleSheet.create({
 export const appointmentLetterStyles = StyleSheet.create({
   page: {
     ...commonStyles.page,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     fontSize: 12,
     lineHeight: 1.6,
   },
