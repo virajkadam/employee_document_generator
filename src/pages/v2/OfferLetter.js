@@ -215,7 +215,7 @@ const OfferLetterPDF = ({ formData }) => {
             As per mentioned in the offer letter, here with attaching your salary structure which includes your Basic salary and other benefits received by you from the company.
           </Paragraph>
           
-          <Text style={{ fontWeight: 'bold', marginTop: 8, marginBottom: 4, fontSize: 11.5, fontFamily: 'Times New Roman' }}>
+          <Text style={{ fontWeight: 'bold', marginTop: 8, marginBottom: 4, fontSize: 11.5, fontFamily: 'Calibri' }}>
             Your salary structure as follows:
           </Text>
           
@@ -228,7 +228,7 @@ const OfferLetterPDF = ({ formData }) => {
             We expect you to keep up your performance in the years to come and grow with the organization and we will expect you will get happy and enthusiastic environment for work at the organization.
           </Paragraph>
           
-          <Text style={{ marginTop: 8, fontSize: 11.5, fontFamily: 'Times New Roman' }}>Wish you all the best.</Text>
+          <Text style={{ marginTop: 8, fontSize: 11.5, fontFamily: 'Calibri' }}>Wish you all the best.</Text>
           
           {/* Signature */}
           <Signature designation="Head - HR Dept" style={{ marginTop: 15 }} />
