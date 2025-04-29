@@ -1,7 +1,7 @@
 import { StyleSheet, Font } from '@react-pdf/renderer';
 
 // Register fonts - using standard fonts for simplicity
-// Serif font (Times Roman is built-in to PDF)
+// Default font (Times New Roman for PDF)
 Font.register({
   family: 'Times New Roman',
   fonts: [
@@ -57,6 +57,7 @@ export const commonStyles = StyleSheet.create({
     width: '210mm',
     height: '297mm',
     position: 'relative',
+    fontFamily: 'Times New Roman',
   },
   section: {
     marginBottom: 8,
@@ -73,10 +74,12 @@ export const commonStyles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 2,
     color: '#FF0000',
+    fontFamily: 'Times New Roman',
   },
   companyAddress: {
     fontSize: 10,
     lineHeight: 1.2,
+    fontFamily: 'Times New Roman',
   },
   companyLogo: {
     width: 60,
@@ -94,16 +97,19 @@ export const commonStyles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
+    fontFamily: 'Times New Roman',
   },
   letterDate: {
     marginBottom: 8,
     fontSize: 12,
+    fontFamily: 'Times New Roman',
   },
   letterParagraph: {
     textAlign: 'justify',
     marginBottom: 8,
-    fontSize: 12,
-    lineHeight: 1.4,
+    fontSize: 11.5,
+    lineHeight: 1.5,
+    fontFamily: 'Times New Roman',
   },
   footer: {
     position: 'absolute',
@@ -126,6 +132,7 @@ export const commonStyles = StyleSheet.create({
   signatureSection: {
     marginTop: 15,
     fontSize: 12,
+    fontFamily: 'Times New Roman',
   },
   signatureLine: {
     marginTop: 20,
@@ -138,9 +145,9 @@ export const commonStyles = StyleSheet.create({
 export const offerLetterStyles = StyleSheet.create({
   page: {
     ...commonStyles.page,
-    fontFamily: 'Arial',
-    fontSize: 12,
-    lineHeight: 1.4,
+    fontFamily: 'Times New Roman',
+    fontSize: 11.5,
+    lineHeight: 1.5,
   },
   letterContent: {
     marginBottom: 15,
@@ -148,10 +155,12 @@ export const offerLetterStyles = StyleSheet.create({
   letterSalutation: {
     marginBottom: 8,
     fontSize: 12,
+    fontFamily: 'Times New Roman',
   },
   salaryTable: {
     margin: '8px 0',
     fontSize: 12,
+    fontFamily: 'Times New Roman',
   },
   compensationRow: {
     flexDirection: 'row',
@@ -161,15 +170,17 @@ export const offerLetterStyles = StyleSheet.create({
   },
   compensationLabel: {
     flex: 3,
+    fontFamily: 'Times New Roman',
   },
   compensationValue: {
     flex: 2,
-    fontFamily: 'Courier',
+    fontFamily: 'Times New Roman',
     textAlign: 'right',
   },
   footerText: {
     fontSize: 10,
     lineHeight: 1.2,
+    fontFamily: 'Times New Roman',
   },
 });
 
