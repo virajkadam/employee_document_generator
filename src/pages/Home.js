@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FileText, Briefcase, File, User, Clipboard, ToggleLeft, ToggleRight } from "lucide-react"; // Import icons
 
 function Home() {
-  const [useV2, setUseV2] = useState(false);
+  // Load initial state from localStorage, default to false if not present
+  const [useV2, setUseV2] = useState(() => {
+    const savedVersion = localStorage.getItem("useV2");
+    return savedVersion ? JSON.parse(savedVersion) : false;
+  });
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("useV2", JSON.stringify(useV2));
+  }, [useV2]);
 
   const documents = [
     { title: "Offer Letter", path: "/offer-letter", v2Path: "/v2/offer-letter", icon: <FileText size={32} /> },

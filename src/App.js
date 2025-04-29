@@ -12,6 +12,7 @@ import ManageStudent from "./pages/ManageStudent";
 // Import our v2 PDF components
 import OfferLetterV2 from "./pages/v2/OfferLetter";
 import AppointmentLetterV2 from "./pages/v2/AppointmentLetter";
+import PaySlipGeneratorV2 from "./pages/v2/PaySlipGenerator";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         {/* v2 Routes with React-PDF Implementation */}
         <Route path="/v2/offer-letter" element={<OfferLetterV2 />} />
         <Route path="/v2/appointment-letter" element={<AppointmentLetterV2 />} />
+        <Route path="/v2/payslip" element={<PaySlipGeneratorV2 />} />
 
         <Route
           path="*"
