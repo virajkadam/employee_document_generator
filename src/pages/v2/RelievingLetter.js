@@ -126,43 +126,61 @@ const RelievingLetterPDF = ({ formData }) => {
     }
   };
 
+  // Shared component for company header to maintain consistency
+  const CompanyHeaderComponent = () => (
+    <View style={{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      borderBottomWidth: 1,
+      borderBottomColor: safeFormData.companyColor || '#FF0000',
+      paddingBottom: 5,
+      marginBottom: 15,
+    }}>
+      <View>
+        <Text style={{
+          color: safeFormData.companyColor || '#FF0000',
+          fontSize: 14,
+          fontWeight: 'bold',
+          fontFamily: 'Arial',
+          textTransform: 'uppercase',
+        }}>
+          {safeFormData.companyName || 'COMPANY NAME'}
+        </Text>
+        <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+          {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        </Text>
+        <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+          Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
+        </Text>
+        <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+          {safeFormData.companyWebsite || 'WEBSITE'}
+        </Text>
+      </View>
+      {safeFormData.companyLogo && (
+        <Image src={safeFormData.companyLogo} style={{width: 50, height: 50}} />
+      )}
+    </View>
+  );
+
+  // Shared component for footer to maintain consistency
+  const FooterComponent = () => (
+    <View style={relievingLetterStyles.footer}>
+      <Text style={relievingLetterStyles.footerText}>{safeFormData.companyName || 'COMPANY NAME'}</Text>
+      <Text style={relievingLetterStyles.footerText}>{safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}</Text>
+      <Text style={relievingLetterStyles.footerText}>+91 {safeFormData.companyPhone || 'PHONE NUMBER'}</Text>
+      <Text style={relievingLetterStyles.footerText}>{safeFormData.companyWebsite || 'WEBSITE'}</Text>
+    </View>
+  );
+
+  // Dynamic content calculation - determine if content should be on page 1 or page 2
+  // We'll include the non-compete section on page 1 to ensure content is balanced properly
+  
   return (
     <Document>
-      {/* Page 1 */}
+      {/* Page 1 - All text content */}
       <Page size="A4" style={{...commonStyles.page, ...relievingLetterStyles.page}}>
-        {/* Company Header - Use a very compact header */}
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          borderBottomWidth: 1,
-          borderBottomColor: safeFormData.companyColor || '#FF0000',
-          paddingBottom: 5,
-          marginBottom: 15,
-        }}>
-          <View>
-            <Text style={{
-              color: safeFormData.companyColor || '#FF0000',
-              fontSize: 14,
-              fontWeight: 'bold',
-              fontFamily: 'Arial',
-              textTransform: 'uppercase',
-            }}>
-              {safeFormData.companyName || 'COMPANY NAME'}
-            </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
-              {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
-            </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
-              Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
-            </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
-              {safeFormData.companyWebsite || 'WEBSITE'}
-            </Text>
-          </View>
-          {safeFormData.companyLogo && (
-            <Image src={safeFormData.companyLogo} style={{width: 50, height: 50}} />
-          )}
-        </View>
+        {/* Company Header */}
+        <CompanyHeaderComponent />
         
         {/* Letter Date */}
         <Text style={{...relievingLetterStyles.date, fontSize: 11}}>
@@ -257,118 +275,69 @@ const RelievingLetterPDF = ({ formData }) => {
           <Text style={{...relievingLetterStyles.para, fontSize: 11, marginBottom: 5}}>
             You understand, agree and acknowledge that Nitor has spent substantial money, invested time and efforts over the years in developing and solidifying its relationships with its customers and consultants. Hence on the basis of non-compete clause you hereby agree that for a period of twenty four (24) months from date of relieving for any reason, whether with or without good cause or for any or no cause, at your disposal or at Nitor's, with or without notice, you will not compete with the Nitor and its successors and assigns for all customers and clients introduced by Nitor, without prior written consent from Nitor.
           </Text>
-          
-          {/* Beginning of Non-Compete Part 2 - Move to page 1 to better balance content */}
           <Text style={{...relievingLetterStyles.para, fontSize: 11, marginTop: 2}}>
-            The term "non-compete" as used herein shall mean that you shall not, without the prior written consent of Nitor, (i) serve as a contractor, partner, employee, consultant, officer, director, manager, agent, associate, invest, servant with greater than 5% or otherwise (by itself directly or indirectly, own, manage, operate, join, control, participate in, invest in, work or consult 
+            The term "non-compete" as used herein shall mean that you shall not, without the prior written consent of Nitor, (i) serve as a contractor, partner, employee, consultant, officer, director, manager, agent, associate, invest, servant with greater than 5% or otherwise (by itself directly or indirectly, own, manage, operate, join, control, participate in, invest in, work or consult for or otherwise affiliate with) all customers and clients introduced by Nitor or business in competition with or otherwise similar to Nitor's business.
+          </Text>
+        </View>
+        
+        {/* Further Declaration section - on page 1 */}
+        <View style={{...relievingLetterStyles.section, marginTop: 15, marginBottom: 10}}>
+          <Text style={{
+            fontFamily: 'Arial',
+            fontSize: 11,
+            lineHeight: 1.4,
+            textAlign: 'justify',
+          }}>
+            Furthermore, you declare that you have no further claims of whatsoever nature resulting from my association and or termination thereof, against either the company, its group companies, its affiliates or officers or its representatives.
           </Text>
         </View>
         
         {/* Footer */}
-        <View style={relievingLetterStyles.footer}>
-          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyName || 'COMPANY NAME'}</Text>
-          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}</Text>
-          <Text style={relievingLetterStyles.footerText}>+91 {safeFormData.companyPhone || 'PHONE NUMBER'}</Text>
-          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyWebsite || 'WEBSITE'}</Text>
-        </View>
+        <FooterComponent />
       </Page>
       
-      {/* Page 2 */}
+      {/* Page 2 - Signature page */}
       <Page size="A4" style={{...commonStyles.page, ...relievingLetterStyles.page}}>
-        {/* Company Header - Compact version */}
+        {/* Company Header */}
+        <CompanyHeaderComponent />
+        
+        {/* Date and Place Section with fixed position */}
         <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          borderBottomWidth: 1,
-          borderBottomColor: safeFormData.companyColor || '#FF0000',
-          paddingBottom: 5,
-          marginBottom: 12,
-        }}>
-          <View>
-            <Text style={{
-              color: safeFormData.companyColor || '#FF0000',
-              fontSize: 14,
-              fontWeight: 'bold',
-              fontFamily: 'Arial',
-              textTransform: 'uppercase',
-            }}>
-              {safeFormData.companyName || 'COMPANY NAME'}
-            </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
-              {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
-            </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
-              Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
-            </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
-              {safeFormData.companyWebsite || 'WEBSITE'}
-            </Text>
-          </View>
-          {safeFormData.companyLogo && (
-            <Image src={safeFormData.companyLogo} style={{width: 50, height: 50}} />
-          )}
-        </View>
-        
-        {/* Non-Compete Section (Part 2 continued) */}
-        <Text style={{
-          marginBottom: 8,
-          textAlign: 'justify',
-          fontFamily: 'Arial',
-          lineHeight: 1.4,
-          fontSize: 11,
-        }}>
-          for or otherwise affiliate with) all customers and clients introduced by Nitor or business in competition with or otherwise similar to Nitor's business.
-        </Text>
-        
-        {/* Further Declaration */}
-        <Text style={{
-          marginBottom: 8,
-          textAlign: 'justify',
-          fontFamily: 'Arial',
-          lineHeight: 1.4,
-          fontSize: 11,
-        }}>
-          Furthermore, you declare that you have no further claims of whatsoever nature resulting from my association and or termination thereof, against either the company, its group companies, its affiliates or officers or its representatives.
-        </Text>
-        
-        {/* Date and Place Section */}
-        <View style={{
-          marginTop: 10,
-          marginBottom: 10,
+          position: 'absolute',
+          top: '20%',
+          left: 50,
+          right: 50,
           fontFamily: 'Arial',
           fontSize: 11,
         }}>
           <Text>Date: _________________</Text>
-          <Text style={{marginTop: 4}}>Place: {safeFormData.employeeSignPlace || 'Pune'}</Text>
+          <Text style={{marginTop: 8}}>Place: {safeFormData.employeeSignPlace || 'Pune'}</Text>
         </View>
         
-        {/* Signature Section - More compact */}
+        {/* Signature Section with fixed position */}
         <View style={{
+          position: 'absolute',
+          top: '40%',
+          left: 50,
+          right: 50,
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 15,
-          marginBottom: 15,
         }}>
           <View style={{width: '45%'}}>
             <Text style={{fontFamily: 'Arial', fontSize: 11}}>Sign</Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 20}}>{safeFormData.employeeName || 'Employee Name'}</Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 70}}>{safeFormData.employeeName || 'Employee Name'}</Text>
           </View>
           
           <View style={{width: '45%', textAlign: 'right'}}>
             <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>{safeFormData.companyName || 'Company Name'}</Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 20, textAlign: 'right'}}>{safeFormData.companyHR || 'HR Name'}</Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 70, textAlign: 'right'}}>{safeFormData.companyHR || 'HR Name'}</Text>
             <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>HR Department</Text>
             <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>Head - HR Dept</Text>
           </View>
         </View>
         
         {/* Footer */}
-        <View style={relievingLetterStyles.footer}>
-          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyName || 'COMPANY NAME'}</Text>
-          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}</Text>
-          <Text style={relievingLetterStyles.footerText}>+91 {safeFormData.companyPhone || 'PHONE NUMBER'}</Text>
-          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyWebsite || 'WEBSITE'}</Text>
-        </View>
+        <FooterComponent />
       </Page>
     </Document>
   );
