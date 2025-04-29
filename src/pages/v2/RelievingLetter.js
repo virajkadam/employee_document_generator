@@ -340,7 +340,6 @@ const RelievingLetterPDF = ({ formData }) => {
             <View style={{width: '45%', textAlign: 'right'}}>
               <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>{safeFormData.companyName || 'Company Name'}</Text>
               <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 70, textAlign: 'right'}}>{safeFormData.companyHR || 'HR Name'}</Text>
-              <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>HR Department</Text>
               <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>Head - HR Dept</Text>
             </View>
           </View>
