@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { PDFViewer, PDFDownloadLink, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
 import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import { CompanyHeader, FormattedDate, Paragraph, Signature, Footer } from '../../components/pdf/PDFComponents';
 import { commonStyles } from '../../components/pdf/PDFStyles';
 import { formatIndianCurrency } from '../../components/pdf/SalaryUtilsV2';
@@ -212,7 +212,11 @@ const PaySlipPDF = ({ formData }) => {
   // Get month and year for payslip
   const getPayslipMonth = () => {
     const payDate = safeFormData.payDate ? new Date(safeFormData.payDate) : new Date();
-    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(payDate);
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    }).format(payDate).toUpperCase();
   };
 
   return (
@@ -229,34 +233,46 @@ const PaySlipPDF = ({ formData }) => {
         />
         
         {/* Payslip Title */}
-        <Text style={payslipStyles.title}>SALARY SLIP - {getPayslipMonth()}</Text>
+        <Text style={payslipStyles.title}>PAY SLIP FOR THE MONTH OF {getPayslipMonth()}</Text>
         
         {/* Employee Information */}
         <View style={payslipStyles.employeeInfoContainer}>
-          <View style={payslipStyles.employeeInfoSection}>
+          <View style={{...payslipStyles.employeeInfoSection, flexDirection: 'column'}}>
             <View style={payslipStyles.infoRow}>
-              <Text style={payslipStyles.infoLabel}>Employee Name:</Text>
-              <Text style={payslipStyles.infoValue}>{safeFormData.employeeName || 'Employee Name'}</Text>
-            </View>
-            <View style={payslipStyles.infoRow}>
-              <Text style={payslipStyles.infoLabel}>Employee ID:</Text>
+              <Text style={payslipStyles.infoLabel}>EMP Code</Text>
               <Text style={payslipStyles.infoValue}>{safeFormData.employeeId || 'EMP001'}</Text>
             </View>
             <View style={payslipStyles.infoRow}>
-              <Text style={payslipStyles.infoLabel}>Designation:</Text>
+              <Text style={payslipStyles.infoLabel}>Name</Text>
+              <Text style={payslipStyles.infoValue}>{safeFormData.employeeName || 'Employee Name'}</Text>
+            </View>
+            <View style={payslipStyles.infoRow}>
+              <Text style={payslipStyles.infoLabel}>Designation</Text>
               <Text style={payslipStyles.infoValue}>{safeFormData.designation || 'Designation'}</Text>
             </View>
             <View style={payslipStyles.infoRow}>
-              <Text style={payslipStyles.infoLabel}>Department:</Text>
+              <Text style={payslipStyles.infoLabel}>PAN</Text>
+              <Text style={payslipStyles.infoValue}>{safeFormData.pan || 'XXXXXXXXXX'}</Text>
+            </View>
+            <View style={payslipStyles.infoRow}>
+              <Text style={payslipStyles.infoLabel}>Location</Text>
+              <Text style={payslipStyles.infoValue}>{safeFormData.location || 'Location'}</Text>
+            </View>
+            <View style={payslipStyles.infoRow}>
+              <Text style={payslipStyles.infoLabel}>DOJ</Text>
+              <Text style={payslipStyles.infoValue}>{formatDate(safeFormData.payDate) || 'DD/MM/YYYY'}</Text>
+            </View>
+            <View style={payslipStyles.infoRow}>
+              <Text style={payslipStyles.infoLabel}>Department</Text>
               <Text style={payslipStyles.infoValue}>{safeFormData.department || 'Department'}</Text>
+            </View>
+            <View style={payslipStyles.infoRow}>
+              <Text style={payslipStyles.infoLabel}>Payable Days</Text>
+              <Text style={payslipStyles.infoValue}>{safeFormData.payableDays || '30'}</Text>
             </View>
           </View>
           
           <View style={payslipStyles.employeeInfoSection}>
-            <View style={payslipStyles.infoRow}>
-              <Text style={payslipStyles.infoLabel}>Pay Date:</Text>
-              <Text style={payslipStyles.infoValue}>{formatDate(safeFormData.payDate) || 'DD/MM/YYYY'}</Text>
-            </View>
             <View style={payslipStyles.infoRow}>
               <Text style={payslipStyles.infoLabel}>Bank Name:</Text>
               <Text style={payslipStyles.infoValue}>{safeFormData.bankName || 'Bank Name'}</Text>
@@ -264,10 +280,6 @@ const PaySlipPDF = ({ formData }) => {
             <View style={payslipStyles.infoRow}>
               <Text style={payslipStyles.infoLabel}>Bank A/C No:</Text>
               <Text style={payslipStyles.infoValue}>{safeFormData.accountNumber || 'XXXXXXXXXXXX'}</Text>
-            </View>
-            <View style={payslipStyles.infoRow}>
-              <Text style={payslipStyles.infoLabel}>PAN:</Text>
-              <Text style={payslipStyles.infoValue}>{safeFormData.pan || 'XXXXXXXXXX'}</Text>
             </View>
           </View>
         </View>
@@ -278,41 +290,46 @@ const PaySlipPDF = ({ formData }) => {
           <View style={payslipStyles.earningsSection}>
             <View style={payslipStyles.columnHeader}>
               <Text style={payslipStyles.columnHeaderText}>Earnings</Text>
-              <Text style={payslipStyles.amountColumnHeader}>Amount (Rs.)</Text>
+              <Text style={payslipStyles.amountColumnHeader}>Amount (₹)</Text>
             </View>
             
             {/* Earnings Items */}
             <View style={payslipStyles.item}>
-              <Text style={payslipStyles.itemName}>Basic Salary</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.basicSalary || 0)}</Text>
+              <Text style={payslipStyles.itemName}>Basic</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.basicSalary || 0)}</Text>
             </View>
             <View style={payslipStyles.item}>
-              <Text style={payslipStyles.itemName}>HRA</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.hra || 0)}</Text>
+              <Text style={payslipStyles.itemName}>DA</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.da || 0)}</Text>
             </View>
             <View style={payslipStyles.item}>
               <Text style={payslipStyles.itemName}>Conveyance Allowance</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.conveyanceAllowance || 0)}</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.conveyanceAllowance || 0)}</Text>
+            </View>
+            <View style={payslipStyles.item}>
+              <Text style={payslipStyles.itemName}>Other Allowance</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.otherAllowance || 0)}</Text>
             </View>
             <View style={payslipStyles.item}>
               <Text style={payslipStyles.itemName}>Medical Allowance</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.medicalAllowance || 0)}</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.medicalAllowance || 0)}</Text>
             </View>
             <View style={payslipStyles.item}>
-              <Text style={payslipStyles.itemName}>Special Allowance</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.specialAllowance || 0)}</Text>
+              <Text style={payslipStyles.itemName}>CCA</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.cca || 0)}</Text>
             </View>
             
             {/* Total Earnings */}
             <View style={payslipStyles.totalRow}>
-              <Text style={payslipStyles.totalLabel}>Total Earnings</Text>
+              <Text style={payslipStyles.totalLabel}>Gross Salary</Text>
               <Text style={payslipStyles.totalAmount}>
-                {formatIndianCurrency(
+                Rs. {formatIndianCurrency(
                   (safeFormData.basicSalary || 0) +
-                  (safeFormData.hra || 0) +
+                  (safeFormData.da || 0) +
                   (safeFormData.conveyanceAllowance || 0) +
+                  (safeFormData.otherAllowance || 0) +
                   (safeFormData.medicalAllowance || 0) +
-                  (safeFormData.specialAllowance || 0)
+                  (safeFormData.cca || 0)
                 )}
               </Text>
             </View>
@@ -322,25 +339,25 @@ const PaySlipPDF = ({ formData }) => {
           <View style={payslipStyles.deductionsSection}>
             <View style={payslipStyles.columnHeader}>
               <Text style={payslipStyles.columnHeaderText}>Deductions</Text>
-              <Text style={payslipStyles.amountColumnHeader}>Amount (Rs.)</Text>
+              <Text style={payslipStyles.amountColumnHeader}>Amount (₹)</Text>
             </View>
             
             {/* Deduction Items */}
             <View style={payslipStyles.item}>
-              <Text style={payslipStyles.itemName}>Provident Fund</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.providentFund || 0)}</Text>
-            </View>
-            <View style={payslipStyles.item}>
-              <Text style={payslipStyles.itemName}>Income Tax</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.incomeTax || 0)}</Text>
-            </View>
-            <View style={payslipStyles.item}>
               <Text style={payslipStyles.itemName}>Professional Tax</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.professionalTax || 0)}</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.professionalTax || 0)}</Text>
             </View>
             <View style={payslipStyles.item}>
               <Text style={payslipStyles.itemName}>Other Deductions</Text>
-              <Text style={payslipStyles.itemAmount}>{formatIndianCurrency(safeFormData.otherDeductions || 0)}</Text>
+              <Text style={payslipStyles.itemAmount}>Rs. {formatIndianCurrency(safeFormData.otherDeductions || 0)}</Text>
+            </View>
+            <View style={payslipStyles.item}>
+              <Text style={payslipStyles.itemName}></Text>
+              <Text style={payslipStyles.itemAmount}></Text>
+            </View>
+            <View style={payslipStyles.item}>
+              <Text style={payslipStyles.itemName}></Text>
+              <Text style={payslipStyles.itemAmount}></Text>
             </View>
             <View style={payslipStyles.item}>
               <Text style={payslipStyles.itemName}></Text>
@@ -351,9 +368,7 @@ const PaySlipPDF = ({ formData }) => {
             <View style={payslipStyles.totalRow}>
               <Text style={payslipStyles.totalLabel}>Total Deductions</Text>
               <Text style={payslipStyles.totalAmount}>
-                {formatIndianCurrency(
-                  (safeFormData.providentFund || 0) +
-                  (safeFormData.incomeTax || 0) +
+                Rs. {formatIndianCurrency(
                   (safeFormData.professionalTax || 0) +
                   (safeFormData.otherDeductions || 0)
                 )}
@@ -369,12 +384,11 @@ const PaySlipPDF = ({ formData }) => {
             <Text style={payslipStyles.netPayAmount}>
               Rs. {formatIndianCurrency(
                 (safeFormData.basicSalary || 0) +
-                (safeFormData.hra || 0) +
+                (safeFormData.da || 0) +
                 (safeFormData.conveyanceAllowance || 0) +
+                (safeFormData.otherAllowance || 0) +
                 (safeFormData.medicalAllowance || 0) +
-                (safeFormData.specialAllowance || 0) -
-                (safeFormData.providentFund || 0) -
-                (safeFormData.incomeTax || 0) -
+                (safeFormData.cca || 0) -
                 (safeFormData.professionalTax || 0) -
                 (safeFormData.otherDeductions || 0)
               )}
@@ -397,7 +411,7 @@ const PaySlipPDF = ({ formData }) => {
         
         {/* This is a computer generated payslip */}
         <Text style={{ fontSize: 9, marginTop: 30, textAlign: 'center', fontFamily: 'Times New Roman' }}>
-          This is a computer generated payslip and does not require signature
+          This is a computer-generated Pay slip. No Signature is required.
         </Text>
         
         {/* Footer */}
@@ -418,22 +432,24 @@ function PaySlipGeneratorV2() {
   const [companies, setCompanies] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showPDF, setShowPDF] = useState(false);
   const [formData, setFormData] = useState({
     employeeName: "",
     employeeId: "",
     designation: "",
     department: "",
     payDate: new Date().toISOString().split('T')[0],
-    bankName: "",
-    accountNumber: "",
+    location: "",
+    payableDays: "30",
+    leaves: "0",
+    month: new Date().getMonth().toString(),
     pan: "",
     basicSalary: 0,
-    hra: 0,
+    da: 0,
     conveyanceAllowance: 0,
+    otherAllowance: 0,
     medicalAllowance: 0,
-    specialAllowance: 0,
-    providentFund: 0,
-    incomeTax: 0,
+    cca: 0,
     professionalTax: 0,
     otherDeductions: 0,
     companyName: "",
@@ -478,21 +494,67 @@ function PaySlipGeneratorV2() {
     setCandidates(candidateList);
   };
 
-  // Calculate total earnings
-  const totalEarnings = parseFloat(formData.basicSalary || 0) +
-    parseFloat(formData.hra || 0) +
-    parseFloat(formData.conveyanceAllowance || 0) +
-    parseFloat(formData.medicalAllowance || 0) +
-    parseFloat(formData.specialAllowance || 0);
+  // Add this function to calculate days in month
+  const getDaysInMonth = (month) => {
+    const year = new Date().getFullYear();
+    return new Date(year, month + 1, 0).getDate();
+  };
 
-  // Calculate total deductions
-  const totalDeductions = parseFloat(formData.providentFund || 0) +
-    parseFloat(formData.incomeTax || 0) +
-    parseFloat(formData.professionalTax || 0) +
-    parseFloat(formData.otherDeductions || 0);
-
-  // Calculate net pay
-  const netPay = totalEarnings - totalDeductions;
+  // Calculate salary components
+  const calculateSalary = (lpa, leaves = 0, selectedMonth) => {
+    // Convert inputs to numbers and provide defaults
+    const lpaNum = Number(lpa) || 0;
+    const leavesNum = Number(leaves) || 0;
+    const monthNum = Number(selectedMonth) || new Date().getMonth();
+    
+    // Get total days in selected month
+    const daysInMonth = getDaysInMonth(monthNum);
+    
+    // Calculate base annual salary
+    const annualSalary = lpaNum * 100000;
+    
+    // Calculate per day salary
+    const perDaySalary = (annualSalary / 12) / daysInMonth;
+    
+    // Calculate effective monthly salary after leave deductions
+    const effectiveSalary = Math.max(0, (annualSalary / 12) - (perDaySalary * leavesNum));
+    
+    // Calculate components with null checks and Math.max to prevent negative values
+    const monthlyBasic = Math.max(0, Math.round(effectiveSalary * 0.5));
+    const da = Math.max(0, Math.round(monthlyBasic * 0.2));
+    const conveyanceAllowance = Math.max(0, Math.round(1600 * ((daysInMonth - leavesNum) / daysInMonth)));
+    const medicalAllowance = Math.max(0, Math.round(1250 * ((daysInMonth - leavesNum) / daysInMonth)));
+    const cca = Math.max(0, Math.round(monthlyBasic * 0.1));
+    
+    // Calculate allowances total
+    const totalFixedAllowances = monthlyBasic + da + conveyanceAllowance + medicalAllowance + cca;
+    const monthlyCTC = Math.max(0, Math.round(effectiveSalary));
+    const otherAllowance = Math.max(0, Math.round(monthlyCTC - totalFixedAllowances));
+    
+    // Calculate deductions
+    const professionalTax = Math.max(0, Math.round(200 * ((daysInMonth - leavesNum) / daysInMonth)));
+    
+    // Calculate final amounts
+    const grossSalary = monthlyBasic + da + conveyanceAllowance + 
+                       medicalAllowance + cca + otherAllowance;
+    const totalDeductions = professionalTax;
+    const netPay = Math.max(0, grossSalary - totalDeductions);
+  
+    return {
+      basicSalary: monthlyBasic,
+      da: da,
+      conveyanceAllowance: conveyanceAllowance,
+      medicalAllowance: medicalAllowance,
+      cca: cca,
+      otherAllowance: otherAllowance,
+      gross: grossSalary,
+      professionalTax: professionalTax,
+      totalDeductions: totalDeductions,
+      netPay: netPay,
+      daysInMonth: daysInMonth,
+      payableDays: (daysInMonth - leavesNum).toString()
+    };
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -515,26 +577,46 @@ function PaySlipGeneratorV2() {
     } else if (name === "employeeName") {
       const selectedCandidate = candidates.find(candidate => candidate.candidateName === value);
       if (selectedCandidate) {
-        // You may want to calculate salary components based on the LPA
-        const basicSalary = selectedCandidate.packageLPA * 100000 * 0.5 / 12; // 50% of CTC as basic
-        const hra = basicSalary * 0.4; // 40% of basic as HRA
-        const conveyanceAllowance = 1600; // Fixed
-        const medicalAllowance = 1250; // Fixed
-        const specialAllowance = (selectedCandidate.packageLPA * 100000 / 12) - basicSalary - hra - conveyanceAllowance - medicalAllowance;
-        const providentFund = Math.min(basicSalary * 0.12, 1800); // 12% of basic capped at 1800
+        // Calculate salary based on LPA, leaves and selected month
+        const salaryComponents = calculateSalary(
+          selectedCandidate.packageLPA,
+          formData.leaves,
+          formData.month
+        );
         
         setFormData(prev => ({
           ...prev,
           employeeName: selectedCandidate.candidateName,
-          employeeId: `EMP${Math.floor(1000 + Math.random() * 9000)}`, // Generate random ID
-          designation: selectedCandidate.designation,
-          department: selectedCandidate.department,
-          basicSalary: Math.round(basicSalary),
-          hra: Math.round(hra),
-          conveyanceAllowance,
-          medicalAllowance,
-          specialAllowance: Math.round(specialAllowance),
-          providentFund: Math.round(providentFund)
+          employeeId: selectedCandidate.employeeCode || '',
+          designation: selectedCandidate.designation || '',
+          department: selectedCandidate.department || '',
+          location: selectedCandidate.location || '',
+          pan: selectedCandidate.panNo || '',
+          ...salaryComponents
+        }));
+      }
+    } else if (name === "leaves" || name === "month") {
+      // Recalculate salary when leaves or month changes
+      const selectedCandidate = candidates.find(candidate => candidate.candidateName === formData.employeeName);
+      if (selectedCandidate) {
+        const newLeaves = name === "leaves" ? value : formData.leaves;
+        const newMonth = name === "month" ? value : formData.month;
+        
+        const salaryComponents = calculateSalary(
+          selectedCandidate.packageLPA,
+          newLeaves,
+          newMonth
+        );
+        
+        setFormData(prev => ({
+          ...prev,
+          [name]: value,
+          ...salaryComponents
+        }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
         }));
       }
     } else {
@@ -544,6 +626,15 @@ function PaySlipGeneratorV2() {
       }));
     }
   };
+  
+  const handleGeneratePayslip = () => {
+    setShowPDF(true);
+  };
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -559,9 +650,9 @@ function PaySlipGeneratorV2() {
 
         {/* Form Section */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800">Enter Payslip Details</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Enter Payslip Detail</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
             {/* Company Selection */}
             <div className="form-group">
               <label className="block mb-2 text-sm font-medium text-gray-700">Company</label>
@@ -597,215 +688,85 @@ function PaySlipGeneratorV2() {
               </select>
             </div>
             
-            {/* Pay Date */}
+            {/* Month */}
             <div className="form-group">
-              <label className="block mb-2 text-sm font-medium text-gray-700">Pay Date</label>
-              <input
-                type="date"
-                name="payDate"
-                value={formData.payDate}
+              <label className="block mb-2 text-sm font-medium text-gray-700">Month</label>
+              <select
+                name="month"
+                value={formData.month}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                {months.map((month, index) => (
+                  <option key={index} value={index}>
+                    {month}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Leaves */}
+            <div className="form-group">
+              <label className="block mb-2 text-sm font-medium text-gray-700">Leaves (Max: 30 days)</label>
+              <input
+                type="number"
+                name="leaves"
+                value={formData.leaves}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                min="0"
+                max="30"
               />
             </div>
             
-            {/* Bank Details */}
+            {/* Payable Days */}
             <div className="form-group">
-              <label className="block mb-2 text-sm font-medium text-gray-700">Bank Name</label>
-              <input
-                type="text"
-                name="bankName"
-                value={formData.bankName}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter bank name"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label className="block mb-2 text-sm font-medium text-gray-700">Account Number</label>
-              <input
-                type="text"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter account number"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label className="block mb-2 text-sm font-medium text-gray-700">PAN</label>
+              <label className="block mb-2 text-sm font-medium text-gray-700">Payable Days:</label>
               <input
                 type="text"
-                name="pan"
-                value={formData.pan}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter PAN"
+                name="payableDays"
+                value={formData.payableDays}
+                readOnly
+                className="w-full p-3 border border-gray-300 rounded-md bg-gray-100"
+                placeholder="Enter payable days"
               />
             </div>
-          </div>
-          
-          {/* Earnings and Deductions */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Earnings */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Earnings</h3>
-              
-              <div className="space-y-4">
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Basic Salary</label>
-                  <input
-                    type="number"
-                    name="basicSalary"
-                    value={formData.basicSalary}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">HRA</label>
-                  <input
-                    type="number"
-                    name="hra"
-                    value={formData.hra}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Conveyance Allowance</label>
-                  <input
-                    type="number"
-                    name="conveyanceAllowance"
-                    value={formData.conveyanceAllowance}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Medical Allowance</label>
-                  <input
-                    type="number"
-                    name="medicalAllowance"
-                    value={formData.medicalAllowance}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Special Allowance</label>
-                  <input
-                    type="number"
-                    name="specialAllowance"
-                    value={formData.specialAllowance}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="p-3 bg-gray-100 rounded-md">
-                  <div className="flex justify-between font-semibold">
-                    <span>Total Earnings:</span>
-                    <span>₹ {totalEarnings.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
             
-            {/* Deductions */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Deductions</h3>
-              
-              <div className="space-y-4">
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Provident Fund</label>
-                  <input
-                    type="number"
-                    name="providentFund"
-                    value={formData.providentFund}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Income Tax</label>
-                  <input
-                    type="number"
-                    name="incomeTax"
-                    value={formData.incomeTax}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Professional Tax</label>
-                  <input
-                    type="number"
-                    name="professionalTax"
-                    value={formData.professionalTax}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Other Deductions</label>
-                  <input
-                    type="number"
-                    name="otherDeductions"
-                    value={formData.otherDeductions}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                <div className="p-3 bg-gray-100 rounded-md">
-                  <div className="flex justify-between font-semibold">
-                    <span>Total Deductions:</span>
-                    <span>₹ {totalDeductions.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Net Pay */}
-          <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-bold text-blue-800">Net Pay:</h3>
-              <span className="text-xl font-bold text-blue-800">₹ {netPay.toFixed(2)}</span>
+            {/* Generate Button */}
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={handleGeneratePayslip}
+                className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 shadow-lg hover:shadow-md transition-all duration-200"
+              >
+                <Download size={18} className="mr-2" />
+                <span>Generate PaySlip</span>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* PDF Preview Section */}
-        <div className="bg-white rounded-lg shadow-lg p-4 mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-gray-800">PDF Preview</h3>
+        {/* PDF Preview Section - only show when Generate button is clicked */}
+        {showPDF && (
+          <div className="bg-white rounded-lg shadow-lg p-4 mb-8">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-gray-800">PDF Preview</h3>
+              
+              <PDFDownloadLink 
+                document={memoizedPdfDocument}
+                fileName={`PaySlip_${formData.employeeName || 'Employee'}_${formData.payDate}.pdf`}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              >
+                {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
+              </PDFDownloadLink>
+            </div>
             
-            <PDFDownloadLink 
-              document={memoizedPdfDocument}
-              fileName="payslip.pdf"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-            >
-              {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
-            </PDFDownloadLink>
+            <div className="border rounded-lg" style={{ height: '80vh' }}>
+              <PDFViewer width="100%" height="100%" className="rounded-lg">
+                {memoizedPdfDocument}
+              </PDFViewer>
+            </div>
           </div>
-          
-          <div className="border rounded-lg" style={{ height: '80vh' }}>
-            <PDFViewer width="100%" height="100%" className="rounded-lg">
-              {memoizedPdfDocument}
-            </PDFViewer>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
