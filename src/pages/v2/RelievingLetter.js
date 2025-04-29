@@ -1,0 +1,593 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { PDFViewer, PDFDownloadLink, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
+import { db } from './firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { ArrowLeft, Download } from "lucide-react";
+import { CompanyHeader, FormattedDate, Paragraph, Signature, Footer } from '../../components/pdf/PDFComponents';
+import { commonStyles } from '../../components/pdf/PDFStyles';
+
+// Define styles for the RelievingLetter
+const relievingLetterStyles = StyleSheet.create({
+  page: {
+    padding: '30px 50px',
+    fontSize: 11,
+    fontFamily: 'Arial',
+    lineHeight: 1.4,
+    color: '#000000',
+  },
+  title: {
+    fontSize: 13,
+    textAlign: 'center',
+    marginBottom: 15,
+    fontWeight: 'bold',
+    fontFamily: 'Arial',
+  },
+  date: {
+    marginBottom: 15,
+    fontFamily: 'Arial',
+  },
+  employeeName: {
+    marginBottom: 8,
+    fontFamily: 'Arial',
+  },
+  salutation: {
+    marginBottom: 8,
+    fontFamily: 'Arial',
+  },
+  para: {
+    marginBottom: 8,
+    textAlign: 'justify',
+    fontFamily: 'Arial',
+    lineHeight: 1.4,
+  },
+  section: {
+    marginTop: 8,
+    marginBottom: 8,
+    fontFamily: 'Arial',
+  },
+  sectionTitle: {
+    fontWeight: 'bold',
+    marginBottom: 4,
+    fontFamily: 'Arial',
+  },
+  signatureSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 20,
+    fontFamily: 'Arial',
+  },
+  signatureBlock: {
+    width: '40%',
+    fontFamily: 'Arial',
+  },
+  signatureName: {
+    marginTop: 20,
+    fontFamily: 'Arial',
+  },
+  signatureTitle: {
+    fontFamily: 'Arial',
+    fontSize: 11,
+    marginTop: 3,
+  },
+  datePlaceSection: {
+    marginTop: 15,
+    marginBottom: 15,
+    fontFamily: 'Arial',
+  },
+  companyHeader: {
+    color: 'red',
+    fontSize: 14,
+    fontWeight: 'bold',
+    fontFamily: 'Arial',
+    marginBottom: 4,
+  },
+  companyDetails: {
+    fontSize: 11,
+    fontFamily: 'Arial',
+    marginBottom: 10,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 50,
+    right: 50,
+    borderTopWidth: 1,
+    borderTopColor: '#FF0000',
+    paddingTop: 5,
+    textAlign: 'center',
+  },
+  footerText: {
+    fontSize: 10,
+    marginBottom: 1,
+    fontFamily: 'Arial',
+    textAlign: 'center',
+  }
+});
+
+// Relieving Letter PDF Document Component
+const RelievingLetterPDF = ({ formData }) => {
+  // Helper to safely access formData
+  const safeFormData = formData || {};
+  
+  // Format date function
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    try {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }).format(date);
+    } catch (e) {
+      return "";
+    }
+  };
+
+  return (
+    <Document>
+      {/* Page 1 */}
+      <Page size="A4" style={{...commonStyles.page, ...relievingLetterStyles.page}}>
+        {/* Company Header - Use a very compact header */}
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          borderBottomWidth: 1,
+          borderBottomColor: safeFormData.companyColor || '#FF0000',
+          paddingBottom: 5,
+          marginBottom: 15,
+        }}>
+          <View>
+            <Text style={{
+              color: safeFormData.companyColor || '#FF0000',
+              fontSize: 14,
+              fontWeight: 'bold',
+              fontFamily: 'Arial',
+              textTransform: 'uppercase',
+            }}>
+              {safeFormData.companyName || 'COMPANY NAME'}
+            </Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+              {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+            </Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+              Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
+            </Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+              {safeFormData.companyWebsite || 'WEBSITE'}
+            </Text>
+          </View>
+          {safeFormData.companyLogo && (
+            <Image src={safeFormData.companyLogo} style={{width: 50, height: 50}} />
+          )}
+        </View>
+        
+        {/* Letter Date */}
+        <Text style={{...relievingLetterStyles.date, fontSize: 11}}>
+          {formatDate(safeFormData.lastWorkingDate)}
+        </Text>
+        
+        {/* Letter Title */}
+        <Text style={{
+          fontSize: 13,
+          textAlign: 'center',
+          marginBottom: 12,
+          marginTop: 4,
+          fontWeight: 'bold',
+          fontFamily: 'Arial',
+        }}>
+          Relieving Letter
+        </Text>
+        
+        {/* Employee Name */}
+        <Text style={{
+          fontFamily: 'Arial',
+          fontSize: 11,
+          marginBottom: 8,
+        }}>
+          {safeFormData.employeeName || 'Employee Name'}
+        </Text>
+        
+        {/* Salutation */}
+        <Text style={{
+          fontFamily: 'Arial', 
+          fontSize: 11,
+          marginBottom: 8,
+        }}>
+          Dear {safeFormData.employeeName || 'Employee'},
+        </Text>
+        
+        {/* Opening Paragraph */}
+        <Text style={{...relievingLetterStyles.para, fontSize: 11}}>
+          We Are Relieving You From Your Duties As {safeFormData.designation || 'Designation'} End Of The Day {formatDate(safeFormData.lastWorkingDate)}.
+        </Text>
+        
+        {/* General Note */}
+        <Text style={{...relievingLetterStyles.para, fontSize: 11}}>
+          Please note that on release from the employment with company, you shall continue to be bound by the obligations related to confidentiality, non-solicitation, intellectual property rights and other such commitments. A few of these are described as below:
+        </Text>
+        
+        {/* Company Property Section */}
+        <View style={{...relievingLetterStyles.section, marginTop: 5, marginBottom: 5}}>
+          <Text style={{
+            fontWeight: 'bold',
+            marginBottom: 3,
+            fontFamily: 'Arial',
+            fontSize: 11,
+          }}>
+            Company Property:
+          </Text>
+          <Text style={{...relievingLetterStyles.para, fontSize: 11, marginBottom: 5}}>
+            You certify that you do not possess any documents, maps, blueprints, designs, books, manuals, software code or any other material which belongs to the company or which was developed by you during the course of your association. You understand that either these documents or codes could be in a paper format or computer storage format and you certify that you do not possess them in either format and the same has been handed over to the reporting Manager in the company.
+          </Text>
+        </View>
+        
+        {/* Non-Solicitation Section */}
+        <View style={{...relievingLetterStyles.section, marginTop: 5, marginBottom: 5}}>
+          <Text style={{
+            fontWeight: 'bold',
+            marginBottom: 3,
+            fontFamily: 'Arial',
+            fontSize: 11,
+            marginTop: 5,
+          }}>
+            Non-Solicitation:
+          </Text>
+          <Text style={{...relievingLetterStyles.para, fontSize: 11, marginBottom: 5}}>
+            You confirm that for a period of 12 months after release from the association with the company, you will not solicit, assist, refer, cause or force any employee of Nitor, which could result either directly or indirectly in the employee leaving the company.
+          </Text>
+          <Text style={{...relievingLetterStyles.para, fontSize: 11, marginBottom: 5}}>
+            During the course of your association with the company, you have been privy to information related to the company, its services, processes and systems, business transactions, business plans, software products & IT infrastructure, clients and their business information and other administrative and organizational matters. You agree to treat this information confidential after termination of your association with the company and that you will not share this information by word of mouth or otherwise, with any employee of the company whether past or present, or any third person whether known or unknown to the company and understand that you shall be liable for legal action in case of breach of faith or agreement.
+          </Text>
+        </View>
+        
+        {/* Non-Compete Section (Part 1) */}
+        <View style={{...relievingLetterStyles.section, marginTop: 5, marginBottom: 5}}>
+          <Text style={{
+            fontWeight: 'bold',
+            marginBottom: 3,
+            fontFamily: 'Arial',
+            fontSize: 11,
+            marginTop: 5,
+          }}>
+            Non-Compete:
+          </Text>
+          <Text style={{...relievingLetterStyles.para, fontSize: 11, marginBottom: 5}}>
+            You understand, agree and acknowledge that Nitor has spent substantial money, invested time and efforts over the years in developing and solidifying its relationships with its customers and consultants. Hence on the basis of non-compete clause you hereby agree that for a period of twenty four (24) months from date of relieving for any reason, whether with or without good cause or for any or no cause, at your disposal or at Nitor's, with or without notice, you will not compete with the Nitor and its successors and assigns for all customers and clients introduced by Nitor, without prior written consent from Nitor.
+          </Text>
+          
+          {/* Beginning of Non-Compete Part 2 - Move to page 1 to better balance content */}
+          <Text style={{...relievingLetterStyles.para, fontSize: 11, marginTop: 2}}>
+            The term "non-compete" as used herein shall mean that you shall not, without the prior written consent of Nitor, (i) serve as a contractor, partner, employee, consultant, officer, director, manager, agent, associate, invest, servant with greater than 5% or otherwise (by itself directly or indirectly, own, manage, operate, join, control, participate in, invest in, work or consult 
+          </Text>
+        </View>
+        
+        {/* Footer */}
+        <View style={relievingLetterStyles.footer}>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyName || 'COMPANY NAME'}</Text>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}</Text>
+          <Text style={relievingLetterStyles.footerText}>+91 {safeFormData.companyPhone || 'PHONE NUMBER'}</Text>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyWebsite || 'WEBSITE'}</Text>
+        </View>
+      </Page>
+      
+      {/* Page 2 */}
+      <Page size="A4" style={{...commonStyles.page, ...relievingLetterStyles.page}}>
+        {/* Company Header - Compact version */}
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          borderBottomWidth: 1,
+          borderBottomColor: safeFormData.companyColor || '#FF0000',
+          paddingBottom: 5,
+          marginBottom: 12,
+        }}>
+          <View>
+            <Text style={{
+              color: safeFormData.companyColor || '#FF0000',
+              fontSize: 14,
+              fontWeight: 'bold',
+              fontFamily: 'Arial',
+              textTransform: 'uppercase',
+            }}>
+              {safeFormData.companyName || 'COMPANY NAME'}
+            </Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+              {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
+            </Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+              Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
+            </Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 10}}>
+              {safeFormData.companyWebsite || 'WEBSITE'}
+            </Text>
+          </View>
+          {safeFormData.companyLogo && (
+            <Image src={safeFormData.companyLogo} style={{width: 50, height: 50}} />
+          )}
+        </View>
+        
+        {/* Non-Compete Section (Part 2 continued) */}
+        <Text style={{
+          marginBottom: 8,
+          textAlign: 'justify',
+          fontFamily: 'Arial',
+          lineHeight: 1.4,
+          fontSize: 11,
+        }}>
+          for or otherwise affiliate with) all customers and clients introduced by Nitor or business in competition with or otherwise similar to Nitor's business.
+        </Text>
+        
+        {/* Further Declaration */}
+        <Text style={{
+          marginBottom: 8,
+          textAlign: 'justify',
+          fontFamily: 'Arial',
+          lineHeight: 1.4,
+          fontSize: 11,
+        }}>
+          Furthermore, you declare that you have no further claims of whatsoever nature resulting from my association and or termination thereof, against either the company, its group companies, its affiliates or officers or its representatives.
+        </Text>
+        
+        {/* Date and Place Section */}
+        <View style={{
+          marginTop: 10,
+          marginBottom: 10,
+          fontFamily: 'Arial',
+          fontSize: 11,
+        }}>
+          <Text>Date: _________________</Text>
+          <Text style={{marginTop: 4}}>Place: {safeFormData.employeeSignPlace || 'Pune'}</Text>
+        </View>
+        
+        {/* Signature Section - More compact */}
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginTop: 15,
+          marginBottom: 15,
+        }}>
+          <View style={{width: '45%'}}>
+            <Text style={{fontFamily: 'Arial', fontSize: 11}}>Sign</Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 20}}>{safeFormData.employeeName || 'Employee Name'}</Text>
+          </View>
+          
+          <View style={{width: '45%', textAlign: 'right'}}>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>{safeFormData.companyName || 'Company Name'}</Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 20, textAlign: 'right'}}>{safeFormData.companyHR || 'HR Name'}</Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>HR Department</Text>
+            <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>Head - HR Dept</Text>
+          </View>
+        </View>
+        
+        {/* Footer */}
+        <View style={relievingLetterStyles.footer}>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyName || 'COMPANY NAME'}</Text>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}</Text>
+          <Text style={relievingLetterStyles.footerText}>+91 {safeFormData.companyPhone || 'PHONE NUMBER'}</Text>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyWebsite || 'WEBSITE'}</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+};
+
+// Main Component
+function RelievingLetterV2() {
+  const [companies, setCompanies] = useState([]);
+  const [candidates, setCandidates] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showPDF, setShowPDF] = useState(false);
+  const [formData, setFormData] = useState({
+    employeeName: "",
+    designation: "",
+    lastWorkingDate: "",
+    employeeSignDate: "",
+    employeeSignPlace: "Pune",
+    companyName: "",
+    companyAddressLine1: "",
+    companyColor: "",
+    companyEmail: "",
+    companyPhone: "",
+    companyWebsite: "",
+    companyLogo: "",
+    companyHR: ""
+  });
+
+  // Use React.useMemo to memoize the PDF document to prevent unnecessary re-renders
+  const memoizedPdfDocument = React.useMemo(() => (
+    <RelievingLetterPDF formData={formData} />
+  ), [formData]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        await fetchCompanies();
+        await fetchCandidates();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const fetchCompanies = async () => {
+    const querySnapshot = await getDocs(collection(db, "companies"));
+    const companyList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setCompanies(companyList);
+  };
+
+  const fetchCandidates = async () => {
+    const querySnapshot = await getDocs(collection(db, "candidates"));
+    const candidateList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setCandidates(candidateList);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === "company") {
+      const selectedCompany = companies.find(company => company.name === value);
+      if (selectedCompany) {
+        setFormData(prev => ({
+          ...prev,
+          companyName: selectedCompany.name,
+          companyAddressLine1: selectedCompany.address,
+          companyColor: selectedCompany.serverColor,
+          companyEmail: selectedCompany.email,
+          companyPhone: selectedCompany.mobile,
+          companyWebsite: selectedCompany.website,
+          companyLogo: selectedCompany.logo,
+          companyHR: selectedCompany.hrName
+        }));
+      }
+    } else if (name === "employeeName") {
+      const selectedCandidate = candidates.find(candidate => candidate.candidateName === value);
+      if (selectedCandidate) {
+        setFormData(prev => ({
+          ...prev,
+          employeeName: selectedCandidate.candidateName,
+          employeeCode: selectedCandidate.employeeCode || '',
+          designation: selectedCandidate.designation || '',
+          department: selectedCandidate.department || '',
+          dateOfJoining: selectedCandidate.dateOfJoining || '',
+          lastWorkingDate: selectedCandidate.lastWorkingDate || '',
+          location: selectedCandidate.location || '',
+          pan: selectedCandidate.panNo || ''
+        }));
+      }
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+  
+  const handleGenerateDocument = () => {
+    setShowPDF(true);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <div className="max-w-[210mm] mx-auto">
+        <div className="flex justify-between items-center mb-6 md:mb-12 mt-4 md:mt-6">
+          <div className="ml-2 md:ml-4">
+            <Link to="/" className="back-link flex items-center text-gray-600 hover:text-gray-900">
+              <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 mr-2" />
+              <span className="text-sm md:text-base">Back to Home</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Form Section */}
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Enter Relieving Letter Details</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Employee Selection */}
+            <div className="form-group">
+              <label className="block mb-2 text-sm font-medium text-gray-700">Employee Name</label>
+              <select
+                name="employeeName"
+                value={formData.employeeName}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select Employee</option>
+                {candidates.map((candidate) => (
+                  <option key={candidate.id} value={candidate.candidateName}>
+                    {candidate.candidateName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Employee Sign Date */}
+            <div className="form-group">
+              <label className="block mb-2 text-sm font-medium text-gray-700">Employee Sign Date</label>
+              <input
+                type="date"
+                name="employeeSignDate"
+                value={formData.employeeSignDate}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            
+            {/* Place of Signing */}
+            <div className="form-group">
+              <label className="block mb-2 text-sm font-medium text-gray-700">Place of Signing</label>
+              <input
+                type="text"
+                name="employeeSignPlace"
+                value={formData.employeeSignPlace}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter place"
+              />
+            </div>
+
+            {/* Company Selection */}
+            <div className="form-group">
+              <label className="block mb-2 text-sm font-medium text-gray-700">Company</label>
+              <select
+                name="company"
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select Company</option>
+                {companies.map((company) => (
+                  <option key={company.id} value={company.name}>
+                    {company.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Generate Button */}
+            <div className="md:col-span-2 flex justify-end mt-6">
+              <button
+                onClick={handleGenerateDocument}
+                className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 shadow-lg hover:shadow-md transition-all duration-200"
+              >
+                <Download size={18} className="mr-2" />
+                <span>Generate Relieving Letter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* PDF Preview Section - only show when Generate button is clicked */}
+        {showPDF && (
+          <div className="bg-white rounded-lg shadow-lg p-4 mb-8">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-gray-800">PDF Preview</h3>
+              
+              <PDFDownloadLink 
+                document={memoizedPdfDocument}
+                fileName={`RelievingLetter_${formData.employeeName || 'Employee'}.pdf`}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              >
+                {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
+              </PDFDownloadLink>
+            </div>
+            
+            <div className="border rounded-lg" style={{ height: '80vh' }}>
+              <PDFViewer width="100%" height="100%" className="rounded-lg">
+                {memoizedPdfDocument}
+              </PDFViewer>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default RelievingLetterV2;
