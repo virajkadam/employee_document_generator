@@ -26,7 +26,7 @@ const appointmentStyles = StyleSheet.create({
   tableCellHeader: {
     width: '40%',
     padding: 6,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     fontWeight: 'bold',
     fontSize: 12,
     borderRightWidth: 1,
@@ -36,7 +36,7 @@ const appointmentStyles = StyleSheet.create({
   tableCell: {
     width: '60%',
     padding: 6,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     fontSize: 12,
   },
   sectionHeading: {
@@ -44,42 +44,42 @@ const appointmentStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 12,
     marginBottom: 6,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   listItem: {
     fontSize: 12,
     marginBottom: 6,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'justify',
     lineHeight: 1.5,
   },
   to: {
     fontSize: 12,
     marginBottom: 3,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   addresseeName: {
     fontSize: 12,
     marginBottom: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   subject: {
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   appointmentHeading: {
     fontSize: 12,
     fontWeight: 'bold',
     marginTop: 0,
     marginBottom: 4,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   paragraph: {
     fontSize: 12,
     marginBottom: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   signatureContainer: {
     marginTop: 16,
@@ -94,22 +94,22 @@ const appointmentStyles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   signatureSpace: {
     height: 25,
   },
   signatureName: {
     fontSize: 13,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   signatureDate: {
     fontSize: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   signatureRole: {
     fontSize: 12,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
 });
 
@@ -130,7 +130,7 @@ const tableStyles = StyleSheet.create({
   tableHeader: {
     fontWeight: 'bold',
     fontSize: 11,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   tableRow: {
     flexDirection: 'row',
@@ -142,13 +142,13 @@ const tableStyles = StyleSheet.create({
   tableCell: {
     flex: 3,
     fontSize: 11,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     padding: 2,
   },
   tableCellValue: {
     flex: 2,
     fontSize: 11,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
     textAlign: 'right',
     padding: 2,
   },
