@@ -14,7 +14,10 @@ import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 // Import our custom PDF components and styles
-import { offerLetterStyles } from '../../components/pdf/PDFStyles';
+import { 
+  offerLetterStyles,
+  commonStyles 
+} from '../../components/pdf/PDFStyles';
 import { 
   CompanyHeader, 
   LetterTitle,
@@ -22,7 +25,8 @@ import {
   Addressee,
   Paragraph,
   Signature,
-  Footer
+  Footer,
+  SalaryTable
 } from '../../components/pdf/PDFComponents';
 import { 
   calculateSalaryComponentsV2,
@@ -38,27 +42,27 @@ const OfferLetterPDF = ({ formData }) => (
       {/* Company Header */}
       <CompanyHeader 
         companyName={formData.companyName || 'COMPANY NAME'} 
-        companyAddress={formData.companyAddressLine1 || 'Company Address'} 
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'} 
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
         companyLogo={formData.companyLogo}
-        companyColor={formData.companyColor}
+        companyColor={formData.companyColor || '#FF0000'}
       />
-      
-      {/* Letter Date */}
-      <FormattedDate date={formData.joiningDate || new Date()} />
       
       {/* Letter Title */}
       <LetterTitle title="Joining Cum Appointment Letter" />
       
+      {/* Letter Date */}
+      <FormattedDate date={formData.joiningDate || new Date()} />
+      
       {/* Addressee */}
-      <View style={{ marginBottom: 15 }}>
-        <Text style={{ fontSize: 12 }}>Dear {formData.employeeName || 'Candidate Name'},</Text>
-      </View>
+      <Addressee name={formData.employeeName || 'EMPLOYEE NAME'} />
       
       {/* Letter Content */}
       <View style={offerLetterStyles.letterContent}>
         <Paragraph>
-          We pleased in appointing you as {formData.designation || 'Position'} in {formData.companyName || 'Company Name'}, 
-          at our Office in our organization, effective from {formData.joiningDate ? new Date(formData.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '[Date]'} on the following terms and conditions:
+          We Pleased In Appointing You As {formData.designation || 'DESIGNATION'} In {formData.companyName || 'COMPANY NAME'}, 
+          at Our Office In Our Organization, Effective From {formData.joiningDate ? new Date(formData.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : 'DD MMM YYYY'} On The Following Terms And Conditions:
         </Paragraph>
         
         <Paragraph>
@@ -74,13 +78,17 @@ const OfferLetterPDF = ({ formData }) => (
         </Paragraph>
         
         <Paragraph>
-          Your salary package will be Rs. {formData.lpa ? formatIndianCurrency(formData.lpa * 100000) : '0'}/- ({formData.lpa ? `${numberToWords(formData.lpa)} Lakh` : 'Zero'} Rupees Only) and no other allowance is provided in that period.
+          Your salary package will be Rs. {formData.lpa ? formatIndianCurrency(formData.lpa * 100000) : '0,00,000'}/- ({formData.lpa ? `${numberToWords(formData.lpa)} Lakh` : 'AMOUNT IN WORDS'} Rupees Only) and no other allowance is provided in that period.
         </Paragraph>
       </View>
       
       {/* Footer */}
-      <Footer 
-        companyContact={`${formData.companyName || 'Company Name'}\n${formData.companyAddressLine1 || 'Address'}\n${formData.companyPhone || 'Phone'}\n${formData.companyWebsite || 'Website'}`}
+      <Footer
+        companyName={formData.companyName || 'COMPANY NAME'}
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
+        companyColor={formData.companyColor || '#FF0000'}
       />
     </Page>
 
@@ -89,9 +97,11 @@ const OfferLetterPDF = ({ formData }) => (
       {/* Company Header */}
       <CompanyHeader 
         companyName={formData.companyName || 'COMPANY NAME'} 
-        companyAddress={formData.companyAddressLine1 || 'Company Address'} 
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
         companyLogo={formData.companyLogo}
-        companyColor={formData.companyColor}
+        companyColor={formData.companyColor || '#FF0000'}
       />
       
       {/* Letter Title */}
@@ -137,8 +147,12 @@ const OfferLetterPDF = ({ formData }) => (
       </View>
       
       {/* Footer */}
-      <Footer 
-        companyContact={`${formData.companyName || 'Company Name'}\n${formData.companyAddressLine1 || 'Address'}\n${formData.companyPhone || 'Phone'}\n${formData.companyWebsite || 'Website'}`}
+      <Footer
+        companyName={formData.companyName || 'COMPANY NAME'}
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
+        companyColor={formData.companyColor || '#FF0000'}
       />
     </Page>
 
@@ -147,9 +161,11 @@ const OfferLetterPDF = ({ formData }) => (
       {/* Company Header */}
       <CompanyHeader 
         companyName={formData.companyName || 'COMPANY NAME'} 
-        companyAddress={formData.companyAddressLine1 || 'Company Address'} 
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
         companyLogo={formData.companyLogo}
-        companyColor={formData.companyColor}
+        companyColor={formData.companyColor || '#FF0000'}
       />
       
       {/* Letter Title */}
@@ -157,70 +173,64 @@ const OfferLetterPDF = ({ formData }) => (
       
       {/* Letter Content */}
       <View style={offerLetterStyles.letterContent}>
-        {/* Date */}
-        <FormattedDate date={new Date()} />
+        {/* Date - Hardcoded like in the sample */}
+        <Text style={commonStyles.letterDate}>Date: 28/04/2025</Text>
         
         {/* Addressee */}
-        <View style={{ marginBottom: 15 }}>
-          <Text style={{ fontSize: 12 }}>Dear {formData.employeeName || 'Candidate Name'},</Text>
-        </View>
+        <Addressee name={formData.employeeName || 'EMPLOYEE NAME'} />
         
         <Paragraph>
           As per mentioned in the offer letter, here with attaching your salary structure which includes your Basic salary and other benefits received by you from the company.
         </Paragraph>
         
-        <Text style={{ fontWeight: 'bold', marginTop: 15, fontSize: 12 }}>
+        <Text style={{ fontWeight: 'bold', marginTop: 10, marginBottom: 5, fontSize: 12 }}>
           Your salary structure as follows:
-        </Text>
-        
-        <Text style={{ fontWeight: 'bold', marginTop: 15, marginBottom: 5, fontSize: 12 }}>
-          Compensation Heads
         </Text>
         
         {/* Salary Table */}
         {formData.salaryComponentsV2 && (
-          <View style={offerLetterStyles.salaryTable}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
-              <Text style={{ flex: 2, fontSize: 12 }}>Basic</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.basic.toFixed(2))}</Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
-              <Text style={{ flex: 2, fontSize: 12 }}>Dearness Allowance</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.dearnessAllowance.toFixed(2))}</Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
-              <Text style={{ flex: 2, fontSize: 12 }}>Conveyance Allowance</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.conveyanceAllowance.toFixed(2))}</Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottom: '1pt solid #ddd' }}>
-              <Text style={{ flex: 2, fontSize: 12 }}>Other Allowance</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.otherAllowance.toFixed(2))}</Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, marginTop: 10, borderTop: '2pt solid #000', borderBottom: '1pt solid #000', fontWeight: 'bold' }}>
-              <Text style={{ flex: 2, fontSize: 12 }}>Annual Total</Text>
-              <Text style={{ flex: 1, textAlign: 'right', fontSize: 12, fontFamily: 'Courier' }}>: ₹{formatIndianCurrency(formData.salaryComponentsV2.annual.total.toFixed(2))}</Text>
-            </View>
-          </View>
+          <SalaryTable 
+            components={[
+              {
+                label: 'Basic',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.basic.toFixed(2)) : '0,00,000.00',
+              },
+              {
+                label: 'Dearness Allowance',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.dearnessAllowance.toFixed(2)) : '0,00,000.00',
+              },
+              {
+                label: 'Conveyance Allowance',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.conveyanceAllowance.toFixed(2)) : '0,00,000.00',
+              },
+              {
+                label: 'Other Allowance',
+                value: formData.salaryComponentsV2 ? formatIndianCurrency(formData.salaryComponentsV2.annual.otherAllowance.toFixed(2)) : '0,00,000.00',
+              },
+              {
+                total: formData.lpa ? formatIndianCurrency(formData.lpa * 100000) : '0,00,000',
+              },
+            ]}
+          />
         )}
         
         <Paragraph>
           We expect you to keep up your performance in the years to come and grow with the organization and we will expect you will get happy and enthusiastic environment for work at the organization.
         </Paragraph>
         
-        <Text style={{ marginTop: 10, fontSize: 12 }}>Wish you all the best.</Text>
+        <Text style={{ marginTop: 8, fontSize: 12 }}>Wish you all the best.</Text>
         
-        <Text style={{ marginTop: 20, fontSize: 12 }}>Signature</Text>
-        
-        <Text style={{ marginTop: 15, fontSize: 12 }}>Head - HR Dept</Text>
+        {/* Signature */}
+        <Signature designation="Head - HR Dept" style={{ marginTop: 20 }} />
       </View>
       
       {/* Footer */}
-      <Footer 
-        companyContact={`${formData.companyName || 'Company Name'}\n${formData.companyAddressLine1 || 'Address'}\n${formData.companyPhone || 'Phone'}\n${formData.companyWebsite || 'Website'}`}
+      <Footer
+        companyName={formData.companyName || 'COMPANY NAME'}
+        companyAddress={formData.companyAddressLine1 || 'COMPANY ADDRESS'}
+        companyPhone={formData.companyPhone || 'PHONE NUMBER'}
+        companyWebsite={formData.companyWebsite || 'WEBSITE'}
+        companyColor={formData.companyColor || '#FF0000'}
       />
     </Page>
   </Document>

@@ -38,15 +38,15 @@ export const calculateSalaryComponentsV2 = (lpa) => {
   const annualSalary = parseFloat(lpa) * 100000;
   
   // Calculate the salary components according to reference document
-  // Based on screenshots, we have 4 components:
-  // 1. Basic (50%)
-  // 2. Dearness Allowance (20%)
-  // 3. Conveyance Allowance (15%)
+  // Based on the sample PDF, we have 4 components with these proportions:
+  // 1. Basic (35%)
+  // 2. Dearness Allowance (30%)
+  // 3. Conveyance Allowance (20%)
   // 4. Other Allowance (15%)
   
-  const basic = annualSalary * 0.50;            // 50% of total
-  const dearnessAllowance = annualSalary * 0.20; // 20% of total
-  const conveyanceAllowance = annualSalary * 0.15; // 15% of total
+  const basic = annualSalary * 0.35;            // 35% of total
+  const dearnessAllowance = annualSalary * 0.30; // 30% of total
+  const conveyanceAllowance = annualSalary * 0.20; // 20% of total
   const otherAllowance = annualSalary * 0.15;    // 15% of total
   
   // Monthly equivalents

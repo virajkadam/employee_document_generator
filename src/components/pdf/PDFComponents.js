@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet } from '@react-pdf/renderer';
 import { commonStyles } from './PDFStyles';
 
 // Company Header Component
-export const CompanyHeader = ({ companyName, companyAddress, companyLogo, companyColor }) => (
+export const CompanyHeader = ({ companyName, companyAddress, companyLogo, companyPhone, companyWebsite, companyColor }) => (
   <>
     <View style={commonStyles.companyHeader}>
       <View>
@@ -16,6 +16,8 @@ export const CompanyHeader = ({ companyName, companyAddress, companyLogo, compan
           {companyName}
         </Text>
         <Text style={commonStyles.companyAddress}>{companyAddress}</Text>
+        <Text style={commonStyles.companyAddress}>Phone: {companyPhone}</Text>
+        <Text style={commonStyles.companyAddress}>{companyWebsite}</Text>
       </View>
       {companyLogo && (
         <Image 
@@ -24,7 +26,7 @@ export const CompanyHeader = ({ companyName, companyAddress, companyLogo, compan
         />
       )}
     </View>
-    <View style={commonStyles.separatorLine} />
+    <View style={[commonStyles.separatorLine, { borderBottomColor: companyColor || '#FF0000' }]} />
   </>
 );
 
@@ -55,10 +57,9 @@ export const FormattedDate = ({ date, style }) => {
 };
 
 // Addressee Component
-export const Addressee = ({ name, designation }) => (
-  <View style={{ marginBottom: 15 }}>
-    <Text style={{ fontSize: 12 }}>{name}</Text>
-    {designation && <Text style={{ fontSize: 12 }}>{designation}</Text>}
+export const Addressee = ({ name, style }) => (
+  <View style={{ marginBottom: 15, ...style }}>
+    <Text style={{ fontSize: 12 }}>Dear {name},</Text>
   </View>
 );
 
@@ -68,25 +69,21 @@ export const Paragraph = ({ children, style }) => (
 );
 
 // Signature Component
-export const Signature = ({ name, designation, companyName }) => (
-  <View style={commonStyles.signatureSection}>
-    <Text>Yours sincerely,</Text>
-    <View style={commonStyles.signatureLine} />
-    <Text style={{ marginTop: 5, fontWeight: 'bold' }}>{name}</Text>
-    {designation && <Text>{designation}</Text>}
-    {companyName && <Text>{companyName}</Text>}
+export const Signature = ({ name, designation, style }) => (
+  <View style={[commonStyles.signatureSection, style]}>
+    <Text style={{ marginBottom: 5 }}>Signature</Text>
+    <Text style={{ marginTop: 15 }}>{designation || 'Head - HR Dept'}</Text>
   </View>
 );
 
 // Footer Component
-export const Footer = ({ companyContact }) => (
+export const Footer = ({ companyName, companyAddress, companyPhone, companyWebsite, companyColor }) => (
   <View style={commonStyles.footer}>
-    <View style={commonStyles.footerSeparator} />
-    {companyContact && (
-      <Text style={{ fontSize: 9 }}>
-        {companyContact}
-      </Text>
-    )}
+    <View style={[commonStyles.footerSeparator, { borderTopColor: companyColor || '#FF0000' }]} />
+    <Text style={{ fontSize: 10, marginBottom: 2 }}>{companyName}</Text>
+    <Text style={{ fontSize: 10, marginBottom: 2 }}>{companyAddress}</Text>
+    <Text style={{ fontSize: 10, marginBottom: 2 }}>{companyPhone}</Text>
+    <Text style={{ fontSize: 10 }}>{companyWebsite}</Text>
   </View>
 );
 
@@ -98,56 +95,53 @@ const tableStyles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     borderBottom: '1pt solid #ddd',
-    paddingVertical: 6,
+    paddingVertical: 5,
   },
   headerRow: {
     flexDirection: 'row',
-    borderBottom: '2pt solid #000',
-    paddingVertical: 6,
+    justifyContent: 'space-between',
     fontWeight: 'bold',
     fontSize: 12,
+    marginBottom: 2,
   },
   tableCell: {
-    flex: 1,
+    flex: 3,
     fontSize: 12,
   },
-  tableCellRight: {
-    flex: 1,
+  tableCellValue: {
+    flex: 2,
     textAlign: 'right',
     fontSize: 12,
-    fontFamily: 'Courier', // Use monospace font for numbers
+    fontFamily: 'Courier',
   },
   totalRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 5,
     borderTop: '2pt solid #000',
     borderBottom: '2pt solid #000',
-    paddingVertical: 6,
+    paddingVertical: 5,
     fontWeight: 'bold',
     fontSize: 12,
   },
 });
 
-export const SalaryTable = ({ data, showMonthly = true, showAnnual = true }) => (
+export const SalaryTable = ({ components }) => (
   <View style={tableStyles.table}>
-    <View style={tableStyles.headerRow}>
-      <Text style={tableStyles.tableCell}>EARNINGS</Text>
-      {showMonthly && <Text style={tableStyles.tableCellRight}>MONTHLY</Text>}
-      {showAnnual && <Text style={tableStyles.tableCellRight}>YEARLY</Text>}
-    </View>
+    <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Compensation Heads</Text>
     
-    {data.components.map((item, index) => (
+    {components.map((item, index) => (
       <View key={index} style={tableStyles.tableRow}>
-        <Text style={tableStyles.tableCell}>{item.name}</Text>
-        {showMonthly && <Text style={tableStyles.tableCellRight}>{item.monthly.toFixed(2)}</Text>}
-        {showAnnual && <Text style={tableStyles.tableCellRight}>{item.annual.toFixed(2)}</Text>}
+        <Text style={tableStyles.tableCell}>{item.label}</Text>
+        <Text style={tableStyles.tableCellValue}>: ₹{item.value}</Text>
       </View>
     ))}
     
     <View style={tableStyles.totalRow}>
-      <Text style={tableStyles.tableCell}>TOTAL</Text>
-      {showMonthly && <Text style={tableStyles.tableCellRight}>{data.totalMonthly.toFixed(2)}</Text>}
-      {showAnnual && <Text style={tableStyles.tableCellRight}>{data.totalAnnual.toFixed(2)}</Text>}
+      <Text style={tableStyles.tableCell}>Annual Total</Text>
+      <Text style={tableStyles.tableCellValue}>: ₹{components[components.length - 1].total}</Text>
     </View>
   </View>
 ); 

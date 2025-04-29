@@ -52,7 +52,7 @@ Font.register({
 // Common styles for all PDF documents
 export const commonStyles = StyleSheet.create({
   page: {
-    padding: '20mm 30mm',
+    padding: '15mm 20mm',
     backgroundColor: 'white',
     width: '210mm',
     height: '297mm',
@@ -65,58 +65,58 @@ export const commonStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   companyName: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    marginBottom: 5,
-    letterSpacing: 0.5,
+    marginBottom: 3,
+    color: '#FF0000',
   },
   companyAddress: {
     fontSize: 10,
     lineHeight: 1.3,
   },
   companyLogo: {
-    width: 70,
-    height: 'auto',
+    width: 60,
+    height: 60,
+    objectFit: 'contain',
   },
   separatorLine: {
-    borderBottom: '1pt solid #000',
+    borderBottom: '1pt solid #FF0000',
     width: '100%',
-    marginVertical: 8,
+    marginTop: 3,
+    marginBottom: 15,
   },
   letterTitle: {
     fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 15,
-    textDecoration: 'underline',
   },
   letterDate: {
-    marginBottom: 15,
+    marginBottom: 12,
     fontSize: 12,
   },
   letterParagraph: {
     textAlign: 'justify',
     marginBottom: 12,
-    textIndent: 40,
     fontSize: 12,
     lineHeight: 1.5,
   },
   footer: {
     position: 'absolute',
-    bottom: 20,
-    left: 30,
-    right: 30,
+    bottom: 15,
+    left: 20,
+    right: 20,
     textAlign: 'left',
-    paddingTop: 10,
+    paddingTop: 5,
   },
   footerSeparator: {
-    borderTop: '1pt solid #000',
+    borderTop: '1pt solid #FF0000',
     width: '100%',
-    marginBottom: 8,
+    marginBottom: 5,
   },
   signatureSection: {
     marginTop: 25,
@@ -138,14 +138,14 @@ export const offerLetterStyles = StyleSheet.create({
     lineHeight: 1.5,
   },
   letterContent: {
-    marginBottom: 35,
+    marginBottom: 20,
   },
   letterSalutation: {
     marginBottom: 12,
     fontSize: 12,
   },
   salaryTable: {
-    margin: '15px 10px',
+    margin: '10px 0',
     fontSize: 12,
   },
   compensationRow: {
@@ -155,12 +155,16 @@ export const offerLetterStyles = StyleSheet.create({
     borderBottom: '1pt solid #ddd',
   },
   compensationLabel: {
-    flex: 2,
+    flex: 3,
   },
   compensationValue: {
-    flex: 1,
+    flex: 2,
     fontFamily: 'Courier',
     textAlign: 'right',
+  },
+  footerText: {
+    fontSize: 10,
+    lineHeight: 1.2,
   },
 });
 
