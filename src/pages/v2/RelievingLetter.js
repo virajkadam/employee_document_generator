@@ -12,7 +12,7 @@ const relievingLetterStyles = StyleSheet.create({
   page: {
     padding: '30px 50px',
     fontSize: 11,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     lineHeight: 1.4,
     color: '#000000',
   },
@@ -21,71 +21,71 @@ const relievingLetterStyles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
     fontWeight: 'bold',
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   date: {
     marginBottom: 15,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   employeeName: {
     marginBottom: 8,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   salutation: {
     marginBottom: 8,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   para: {
     marginBottom: 8,
     textAlign: 'justify',
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     lineHeight: 1.4,
   },
   section: {
     marginTop: 8,
     marginBottom: 8,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   sectionTitle: {
     fontWeight: 'bold',
     marginBottom: 4,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   signatureSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
     marginBottom: 20,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   signatureBlock: {
     width: '40%',
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   signatureName: {
     marginTop: 20,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   signatureTitle: {
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     fontSize: 11,
     marginTop: 3,
   },
   datePlaceSection: {
     marginTop: 15,
     marginBottom: 15,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   companyHeader: {
     color: 'red',
     fontSize: 14,
     fontWeight: 'bold',
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     marginBottom: 4,
   },
   companyDetails: {
     fontSize: 11,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     marginBottom: 10,
   },
   footer: {
@@ -101,7 +101,7 @@ const relievingLetterStyles = StyleSheet.create({
   footerText: {
     fontSize: 10,
     marginBottom: 1,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     textAlign: 'center',
   },
   // Add compact styles for tighter layout
@@ -146,18 +146,18 @@ const RelievingLetterPDF = ({ formData }) => {
           color: safeFormData.companyColor || '#FF0000',
           fontSize: 13, // Reduced size
           fontWeight: 'bold',
-          fontFamily: 'Arial',
+          fontFamily: 'Calibri',
           textTransform: 'uppercase',
         }}>
           {safeFormData.companyName || 'COMPANY NAME'}
         </Text>
-        <Text style={{fontFamily: 'Arial', fontSize: 9}}>
+        <Text style={{fontFamily: 'Calibri', fontSize: 9}}>
           {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
         </Text>
-        <Text style={{fontFamily: 'Arial', fontSize: 9}}>
+        <Text style={{fontFamily: 'Calibri', fontSize: 9}}>
           Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
         </Text>
-        <Text style={{fontFamily: 'Arial', fontSize: 9}}>
+        <Text style={{fontFamily: 'Calibri', fontSize: 9}}>
           {safeFormData.companyWebsite || 'WEBSITE'}
         </Text>
       </View>
@@ -207,14 +207,14 @@ const RelievingLetterPDF = ({ formData }) => {
             marginBottom: 10,
             marginTop: 4,
             fontWeight: 'bold',
-            fontFamily: 'Arial',
+            fontFamily: 'Calibri',
           }}>
             Relieving Letter
           </Text>
           
           {/* Employee Name */}
           <Text style={{
-            fontFamily: 'Arial',
+            fontFamily: 'Calibri',
             fontSize: 10,
             marginBottom: 6,
           }}>
@@ -223,7 +223,7 @@ const RelievingLetterPDF = ({ formData }) => {
           
           {/* Salutation */}
           <Text style={{
-            fontFamily: 'Arial', 
+            fontFamily: 'Calibri', 
             fontSize: 10,
             marginBottom: 6,
           }}>
@@ -245,7 +245,7 @@ const RelievingLetterPDF = ({ formData }) => {
             <Text style={{
               fontWeight: 'bold',
               marginBottom: 2,
-              fontFamily: 'Arial',
+              fontFamily: 'Calibri',
               fontSize: 10,
             }}>
               Company Property:
@@ -260,7 +260,7 @@ const RelievingLetterPDF = ({ formData }) => {
             <Text style={{
               fontWeight: 'bold',
               marginBottom: 2,
-              fontFamily: 'Arial',
+              fontFamily: 'Calibri',
               fontSize: 10,
               marginTop: 2,
             }}>
@@ -279,7 +279,7 @@ const RelievingLetterPDF = ({ formData }) => {
             <Text style={{
               fontWeight: 'bold',
               marginBottom: 2,
-              fontFamily: 'Arial',
+              fontFamily: 'Calibri',
               fontSize: 10,
               marginTop: 2,
             }}>
@@ -296,7 +296,7 @@ const RelievingLetterPDF = ({ formData }) => {
           {/* Further Declaration section - on page 1 */}
           <View style={{...relievingLetterStyles.section, marginTop: 10, marginBottom: 6}}>
             <Text style={{
-              fontFamily: 'Arial',
+              fontFamily: 'Calibri',
               fontSize: 9.5,
               lineHeight: 1.25,
               textAlign: 'justify',
@@ -319,8 +319,8 @@ const RelievingLetterPDF = ({ formData }) => {
         <View fixed style={{ height: '700px', position: 'relative' }}>
           {/* Date and Place Section */}
           <View style={{ position: 'absolute', top: '70px', left: 0, right: 0 }}>
-            <Text style={{fontFamily: 'Arial', fontSize: 11}}>Date: _________________</Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 8}}>Place: {safeFormData.employeeSignPlace || 'Pune'}</Text>
+            <Text style={{fontFamily: 'Calibri', fontSize: 11}}>Date: _________________</Text>
+            <Text style={{fontFamily: 'Calibri', fontSize: 11, marginTop: 8}}>Place: {safeFormData.employeeSignPlace || 'Pune'}</Text>
           </View>
           
           {/* Signature Section - positioned with enough space above footer */}
@@ -333,14 +333,14 @@ const RelievingLetterPDF = ({ formData }) => {
             justifyContent: 'space-between',
           }}>
             <View style={{width: '45%'}}>
-              <Text style={{fontFamily: 'Arial', fontSize: 11}}>Sign</Text>
-              <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 70}}>{safeFormData.employeeName || 'Employee Name'}</Text>
+              <Text style={{fontFamily: 'Calibri', fontSize: 11}}>Sign</Text>
+              <Text style={{fontFamily: 'Calibri', fontSize: 11, marginTop: 70}}>{safeFormData.employeeName || 'Employee Name'}</Text>
             </View>
             
             <View style={{width: '45%', textAlign: 'right'}}>
-              <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>{safeFormData.companyName || 'Company Name'}</Text>
-              <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 70, textAlign: 'right'}}>{safeFormData.companyHR || 'HR Name'}</Text>
-              <Text style={{fontFamily: 'Arial', fontSize: 11, textAlign: 'right'}}>Head - HR Dept</Text>
+              <Text style={{fontFamily: 'Calibri', fontSize: 11, textAlign: 'right'}}>{safeFormData.companyName || 'Company Name'}</Text>
+              <Text style={{fontFamily: 'Calibri', fontSize: 11, marginTop: 70, textAlign: 'right'}}>{safeFormData.companyHR || 'HR Name'}</Text>
+              <Text style={{fontFamily: 'Calibri', fontSize: 11, textAlign: 'right'}}>Head - HR Dept</Text>
             </View>
           </View>
         </View>
