@@ -11,7 +11,7 @@ const appraisalLetterStyles = StyleSheet.create({
   page: {
     padding: '25px 50px',
     fontSize: 10,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     lineHeight: 1.3,
     color: '#000000',
   },
@@ -21,25 +21,25 @@ const appraisalLetterStyles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     fontWeight: 'bold',
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   date: {
     marginBottom: 8,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   employeeName: {
     marginBottom: 8,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     textTransform: 'capitalize',
   },
   subject: {
     marginBottom: 10,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   para: {
     marginBottom: 8,
     textAlign: 'justify',
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     lineHeight: 1.3,
   },
   tableContainer: {
@@ -78,7 +78,7 @@ const appraisalLetterStyles = StyleSheet.create({
   },
   signatureSection: {
     marginTop: 25,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
   },
   footer: {
     position: 'absolute',
@@ -93,7 +93,7 @@ const appraisalLetterStyles = StyleSheet.create({
   footerText: {
     fontSize: 8,
     marginBottom: 1,
-    fontFamily: 'Arial',
+    fontFamily: 'Calibri',
     textAlign: 'center',
   }
 });
@@ -135,18 +135,18 @@ const AppraisalLetterPDF = ({ formData }) => {
               color: safeFormData.companyColor || '#FF0000',
               fontSize: 12,
               fontWeight: 'bold',
-              fontFamily: 'Arial',
+              fontFamily: 'Calibri',
               textTransform: 'uppercase',
             }}>
               {safeFormData.companyName || 'COMPANY NAME'}
             </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 8}}>
+            <Text style={{fontFamily: 'Calibri', fontSize: 8}}>
               {safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}
             </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 8}}>
+            <Text style={{fontFamily: 'Calibri', fontSize: 8}}>
               Phone: {safeFormData.companyPhone || 'PHONE NUMBER'}
             </Text>
-            <Text style={{fontFamily: 'Arial', fontSize: 8}}>
+            <Text style={{fontFamily: 'Calibri', fontSize: 8}}>
               {safeFormData.companyWebsite || 'WEBSITE'}
             </Text>
           </View>
