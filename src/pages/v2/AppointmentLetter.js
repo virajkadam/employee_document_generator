@@ -25,32 +25,87 @@ const appointmentStyles = StyleSheet.create({
   },
   tableCellHeader: {
     width: '40%',
-    padding: 5,
+    padding: 8,
     fontFamily: 'Times New Roman',
     fontWeight: 'bold',
-    fontSize: 11,
+    fontSize: 12,
     borderRightWidth: 1,
     borderRightColor: '#000',
     borderRightStyle: 'solid',
   },
   tableCell: {
     width: '60%',
-    padding: 5,
+    padding: 8,
     fontFamily: 'Times New Roman',
-    fontSize: 11,
+    fontSize: 12,
   },
   sectionHeading: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: 'bold',
-    marginTop: 10,
-    marginBottom: 5,
+    marginTop: 15,
+    marginBottom: 8,
     fontFamily: 'Times New Roman',
   },
   listItem: {
-    fontSize: 11,
-    marginBottom: 5,
+    fontSize: 12,
+    marginBottom: 8,
     fontFamily: 'Times New Roman',
     textAlign: 'justify',
+    lineHeight: 1.5,
+  },
+  to: {
+    fontSize: 12,
+    marginBottom: 4,
+    fontFamily: 'Times New Roman',
+  },
+  addresseeName: {
+    fontSize: 12,
+    marginBottom: 15,
+    fontFamily: 'Times New Roman',
+  },
+  subject: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    fontFamily: 'Times New Roman',
+  },
+  appointmentHeading: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 0,
+    marginBottom: 5,
+    fontFamily: 'Times New Roman',
+  },
+  paragraph: {
+    fontSize: 12,
+    marginBottom: 15,
+    fontFamily: 'Times New Roman',
+  },
+  signatureContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  signatureBox: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  signatureTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    fontFamily: 'Times New Roman',
+  },
+  signatureSpace: {
+    height: 20,
+  },
+  signatureName: {
+    fontSize: 12,
+    fontFamily: 'Times New Roman',
+  },
+  signatureDate: {
+    fontSize: 12,
+    fontFamily: 'Times New Roman',
   },
 });
 
@@ -197,25 +252,25 @@ const AppointmentTable = ({ joiningDate, designation, department, reportingAutho
   <View style={appointmentStyles.table}>
     <View style={appointmentStyles.tableRow}>
       <Text style={appointmentStyles.tableCellHeader}>Date of joining as recorded</Text>
-      <Text style={appointmentStyles.tableCell}>{joiningDate}</Text>
+      <Text style={appointmentStyles.tableCell}>{joiningDate || '[Date]'}</Text>
     </View>
     <View style={appointmentStyles.tableRow}>
       <Text style={appointmentStyles.tableCellHeader}>Designation</Text>
-      <Text style={appointmentStyles.tableCell}>{designation}</Text>
+      <Text style={appointmentStyles.tableCell}>{designation || '[Designation]'}</Text>
     </View>
     <View style={appointmentStyles.tableRow}>
       <Text style={appointmentStyles.tableCellHeader}>Department</Text>
-      <Text style={appointmentStyles.tableCell}>{department}</Text>
+      <Text style={appointmentStyles.tableCell}>{department || '[Department]'}</Text>
     </View>
     <View style={appointmentStyles.tableRow}>
       <Text style={appointmentStyles.tableCellHeader}>Reporting Authority</Text>
-      <Text style={appointmentStyles.tableCell}>{reportingAuthority}</Text>
+      <Text style={appointmentStyles.tableCell}>{reportingAuthority || '[Authority]'}</Text>
     </View>
     <View style={appointmentStyles.tableRow}>
       <Text style={appointmentStyles.tableCellHeader}>CTC (break up as per Annexure)</Text>
       <Text style={appointmentStyles.tableCell}>
         Total Annual CTC Rs. {ctc} Lakhs{'\n'}
-        ({ctcInWords})
+        {ctcInWords ? `(${ctcInWords})` : '(Rupees [Amount] Only)'}
       </Text>
     </View>
   </View>
@@ -255,25 +310,25 @@ const AppointmentLetterPDF = ({ formData }) => {
           companyColor={formData.companyColor || '#FF0000'}
         />
         
-        <View style={commonStyles.contentContainer}>
+        <View style={{marginTop: 10}}>
           {/* Addressee */}
-          <Text style={commonStyles.to}>To,</Text>
-          <Text style={commonStyles.addresseeName}>{formData.employeeName || '[Employee Name]'}</Text>
+          <Text style={appointmentStyles.to}>To,</Text>
+          <Text style={appointmentStyles.addresseeName}>{formData.employeeName || '[Employee Name]'}</Text>
           
           {/* Subject */}
-          <Text style={commonStyles.subject}>Subject: Appointment Letter</Text>
+          <Text style={appointmentStyles.subject}>Subject: Appointment Letter</Text>
           
           {/* Introduction */}
-          <Paragraph>
+          <Text style={appointmentStyles.listItem}>
             Dear {formData.employeeName || '[Employee Name]'},
-          </Paragraph>
+          </Text>
           
-          <Paragraph>
+          <Text style={appointmentStyles.listItem}>
             We welcome you to {formData.companyName || 'our company'}. Your appointment is subject to the Terms & Conditions contained in this letter & Company policy.
-          </Paragraph>
+          </Text>
           
           {/* Appointment Details */}
-          <Text style={appointmentStyles.sectionHeading}>Appointment</Text>
+          <Text style={appointmentStyles.appointmentHeading}>Appointment</Text>
           
           <AppointmentTable 
             joiningDate={formatDate(formData.joiningDate)}
@@ -318,7 +373,7 @@ const AppointmentLetterPDF = ({ formData }) => {
           companyColor={formData.companyColor || '#FF0000'}
         />
         
-        <View style={commonStyles.contentContainer}>
+        <View style={{marginTop: 10}}>
           <Text style={appointmentStyles.listItem}>
             3. Your performance may be reviewed by the Company at least once annually. Any increase or decrease in your Remuneration is at the absolute discretion of Company and will depend on factors such as your performance and the performance of Company's business as a whole. The Company is under no obligation to increase the Remuneration as a result of any review.
           </Text>
@@ -339,7 +394,7 @@ const AppointmentLetterPDF = ({ formData }) => {
           <Text style={appointmentStyles.sectionHeading}>Posting</Text>
           
           <Text style={appointmentStyles.listItem}>
-            7. At present, you would be posted at {formData.location || 'your current location'}, however, you may be required to travel to or work at other locations, including interstate or overseas. Your services are liable to be transferred to any other division, activity, geographical location, branch, Group Company, sister concern or subsidiary of this Company or any of its associates, clients, customers, presently in existence & operational or will be operational in future. In such an eventuality, you will be governed by the terms and conditions and the remunerations as applicable to such new place to which your services may be temporarily or permanently transferred and that you will, therefore, not be entitled to any additional compensation.
+            7. At present, you would be posted at {formData.location || 'Pune'}, however, you may be required to travel to or work at other locations, including interstate or overseas. Your services are liable to be transferred to any other division, activity, geographical location, branch, Group Company, sister concern or subsidiary of this Company or any of its associates, clients, customers, presently in existence & operational or will be operational in future. In such an eventuality, you will be governed by the terms and conditions and the remunerations as applicable to such new place to which your services may be temporarily or permanently transferred and that you will, therefore, not be entitled to any additional compensation.
           </Text>
 
           {/* Responsibility Section */}
@@ -380,7 +435,7 @@ const AppointmentLetterPDF = ({ formData }) => {
           companyColor={formData.companyColor || '#FF0000'}
         />
         
-        <View style={commonStyles.contentContainer}>
+        <View style={{marginTop: 10}}>
           <Text style={appointmentStyles.listItem}>
             11. Your appointment is a full time assignment and you will not at any time engage, directly or indirectly, in any paid occupation or business outside the Company without obtaining prior written consent of the Company.
           </Text>
@@ -422,7 +477,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
       </Page>
 
-      {/* Page 4 - More conditions */}
+      {/* Page 4 - Final additional conditions and signing */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -434,30 +489,48 @@ const AppointmentLetterPDF = ({ formData }) => {
           companyColor={formData.companyColor || '#FF0000'}
         />
         
-        <View style={commonStyles.contentContainer}>
+        <View style={{marginTop: 10}}>
           <Text style={appointmentStyles.listItem}>
-            17. Company as and when required by the Company. If at any stage, you are found to be unfit by the Medical Officer for the job currently being done by you, then you are liable to be terminated on medical grounds.
+            17. Your appointment is a full time assignment and you will not at any time engage, directly or indirectly, in any paid occupation or business outside the Company without obtaining prior written consent of the Company.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            18. You will be solely responsible for the Company property assigned to you to discharge your duties. Loss of any of items would be recovered from you, as the Company may deem appropriate. On ceasing to be in the employment of this Company for any reason, you will promptly settle all the accounts including the return of all Company properties, tools, equipment's, documents, etc. without making or retaining any copies.
+            18. You will be required to submit with us, a copy of attested documents mentioned below within 3 working days of joining, which will be retained by the company as your personal history record:{'\n'}
+            • Educational certificate.{'\n'}
+            • Professional certificate.{'\n'}
+            • Appointment cum Joining/JD/Relieving/Service Certificate/Experience Certificate from your present & earlier company, if any.{'\n'}
+            • 3 passport size photographs{'\n'}
+            • Identity Proof (Any one from the PAN Card/Voter ID/Driving License/Aadhar/Passport){'\n'}
+            • Address Proof (Any one from Electricity Bill/Telephone Bill/Aadhar/Bank Passbook/Passport)
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            19. Upon leaving the employment you shall return to the company forthwith all the property, documents, drawings, designs, programs, data in whatever form, hardware, software, records etc belonging to the Company or its associates, subsidiary, clients, or customers.
+            19. This appointment shall be valid only if accepted on or before {formData.acceptanceDate || 'ACCEPTANCE DATE'}.
+          </Text>
+
+          <Text style={appointmentStyles.listItem}>
+            20. You are required to return this letter of appointment duly signed as a token of your acceptance of the terms and conditions.
           </Text>
           
-          <Text style={appointmentStyles.listItem}>
-            20. Applicable notice period subject to the maximum period specified will be determined by the Reporting Manager and HR based on business requirements and approved by the Management. Any balance of notice period beyond the last working date so agreed upon will be automatically waived.
+          <Text style={appointmentStyles.paragraph}>
+            We place on record your joining in the Company on {formData.joiningDate || 'JOINING DATE'} and look forward to your long & purposeful association with the Company.
           </Text>
           
-          <Text style={appointmentStyles.listItem}>
-            21. Where the employee does not serve the requisite notice period as per the last working day agreed upon by the Manager and HR, such exit would be treated as unclear exit. The employee does not have the right to terminate with sooner effect by tendering equivalent salary in lieu of any part of the applicable notice period.
-          </Text>
-          
-          <Text style={appointmentStyles.listItem}>
-            22. The age of retirement is 60 years for all employees on the permanent rolls of the company. Employees shall continue on the Company's rolls till and including the last day of the financial year in which they complete the age of 60 years. Continued service with the Company beyond the age of 60 will be solely as per the discretion of the management.
-          </Text>
+          <View style={appointmentStyles.signatureContainer}>
+            <View style={appointmentStyles.signatureBox}>
+              <Text style={appointmentStyles.signatureTitle}>FOR {formData.companyName?.toUpperCase() || 'COMPANY NAME'}</Text>
+              <View style={appointmentStyles.signatureSpace}></View>
+              <Text style={appointmentStyles.signatureName}>NAME</Text>
+              <Text style={appointmentStyles.signatureRole}>DESIGNATION</Text>
+            </View>
+            
+            <View style={appointmentStyles.signatureBox}>
+              <Text style={appointmentStyles.signatureTitle}>ACCEPTED & AGREED</Text>
+              <View style={appointmentStyles.signatureSpace}></View>
+              <Text style={appointmentStyles.signatureName}>{formData.employeeName?.toUpperCase() || 'EMPLOYEE NAME'}</Text>
+              <Text style={appointmentStyles.signatureDate}>DATE: {formData.joiningDate || 'JOINING DATE'}</Text>
+            </View>
+          </View>
         </View>
         
         {/* Footer */}
@@ -487,23 +560,23 @@ const AppointmentLetterPDF = ({ formData }) => {
           <Text style={appointmentStyles.sectionHeading}>Confidentiality</Text>
           
           <Text style={appointmentStyles.listItem}>
-            23. Without the prior consent of the Company in writing during the continuance of your employment, you shall not publish or cause to be published any publication or contribute any article or review to any newspaper, magazine or other publication whether for remuneration or otherwise on a subject in any way related to or concerning the Company's business, services, products, strategies or policies.
+            21. Without the prior consent of the Company in writing during the continuance of your employment, you shall not publish or cause to be published any publication or contribute any article or review to any newspaper, magazine or other publication whether for remuneration or otherwise on a subject in any way related to or concerning the Company's business, services, products, strategies or policies.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            24. If, during the period of employment with us, you achieve any inventions, process improvement, operational improvement or other processes/methods, likely to result in more efficient operation of any of the activities of the Company, the Company shall be entitled to use, utilize and exploit such improvement, and such rights shall stand to be automatically assigned to the Company.
+            22. If, during the period of employment with us, you achieve any inventions, process improvement, operational improvement or other processes/methods, likely to result in more efficient operation of any of the activities of the Company, the Company shall be entitled to use, utilize and exploit such improvement, and such rights shall stand to be automatically assigned to the Company.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            25. You have to treat the affairs of the Company and its customers of which you may be cognizant, particularly the products, quotations, specifications, trade secrets, systems, procedures or other policy information as strictly confidential.
+            23. You have to treat the affairs of the Company and its customers of which you may be cognizant, particularly the products, quotations, specifications, trade secrets, systems, procedures or other policy information as strictly confidential.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            26. During the period of your employment with the Company, you shall at all times observe secrecy in respect of any information of whatever nature be it technical, trade, business data, information of systems, designs, drawings existing programs or programs developed, Software, inventions made by you or any other employee of the Company, which you may acquire or which may come to your knowledge while during the currency of your employment. You shall not disclose the same to anyone except a Company's Officer authorized in that behalf. Even after you cease to be in our employment you shall not disclose the same to anyone.
+            24. During the period of your employment with the Company, you shall at all times observe secrecy in respect of any information of whatever nature be it technical, trade, business data, information of systems, designs, drawings existing programs or programs developed, Software, inventions made by you or any other employee of the Company, which you may acquire or which may come to your knowledge while during the currency of your employment. You shall not disclose the same to anyone except a Company's Officer authorized in that behalf. Even after you cease to be in our employment you shall not disclose the same to anyone.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            27. You shall assign the right and interest in any invention, improvement design or software development drawing made by you solely or in a group while in employment, and you shall perform all such acts, execute documents without any consideration for securing the Patent design copyright or trade mark or such or any other right or create title in the name of the Company, in relation to any product, service arising out of invention, improvement or software development as stated above.
+            25. You shall assign the right and interest in any invention, improvement design or software development drawing made by you solely or in a group while in employment, and you shall perform all such acts, execute documents without any consideration for securing the Patent design copyright or trade mark or such or any other right or create title in the name of the Company, in relation to any product, service arising out of invention, improvement or software development as stated above.
           </Text>
         </View>
         
@@ -534,27 +607,27 @@ const AppointmentLetterPDF = ({ formData }) => {
           <Text style={appointmentStyles.sectionHeading}>General</Text>
           
           <Text style={appointmentStyles.listItem}>
-            28. The Company is engaged in the business of providing various professional and other High End Services to its customers and clients. It is just and necessary to keep the operations in tandem with the needs of the customers and clients.
+            26. The Company is engaged in the business of providing various professional and other High End Services to its customers and clients. It is just and necessary to keep the operations in tandem with the needs of the customers and clients.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            29. Office working days are Monday to Friday. Office hours are generally 9:30 am to 6:30 pm however, your working hours may be flexible. You may be required to work in shifts as per the exigencies of work. The management shall have the sole right to change your working hours as per the exigencies of work, similarly your weekly off's shall also be flexible and shall be subject to change as per the exigencies of work.
+            27. Office working days are Monday to Friday. Office hours are generally 9:30 am to 6:30 pm however, your working hours may be flexible. You may be required to work in shifts as per the exigencies of work. The management shall have the sole right to change your working hours as per the exigencies of work, similarly your weekly off's shall also be flexible and shall be subject to change as per the exigencies of work.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            30. There shall be exceptions and flexibility with respect to working hours, leaves & holidays for accommodating needs of internal/external customers and clients& project needs and for those who are interfacing with the customers and clients.
+            28. There shall be exceptions and flexibility with respect to working hours, leaves & holidays for accommodating needs of internal/external customers and clients& project needs and for those who are interfacing with the customers and clients.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            31. Leave – You will be entitled to leave in accordance with the Leave Policy framed by the Company from time to time.
+            29. Leave – You will be entitled to leave in accordance with the Leave Policy framed by the Company from time to time.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            32. All the correspondence, communications by the company herein after shall be made either personally at work place or at the residential address given by you, at any one of the places at the discretion and convenience of the company. Should you change your residence, you shall forthwith inform the address in writing to the company.
+            30. All the correspondence, communications by the company herein after shall be made either personally at work place or at the residential address given by you, at any one of the places at the discretion and convenience of the company. Should you change your residence, you shall forthwith inform the address in writing to the company.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            33. Any dispute between yourself and the Company concerning or relating to or arising out of your appointment/employment shall be subject to the jurisdiction of {formData.location || 'Pune'}.
+            31. Any dispute between yourself and the Company concerning or relating to or arising out of your appointment/employment shall be subject to the jurisdiction of {formData.location || 'Pune'}.
           </Text>
 
           <Text style={[appointmentStyles.listItem, { marginTop: 15 }]}>
