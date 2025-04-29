@@ -304,18 +304,21 @@ const RelievingLetterPDF = ({ formData }) => {
         <CompanyHeaderComponent />
         
         {/* Hard-coded structure for page 2 that won't overflow */}
-        <View fixed>
+        <View fixed style={{ height: '700px', position: 'relative' }}>
           {/* Date and Place Section */}
-          <View style={{marginTop: 90}}>
+          <View style={{ position: 'absolute', top: '70px', left: 0, right: 0 }}>
             <Text style={{fontFamily: 'Arial', fontSize: 11}}>Date: _________________</Text>
             <Text style={{fontFamily: 'Arial', fontSize: 11, marginTop: 8}}>Place: {safeFormData.employeeSignPlace || 'Pune'}</Text>
           </View>
           
-          {/* Signature Section */}
+          {/* Signature Section - positioned with enough space above footer */}
           <View style={{
+            position: 'absolute',
+            top: '250px',
+            left: 0, 
+            right: 0,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginTop: 90,
           }}>
             <View style={{width: '45%'}}>
               <Text style={{fontFamily: 'Arial', fontSize: 11}}>Sign</Text>
@@ -331,8 +334,22 @@ const RelievingLetterPDF = ({ formData }) => {
           </View>
         </View>
         
-        {/* Footer */}
-        <FooterComponent />
+        {/* Footer - positioned relatively to ensure it's at the bottom with no overlap */}
+        <View style={{
+          position: 'absolute',
+          bottom: 30,
+          left: 50,
+          right: 50,
+          borderTopWidth: 1,
+          borderTopColor: safeFormData.companyColor || '#FF0000',
+          paddingTop: 5,
+          textAlign: 'center',
+        }}>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyName || 'COMPANY NAME'}</Text>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyAddressLine1 || 'COMPANY ADDRESS'}</Text>
+          <Text style={relievingLetterStyles.footerText}>+91 {safeFormData.companyPhone || 'PHONE NUMBER'}</Text>
+          <Text style={relievingLetterStyles.footerText}>{safeFormData.companyWebsite || 'WEBSITE'}</Text>
+        </View>
       </Page>
     </Document>
   );
