@@ -76,7 +76,7 @@ export const Signature = ({ name, designation, style }) => (
   </View>
 );
 
-// Footer Component - Fix font rendering issues
+// Footer Component - Center-aligned text like in current version
 export const Footer = ({ companyName, companyAddress, companyPhone, companyWebsite, companyColor }) => (
   <View style={commonStyles.footer}>
     <View style={[commonStyles.footerSeparator, { borderTopColor: companyColor || '#FF0000' }]} />

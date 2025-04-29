@@ -116,13 +116,14 @@ export const commonStyles = StyleSheet.create({
     bottom: 15,
     left: 20,
     right: 20,
-    textAlign: 'left',
+    textAlign: 'center',
     paddingTop: 5,
   },
   footerText: {
     fontSize: 10,
     marginBottom: 2,
     fontFamily: 'Times New Roman',
+    textAlign: 'center',
   },
   footerSeparator: {
     borderTop: '1pt solid #FF0000',
