@@ -10,7 +10,7 @@ export const CompanyHeader = ({ companyName, companyAddress, companyLogo, compan
         <Text 
           style={[
             commonStyles.companyName, 
-            { color: companyColor || '#FF0000', fontFamily: 'Times New Roman' }
+            { color: companyColor || '#FF0000', fontFamily: 'Calibri' }
           ]}
         >
           {companyName}
@@ -59,7 +59,7 @@ export const FormattedDate = ({ date, style }) => {
 // Addressee Component
 export const Addressee = ({ name, style }) => (
   <View style={{ marginBottom: 8, ...style }}>
-    <Text style={{ fontSize: 11.5, fontFamily: 'Times New Roman' }}>Dear {name},</Text>
+    <Text style={{ fontSize: 11.5, fontFamily: 'Calibri' }}>Dear {name},</Text>
   </View>
 );
 
@@ -71,8 +71,8 @@ export const Paragraph = ({ children, style }) => (
 // Signature Component
 export const Signature = ({ name, designation, style }) => (
   <View style={[commonStyles.signatureSection, style]}>
-    <Text style={{ marginBottom: 5, fontFamily: 'Times New Roman' }}>Signature</Text>
-    <Text style={{ marginTop: 15, fontFamily: 'Times New Roman' }}>{designation || 'Head - HR Dept'}</Text>
+    <Text style={{ marginBottom: 5, fontFamily: 'Calibri' }}>Signature</Text>
+    <Text style={{ marginTop: 15, fontFamily: 'Calibri' }}>{designation || 'Head - HR Dept'}</Text>
   </View>
 );
 
@@ -105,18 +105,18 @@ const tableStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 11.5,
     marginBottom: 2,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   tableCell: {
     flex: 3,
     fontSize: 11.5,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   tableCellValue: {
     flex: 2,
     textAlign: 'right',
     fontSize: 11.5,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
   totalRow: {
     flexDirection: 'row',
@@ -127,13 +127,13 @@ const tableStyles = StyleSheet.create({
     paddingVertical: 4,
     fontWeight: 'bold',
     fontSize: 11.5,
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Calibri',
   },
 });
 
 export const SalaryTable = ({ components }) => (
   <View style={tableStyles.table}>
-    <Text style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 11.5, fontFamily: 'Times New Roman' }}>Compensation Heads</Text>
+    <Text style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 11.5, fontFamily: 'Calibri' }}>Compensation Heads</Text>
     
     {components && components.slice(0, -1).map((item, index) => (
       <View key={index} style={tableStyles.tableRow}>
