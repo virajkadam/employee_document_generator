@@ -200,31 +200,31 @@ const AppraisalLetterPDF = ({ formData }) => {
             {/* Basic Row */}
             <View style={appraisalLetterStyles.tableRow}>
               <Text style={appraisalLetterStyles.tableCol1}>Basic</Text>
-              <Text style={appraisalLetterStyles.tableCol2}>₹{safeFormData.basic || '0.00'}</Text>
+              <Text style={appraisalLetterStyles.tableCol2}>Rs {safeFormData.basic || '0.00'}</Text>
             </View>
             
             {/* DA Row */}
             <View style={appraisalLetterStyles.tableRow}>
               <Text style={appraisalLetterStyles.tableCol1}>Dearness Allowance</Text>
-              <Text style={appraisalLetterStyles.tableCol2}>₹{safeFormData.da || '0.00'}</Text>
+              <Text style={appraisalLetterStyles.tableCol2}>Rs {safeFormData.da || '0.00'}</Text>
             </View>
             
             {/* Conveyance Row */}
             <View style={appraisalLetterStyles.tableRow}>
               <Text style={appraisalLetterStyles.tableCol1}>Conveyance Allowance</Text>
-              <Text style={appraisalLetterStyles.tableCol2}>₹{safeFormData.conveyance || '0.00'}</Text>
+              <Text style={appraisalLetterStyles.tableCol2}>Rs {safeFormData.conveyance || '0.00'}</Text>
             </View>
             
             {/* Other Row */}
             <View style={appraisalLetterStyles.tableRow}>
               <Text style={appraisalLetterStyles.tableCol1}>Other allowance</Text>
-              <Text style={appraisalLetterStyles.tableCol2}>₹{safeFormData.other || '0.00'}</Text>
+              <Text style={appraisalLetterStyles.tableCol2}>Rs {safeFormData.other || '0.00'}</Text>
             </View>
             
             {/* Total Row */}
             <View style={appraisalLetterStyles.tableRowTotal}>
               <Text style={appraisalLetterStyles.tableCol1}>Monthly Total</Text>
-              <Text style={appraisalLetterStyles.tableCol2}>₹{safeFormData.total || '0.00'}</Text>
+              <Text style={appraisalLetterStyles.tableCol2}>Rs {safeFormData.total || '0.00'}</Text>
             </View>
           </View>
           
