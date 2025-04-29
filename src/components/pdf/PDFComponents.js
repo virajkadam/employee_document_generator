@@ -76,18 +76,18 @@ export const Signature = ({ name, designation, style }) => (
   </View>
 );
 
-// Footer Component
+// Footer Component - Fix font rendering issues
 export const Footer = ({ companyName, companyAddress, companyPhone, companyWebsite, companyColor }) => (
   <View style={commonStyles.footer}>
     <View style={[commonStyles.footerSeparator, { borderTopColor: companyColor || '#FF0000' }]} />
-    <Text style={{ fontSize: 10, marginBottom: 2 }}>{companyName}</Text>
-    <Text style={{ fontSize: 10, marginBottom: 2 }}>{companyAddress}</Text>
-    <Text style={{ fontSize: 10, marginBottom: 2 }}>{companyPhone}</Text>
-    <Text style={{ fontSize: 10 }}>{companyWebsite}</Text>
+    <Text style={commonStyles.footerText}>{companyName}</Text>
+    <Text style={commonStyles.footerText}>{companyAddress}</Text>
+    <Text style={commonStyles.footerText}>{companyPhone}</Text>
+    <Text style={commonStyles.footerText}>{companyWebsite}</Text>
   </View>
 );
 
-// Table Component for Salary/Compensation
+// Table Component for Salary/Compensation - Fix number rendering and borders
 const tableStyles = StyleSheet.create({
   table: {
     width: '100%',
@@ -114,7 +114,7 @@ const tableStyles = StyleSheet.create({
     flex: 2,
     textAlign: 'right',
     fontSize: 12,
-    fontFamily: 'Courier',
+    fontFamily: 'Times New Roman',
   },
   totalRow: {
     flexDirection: 'row',
@@ -132,16 +132,18 @@ export const SalaryTable = ({ components }) => (
   <View style={tableStyles.table}>
     <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>Compensation Heads</Text>
     
-    {components.map((item, index) => (
+    {components && components.slice(0, -1).map((item, index) => (
       <View key={index} style={tableStyles.tableRow}>
         <Text style={tableStyles.tableCell}>{item.label}</Text>
         <Text style={tableStyles.tableCellValue}>: ₹{item.value}</Text>
       </View>
     ))}
     
-    <View style={tableStyles.totalRow}>
-      <Text style={tableStyles.tableCell}>Annual Total</Text>
-      <Text style={tableStyles.tableCellValue}>: ₹{components[components.length - 1].total}</Text>
-    </View>
+    {components && components.length > 0 && (
+      <View style={tableStyles.totalRow}>
+        <Text style={tableStyles.tableCell}>Annual Total</Text>
+        <Text style={tableStyles.tableCellValue}>: ₹{components[components.length - 1].total}</Text>
+      </View>
+    )}
   </View>
 ); 

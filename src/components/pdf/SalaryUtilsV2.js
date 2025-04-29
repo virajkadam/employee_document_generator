@@ -76,13 +76,15 @@ export const calculateSalaryComponentsV2 = (lpa) => {
 
 // Function to format currency with comma separators for Indian number system
 export const formatIndianCurrency = (amount) => {
-  // Format without decimals for whole numbers as in the sample PDF
-  // Convert to string and split the decimal part if present
-  const [wholePart, decimalPart] = amount.toString().split('.');
+  // Ensure we're working with a number
+  amount = amount || 0;
+  
+  // Convert to integer to avoid decimal formatting issues
+  const amountInt = Math.round(Number(amount));
   
   // Format the whole part with commas for Indian number system
   let formattedWhole = '';
-  const wholePartStr = wholePart.toString();
+  const wholePartStr = amountInt.toString();
   
   // First add comma after first 3 digits from right
   let remaining = wholePartStr;
