@@ -104,6 +104,6 @@ export const formatIndianCurrency = (amount) => {
     remaining = remaining.substring(0, remaining.length - chunkSize);
   }
   
-  // For the PDF output, we don't include decimal places as shown in the sample
-  return formattedWhole;
+  // Add the decimal part for better alignment with original PDF
+  return formattedWhole + '.00';
 }; 

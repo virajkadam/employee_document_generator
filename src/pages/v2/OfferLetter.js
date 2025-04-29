@@ -40,6 +40,7 @@ const OfferLetterPDF = ({ formData }) => {
   const formatSalaryValues = () => {
     if (!formData.salaryComponentsV2) return null;
     
+    // Format with exact spacing and formatting as in current PDF
     return [
       {
         label: 'Basic',

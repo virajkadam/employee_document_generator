@@ -138,14 +138,14 @@ export const SalaryTable = ({ components }) => (
     {components && components.slice(0, -1).map((item, index) => (
       <View key={index} style={tableStyles.tableRow}>
         <Text style={tableStyles.tableCell}>{item.label}</Text>
-        <Text style={tableStyles.tableCellValue}>: ₹{item.value}</Text>
+        <Text style={tableStyles.tableCellValue}>: Rs. {item.value}</Text>
       </View>
     ))}
     
     {components && components.length > 0 && (
       <View style={tableStyles.totalRow}>
         <Text style={tableStyles.tableCell}>Annual Total</Text>
-        <Text style={tableStyles.tableCellValue}>: ₹{components[components.length - 1].total}</Text>
+        <Text style={tableStyles.tableCellValue}>: Rs. {components[components.length - 1].total}</Text>
       </View>
     )}
   </View>
