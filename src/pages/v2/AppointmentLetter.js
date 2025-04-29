@@ -12,7 +12,7 @@ import { formatIndianCurrency, numberToWords } from '../../components/pdf/Salary
 const appointmentStyles = StyleSheet.create({
   table: {
     width: '100%',
-    marginVertical: 10,
+    marginVertical: 8,
     borderWidth: 1,
     borderColor: '#000',
     borderStyle: 'solid',
@@ -25,7 +25,7 @@ const appointmentStyles = StyleSheet.create({
   },
   tableCellHeader: {
     width: '40%',
-    padding: 8,
+    padding: 6,
     fontFamily: 'Times New Roman',
     fontWeight: 'bold',
     fontSize: 12,
@@ -35,54 +35,54 @@ const appointmentStyles = StyleSheet.create({
   },
   tableCell: {
     width: '60%',
-    padding: 8,
+    padding: 6,
     fontFamily: 'Times New Roman',
     fontSize: 12,
   },
   sectionHeading: {
     fontSize: 12,
     fontWeight: 'bold',
-    marginTop: 15,
-    marginBottom: 8,
+    marginTop: 12,
+    marginBottom: 6,
     fontFamily: 'Times New Roman',
   },
   listItem: {
     fontSize: 12,
-    marginBottom: 8,
+    marginBottom: 6,
     fontFamily: 'Times New Roman',
     textAlign: 'justify',
     lineHeight: 1.5,
   },
   to: {
     fontSize: 12,
-    marginBottom: 4,
+    marginBottom: 3,
     fontFamily: 'Times New Roman',
   },
   addresseeName: {
     fontSize: 12,
-    marginBottom: 15,
+    marginBottom: 12,
     fontFamily: 'Times New Roman',
   },
   subject: {
     fontSize: 12,
     fontWeight: 'bold',
-    marginBottom: 15,
+    marginBottom: 12,
     fontFamily: 'Times New Roman',
   },
   appointmentHeading: {
     fontSize: 12,
     fontWeight: 'bold',
     marginTop: 0,
-    marginBottom: 5,
+    marginBottom: 4,
     fontFamily: 'Times New Roman',
   },
   paragraph: {
     fontSize: 12,
-    marginBottom: 15,
+    marginBottom: 12,
     fontFamily: 'Times New Roman',
   },
   signatureContainer: {
-    marginTop: 20,
+    marginTop: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -97,7 +97,7 @@ const appointmentStyles = StyleSheet.create({
     fontFamily: 'Times New Roman',
   },
   signatureSpace: {
-    height: 30,
+    height: 25,
   },
   signatureName: {
     fontSize: 13,
@@ -321,7 +321,7 @@ const AppointmentLetterPDF = ({ formData }) => {
 
   return (
     <Document>
-      {/* Page 1 */}
+      {/* Page 1 - Introduction & Appointment Details */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -362,7 +362,7 @@ const AppointmentLetterPDF = ({ formData }) => {
             ctcInWords={formData.ctcInWords || ''}
           />
           
-          {/* Salary & Benefits */}
+          {/* Salary & Benefits - Combined on first page if space allows */}
           <Text style={appointmentStyles.sectionHeading}>Salary & Benefits</Text>
           
           <Text style={appointmentStyles.listItem}>
@@ -371,6 +371,10 @@ const AppointmentLetterPDF = ({ formData }) => {
           
           <Text style={appointmentStyles.listItem}>
             2. Your salary, benefits, level / grade fitment, level of earnings within your group is absolutely personal to you, which is purely based on your academic background, experience, potential and competence as assessed by the Company. As such comparison between individual employees is invidious. Such information is strictly confidential to you.
+          </Text>
+          
+          <Text style={appointmentStyles.listItem}>
+            3. Your performance may be reviewed by the Company at least once annually. Any increase or decrease in your Remuneration is at the absolute discretion of Company and will depend on factors such as your performance and the performance of Company's business as a whole. The Company is under no obligation to increase the Remuneration as a result of any review.
           </Text>
         </View>
         
@@ -384,7 +388,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
       </Page>
 
-      {/* Page 2 - Benefits continued */}
+      {/* Page 2 - Combined Benefits, Posting, and Responsibility */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -397,10 +401,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
         
         <View style={{marginTop: 10}}>
-          <Text style={appointmentStyles.listItem}>
-            3. Your performance may be reviewed by the Company at least once annually. Any increase or decrease in your Remuneration is at the absolute discretion of Company and will depend on factors such as your performance and the performance of Company's business as a whole. The Company is under no obligation to increase the Remuneration as a result of any review.
-          </Text>
-          
+          {/* Continuing Salary & Benefits */}
           <Text style={appointmentStyles.listItem}>
             4. Your Remuneration will be paid monthly directly into a bank account nominated by you and acceptable to Company.
           </Text>
@@ -434,6 +435,10 @@ const AppointmentLetterPDF = ({ formData }) => {
           <Text style={appointmentStyles.listItem}>
             10. You are, by virtue of employment with this Company, required to do all the work allied, ancillary related or incidental to the main job. Similarly, you may be asked to do any job within your competence depending upon the exigencies of the situation.
           </Text>
+          
+          <Text style={appointmentStyles.listItem}>
+            11. Your appointment is a full time assignment and you will not at any time engage, directly or indirectly, in any paid occupation or business outside the Company without obtaining prior written consent of the Company.
+          </Text>
         </View>
         
         {/* Footer */}
@@ -446,7 +451,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
       </Page>
 
-      {/* Page 3 - Additional conditions */}
+      {/* Page 3 - Combined Training and Termination Sections */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -459,10 +464,6 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
         
         <View style={{marginTop: 10}}>
-          <Text style={appointmentStyles.listItem}>
-            11. Your appointment is a full time assignment and you will not at any time engage, directly or indirectly, in any paid occupation or business outside the Company without obtaining prior written consent of the Company.
-          </Text>
-
           {/* Training Section */}
           <Text style={appointmentStyles.sectionHeading}>Training</Text>
           
@@ -500,7 +501,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
       </Page>
 
-      {/* Page 4 - Final additional conditions and signing */}
+      {/* Page 4 - Document Submission and Acceptance */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -514,11 +515,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         
         <View style={{marginTop: 10}}>
           <Text style={appointmentStyles.listItem}>
-            17. Your appointment is a full time assignment and you will not at any time engage, directly or indirectly, in any paid occupation or business outside the Company without obtaining prior written consent of the Company.
-          </Text>
-          
-          <Text style={appointmentStyles.listItem}>
-            18. You will be required to submit with us, a copy of attested documents mentioned below within 3 working days of joining, which will be retained by the company as your personal history record:
+            17. You will be required to submit with us, a copy of attested documents mentioned below within 3 working days of joining, which will be retained by the company as your personal history record:
           </Text>
           
           {/* Separate bullet points for better spacing and consistent font size */}
@@ -532,11 +529,11 @@ const AppointmentLetterPDF = ({ formData }) => {
           </View>
           
           <Text style={appointmentStyles.listItem}>
-            19. This appointment shall be valid only if accepted on or before {formData.acceptanceDate || 'ACCEPTANCE DATE'}.
+            18. This appointment shall be valid only if accepted on or before {formData.acceptanceDate || 'ACCEPTANCE DATE'}.
           </Text>
 
           <Text style={appointmentStyles.listItem}>
-            20. You are required to return this letter of appointment duly signed as a token of your acceptance of the terms and conditions.
+            19. You are required to return this letter of appointment duly signed as a token of your acceptance of the terms and conditions.
           </Text>
           
           <Text style={appointmentStyles.paragraph}>
@@ -570,7 +567,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
       </Page>
 
-      {/* Page 5 - Confidentiality */}
+      {/* Page 5 - Combined Confidentiality and General Sections */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -587,23 +584,34 @@ const AppointmentLetterPDF = ({ formData }) => {
           <Text style={[appointmentStyles.sectionHeading, {fontSize: 12, fontWeight: 'bold'}]}>Confidentiality</Text>
           
           <Text style={appointmentStyles.listItem}>
-            21. Without the prior consent of the Company in writing during the continuance of your employment, you shall not publish or cause to be published any publication or contribute any article or review to any newspaper, magazine or other publication whether for remuneration or otherwise on a subject in any way related to or concerning the Company's business, services, products, strategies or policies.
+            20. Without the prior consent of the Company in writing during the continuance of your employment, you shall not publish or cause to be published any publication or contribute any article or review to any newspaper, magazine or other publication whether for remuneration or otherwise on a subject in any way related to or concerning the Company's business, services, products, strategies or policies.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            22. If, during the period of employment with us, you achieve any inventions, process improvement, operational improvement or other processes/methods, likely to result in more efficient operation of any of the activities of the Company, the Company shall be entitled to use, utilize and exploit such improvement, and such rights shall stand to be automatically assigned to the Company.
+            21. If, during the period of employment with us, you achieve any inventions, process improvement, operational improvement or other processes/methods, likely to result in more efficient operation of any of the activities of the Company, the Company shall be entitled to use, utilize and exploit such improvement, and such rights shall stand to be automatically assigned to the Company.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            23. You have to treat the affairs of the Company and its customers of which you may be cognizant, particularly the products, quotations, specifications, trade secrets, systems, procedures or other policy information as strictly confidential.
+            22. You have to treat the affairs of the Company and its customers of which you may be cognizant, particularly the products, quotations, specifications, trade secrets, systems, procedures or other policy information as strictly confidential.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            24. During the period of your employment with the Company, you shall at all times observe secrecy in respect of any information of whatever nature be it technical, trade, business data, information of systems, designs, drawings existing programs or programs developed, Software, inventions made by you or any other employee of the Company, which you may acquire or which may come to your knowledge while during the currency of your employment. You shall not disclose the same to anyone except a Company's Officer authorized in that behalf. Even after you cease to be in our employment you shall not disclose the same to anyone.
+            23. During the period of your employment with the Company, you shall at all times observe secrecy in respect of any information of whatever nature be it technical, trade, business data, information of systems, designs, drawings existing programs or programs developed, Software, inventions made by you or any other employee of the Company, which you may acquire or which may come to your knowledge while during the currency of your employment. You shall not disclose the same to anyone except a Company's Officer authorized in that behalf. Even after you cease to be in our employment you shall not disclose the same to anyone.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            25. You shall assign the right and interest in any invention, improvement design or software development drawing made by you solely or in a group while in employment, and you shall perform all such acts, execute documents without any consideration for securing the Patent design copyright or trade mark or such or any other right or create title in the name of the Company, in relation to any product, service arising out of invention, improvement or software development as stated above.
+            24. You shall assign the right and interest in any invention, improvement design or software development drawing made by you solely or in a group while in employment, and you shall perform all such acts, execute documents without any consideration for securing the Patent design copyright or trade mark or such or any other right or create title in the name of the Company, in relation to any product, service arising out of invention, improvement or software development as stated above.
+          </Text>
+
+          {/* General Section - Combined on same page */}
+          <Text style={appointmentStyles.sectionHeading}>General</Text>
+          
+          <Text style={appointmentStyles.listItem}>
+            25. The Company is engaged in the business of providing various professional and other High End Services to its customers and clients. It is just and necessary to keep the operations in tandem with the needs of the customers and clients.
+          </Text>
+          
+          <Text style={appointmentStyles.listItem}>
+            26. Office working days are Monday to Friday. Office hours are generally 9:30 am to 6:30 pm however, your working hours may be flexible. You may be required to work in shifts as per the exigencies of work. The management shall have the sole right to change your working hours as per the exigencies of work, similarly your weekly off's shall also be flexible and shall be subject to change as per the exigencies of work.
           </Text>
         </View>
         
@@ -617,7 +625,7 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
       </Page>
 
-      {/* Page 6 - General & Closing */}
+      {/* Page 6 - Final General Information and Salary Annexure */}
       <Page size="A4" style={commonStyles.page}>
         {/* Company Header */}
         <CompanyHeader
@@ -630,31 +638,21 @@ const AppointmentLetterPDF = ({ formData }) => {
         />
         
         <View style={commonStyles.contentContainer}>
-          {/* General Section */}
-          <Text style={appointmentStyles.sectionHeading}>General</Text>
-          
+          {/* Continuing General Section */}
           <Text style={appointmentStyles.listItem}>
-            26. The Company is engaged in the business of providing various professional and other High End Services to its customers and clients. It is just and necessary to keep the operations in tandem with the needs of the customers and clients.
+            27. There shall be exceptions and flexibility with respect to working hours, leaves & holidays for accommodating needs of internal/external customers and clients& project needs and for those who are interfacing with the customers and clients.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            27. Office working days are Monday to Friday. Office hours are generally 9:30 am to 6:30 pm however, your working hours may be flexible. You may be required to work in shifts as per the exigencies of work. The management shall have the sole right to change your working hours as per the exigencies of work, similarly your weekly off's shall also be flexible and shall be subject to change as per the exigencies of work.
+            28. Leave – You will be entitled to leave in accordance with the Leave Policy framed by the Company from time to time.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            28. There shall be exceptions and flexibility with respect to working hours, leaves & holidays for accommodating needs of internal/external customers and clients& project needs and for those who are interfacing with the customers and clients.
+            29. All the correspondence, communications by the company herein after shall be made either personally at work place or at the residential address given by you, at any one of the places at the discretion and convenience of the company. Should you change your residence, you shall forthwith inform the address in writing to the company.
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            29. Leave – You will be entitled to leave in accordance with the Leave Policy framed by the Company from time to time.
-          </Text>
-          
-          <Text style={appointmentStyles.listItem}>
-            30. All the correspondence, communications by the company herein after shall be made either personally at work place or at the residential address given by you, at any one of the places at the discretion and convenience of the company. Should you change your residence, you shall forthwith inform the address in writing to the company.
-          </Text>
-          
-          <Text style={appointmentStyles.listItem}>
-            31. Any dispute between yourself and the Company concerning or relating to or arising out of your appointment/employment shall be subject to the jurisdiction of {formData.location || 'Pune'}.
+            30. Any dispute between yourself and the Company concerning or relating to or arising out of your appointment/employment shall be subject to the jurisdiction of {formData.location || 'Pune'}.
           </Text>
 
           <Text style={[appointmentStyles.listItem, { marginTop: 15 }]}>

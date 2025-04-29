@@ -52,7 +52,7 @@ Font.register({
 // Common styles for all PDF documents
 export const commonStyles = StyleSheet.create({
   page: {
-    padding: '12mm 20mm',
+    padding: '10mm 20mm',
     backgroundColor: 'white',
     width: '210mm',
     height: '297mm',
@@ -60,13 +60,13 @@ export const commonStyles = StyleSheet.create({
     fontFamily: 'Times New Roman',
   },
   section: {
-    marginBottom: 8,
+    marginBottom: 6,
   },
   companyHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   companyName: {
     fontSize: 18,
@@ -90,34 +90,34 @@ export const commonStyles = StyleSheet.create({
     borderBottom: '1pt solid #FF0000',
     width: '100%',
     marginTop: 2,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   letterTitle: {
     fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10,
+    marginVertical: 8,
     fontFamily: 'Times New Roman',
   },
   letterDate: {
-    marginBottom: 8,
+    marginBottom: 6,
     fontSize: 12,
     fontFamily: 'Times New Roman',
   },
   letterParagraph: {
     textAlign: 'justify',
-    marginBottom: 8,
+    marginBottom: 6,
     fontSize: 11.5,
     lineHeight: 1.5,
     fontFamily: 'Times New Roman',
   },
   footer: {
     position: 'absolute',
-    bottom: 15,
+    bottom: 10,
     left: 20,
     right: 20,
     textAlign: 'center',
-    paddingTop: 5,
+    paddingTop: 4,
   },
   footerText: {
     fontSize: 10,
@@ -128,17 +128,21 @@ export const commonStyles = StyleSheet.create({
   footerSeparator: {
     borderTop: '1pt solid #FF0000',
     width: '100%',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   signatureSection: {
-    marginTop: 15,
+    marginTop: 12,
     fontSize: 12,
     fontFamily: 'Times New Roman',
   },
   signatureLine: {
-    marginTop: 20,
+    marginTop: 15,
     borderTop: '1pt solid black',
     width: 200,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    marginTop: 8,
   },
 });
 
