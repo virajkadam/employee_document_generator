@@ -91,19 +91,23 @@ const appointmentStyles = StyleSheet.create({
     alignItems: 'center',
   },
   signatureTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5,
     fontFamily: 'Times New Roman',
   },
   signatureSpace: {
-    height: 20,
+    height: 30,
   },
   signatureName: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'Times New Roman',
   },
   signatureDate: {
+    fontSize: 12,
+    fontFamily: 'Times New Roman',
+  },
+  signatureRole: {
     fontSize: 12,
     fontFamily: 'Times New Roman',
   },
@@ -524,8 +528,8 @@ const AppointmentLetterPDF = ({ formData }) => {
             <View style={appointmentStyles.signatureBox}>
               <Text style={appointmentStyles.signatureTitle}>FOR {formData.companyName?.toUpperCase() || 'COMPANY NAME'}</Text>
               <View style={appointmentStyles.signatureSpace}></View>
-              <Text style={appointmentStyles.signatureName}>NAME</Text>
-              <Text style={appointmentStyles.signatureRole}>DESIGNATION</Text>
+              <Text style={appointmentStyles.signatureName}>{formData.companyHR || 'HR Manager'}</Text>
+              <Text style={appointmentStyles.signatureRole}>Head - HR Dept</Text>
             </View>
             
             <View style={appointmentStyles.signatureBox}>
