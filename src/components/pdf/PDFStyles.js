@@ -6,14 +6,14 @@ Font.register({
   family: 'Calibri',
   fonts: [
     {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/calibri@1.0.4/Calibri.ttf',
+      src: 'https://db.onlinewebfonts.com/t/267bd6adfcf4ef37a3fb97092614dda1.ttf',
     },
     {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/calibri-bold@1.0.4/Calibri Bold.ttf',
+      src: 'https://db.onlinewebfonts.com/t/267bd6adfcf4ef37a3fb97092614dda1.ttf',
       fontWeight: 'bold',
     },
     {
-      src: 'https://cdn.jsdelivr.net/npm/@canvas-fonts/calibri-italic@1.0.4/Calibri Italic.ttf',
+      src: 'https://db.onlinewebfonts.com/t/267bd6adfcf4ef37a3fb97092614dda1.ttf',
       fontStyle: 'italic',
     },
   ],
