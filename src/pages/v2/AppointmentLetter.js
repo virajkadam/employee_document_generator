@@ -218,7 +218,7 @@ const calculateSalaryComponents = (lpa) => {
 const formatSalaryValues = (salaryComponents, includePF) => {
   if (!salaryComponents) return [];
 
-  // Format values for display
+  // Format values for display with proper decimal places
   const items = [
     { label: 'Basic', value: formatIndianCurrency(salaryComponents.basic) },
     { label: 'Education Allowance', value: formatIndianCurrency(salaryComponents.educationAllowance) },
@@ -495,14 +495,18 @@ const AppointmentLetterPDF = ({ formData }) => {
           </Text>
           
           <Text style={appointmentStyles.listItem}>
-            18. You will be required to submit with us, a copy of attested documents mentioned below within 3 working days of joining, which will be retained by the company as your personal history record:{'\n'}
-            • Educational certificate.{'\n'}
-            • Professional certificate.{'\n'}
-            • Appointment cum Joining/JD/Relieving/Service Certificate/Experience Certificate from your present & earlier company, if any.{'\n'}
-            • 3 passport size photographs{'\n'}
-            • Identity Proof (Any one from the PAN Card/Voter ID/Driving License/Aadhar/Passport){'\n'}
-            • Address Proof (Any one from Electricity Bill/Telephone Bill/Aadhar/Bank Passbook/Passport)
+            18. You will be required to submit with us, a copy of attested documents mentioned below within 3 working days of joining, which will be retained by the company as your personal history record:
           </Text>
+          
+          {/* Separate bullet points for better spacing and consistent font size */}
+          <View style={{marginLeft: 20, marginBottom: 8}}>
+            <Text style={[appointmentStyles.listItem, {marginBottom: 4}]}>• Educational certificate.</Text>
+            <Text style={[appointmentStyles.listItem, {marginBottom: 4}]}>• Professional certificate.</Text>
+            <Text style={[appointmentStyles.listItem, {marginBottom: 4}]}>• Appointment cum Joining/JD/Relieving/Service Certificate/Experience Certificate from your present & earlier company, if any.</Text>
+            <Text style={[appointmentStyles.listItem, {marginBottom: 4}]}>• 3 passport size photographs</Text>
+            <Text style={[appointmentStyles.listItem, {marginBottom: 4}]}>• Identity Proof (Any one from the PAN Card/Voter ID/Driving License/Aadhar/Passport)</Text>
+            <Text style={[appointmentStyles.listItem, {marginBottom: 4}]}>• Address Proof (Any one from Electricity Bill/Telephone Bill/Aadhar/Bank Passbook/Passport)</Text>
+          </View>
           
           <Text style={appointmentStyles.listItem}>
             19. This appointment shall be valid only if accepted on or before {formData.acceptanceDate || 'ACCEPTANCE DATE'}.
@@ -555,9 +559,9 @@ const AppointmentLetterPDF = ({ formData }) => {
           companyColor={formData.companyColor || '#FF0000'}
         />
         
-        <View style={commonStyles.contentContainer}>
+        <View style={{marginTop: 10}}>
           {/* Confidentiality Section */}
-          <Text style={appointmentStyles.sectionHeading}>Confidentiality</Text>
+          <Text style={[appointmentStyles.sectionHeading, {fontSize: 12, fontWeight: 'bold'}]}>Confidentiality</Text>
           
           <Text style={appointmentStyles.listItem}>
             21. Without the prior consent of the Company in writing during the continuance of your employment, you shall not publish or cause to be published any publication or contribute any article or review to any newspaper, magazine or other publication whether for remuneration or otherwise on a subject in any way related to or concerning the Company's business, services, products, strategies or policies.
@@ -699,7 +703,7 @@ const AppointmentLetterPDF = ({ formData }) => {
                   const annualValue = parseFloat(item.value.replace(/,/g, ''));
                   const monthlyValue = (annualValue / 12).toFixed(2);
                   
-                  // Format with commas
+                  // Format with commas for Indian number system
                   const formatWithCommas = (num) => {
                     const parts = num.toString().split('.');
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -709,8 +713,8 @@ const AppointmentLetterPDF = ({ formData }) => {
                   return (
                     <View key={index} style={tableStyles.tableRow}>
                       <Text style={tableStyles.tableCell}>{item.label}</Text>
-                      <Text style={tableStyles.tableCellValue}>{formatWithCommas(monthlyValue)}</Text>
-                      <Text style={tableStyles.tableCellValue}>{item.value}</Text>
+                      <Text style={tableStyles.tableCellValue}>Rs. {formatWithCommas(monthlyValue)}</Text>
+                      <Text style={tableStyles.tableCellValue}>Rs. {item.value}</Text>
                     </View>
                   );
                 })}
@@ -719,9 +723,9 @@ const AppointmentLetterPDF = ({ formData }) => {
                   <View style={tableStyles.totalRow}>
                     <Text style={tableStyles.tableCell}>TOTAL</Text>
                     <Text style={tableStyles.tableCellValue}>
-                      {(parseFloat(salaryComponents[salaryComponents.length - 1].total.replace(/,/g, '')) / 12).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      Rs. {(parseFloat(salaryComponents[salaryComponents.length - 1].total.replace(/,/g, '')) / 12).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     </Text>
-                    <Text style={tableStyles.tableCellValue}>{salaryComponents[salaryComponents.length - 1].total}</Text>
+                    <Text style={tableStyles.tableCellValue}>Rs. {salaryComponents[salaryComponents.length - 1].total}</Text>
                   </View>
                 )}
               </View>

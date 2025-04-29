@@ -14,7 +14,7 @@ export const CompanyHeader = ({ companyName, companyAddress, companyLogo, compan
           ]}
         >
           {companyName}
-        </Text>
+        </Text>f
         <Text style={commonStyles.companyAddress}>{companyAddress}</Text>
         <Text style={commonStyles.companyAddress}>Phone: {companyPhone}</Text>
         <Text style={commonStyles.companyAddress}>{companyWebsite}</Text>
