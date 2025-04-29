@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { CompanyHeader, FormattedDate, Paragraph, Signature, Footer } from '../../components/pdf/PDFComponents';
 import { commonStyles } from '../../components/pdf/PDFStyles';
-import { formatIndianCurrency, convertToWords } from '../../components/pdf/SalaryUtilsV2';
+import { formatIndianCurrency, numberToWords } from '../../components/pdf/SalaryUtilsV2';
 
 // Create a styled component for the appointment table
 const appointmentStyles = StyleSheet.create({
@@ -767,14 +767,14 @@ function AppointmentLetterV2() {
           location: selectedCandidate.location,
           joiningDate: selectedCandidate.DateOfJoining,
           ctc: selectedCandidate.packageLPA,
-          ctcInWords: `Rupees ${convertToWords(selectedCandidate.packageLPA * 100000)} Only`,
+          ctcInWords: `Rupees ${numberToWords(selectedCandidate.packageLPA * 100000)} Only`,
           salaryComponents: salaryComponents
         }));
       }
     } else if (name === 'ctc') {
       const ctcValue = parseFloat(value);
       const ctcInWords = !isNaN(ctcValue) ? 
-        `Rupees ${convertToWords(ctcValue * 100000)} Only` : '';
+        `Rupees ${numberToWords(ctcValue * 100000)} Only` : '';
       
       const salaryComponents = calculateSalaryComponents(ctcValue);
       
