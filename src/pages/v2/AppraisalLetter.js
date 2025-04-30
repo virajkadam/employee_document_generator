@@ -98,6 +98,35 @@ const appraisalLetterStyles = StyleSheet.create({
   }
 });
 
+// Watermark styles
+const watermarkStyles = StyleSheet.create({
+  watermarkContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  watermarkImage: {
+    width: '80%',
+    height: 'auto',
+    opacity: 0.17,
+  }
+});
+
+// Watermark component
+const Watermark = ({ logoSrc }) => {
+  if (!logoSrc) return null;
+  return (
+    <View style={watermarkStyles.watermarkContainer}>
+      <Image src={logoSrc} style={watermarkStyles.watermarkImage} />
+    </View>
+  );
+};
+
 // Appraisal Letter PDF Document Component
 const AppraisalLetterPDF = ({ formData }) => {
   // Helper to safely access formData
@@ -121,6 +150,8 @@ const AppraisalLetterPDF = ({ formData }) => {
   return (
     <Document>
       <Page size="A4" wrap={false} style={{...commonStyles.page, ...appraisalLetterStyles.page}}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
         {/* Company Header - More compact */}
         <View style={{
           flexDirection: 'row',
