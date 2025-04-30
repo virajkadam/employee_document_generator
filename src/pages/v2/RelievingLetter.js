@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PDFViewer, PDFDownloadLink, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
-import { db } from './firebase';
+import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { ArrowLeft, Download } from "lucide-react";
 import { CompanyHeader, FormattedDate, Paragraph, Signature, Footer } from '../../components/pdf/PDFComponents';
 import { commonStyles } from '../../components/pdf/PDFStyles';
+import { getStorage } from "firebase/storage";
+import { ref, getDownloadURL } from "firebase/storage";
 
-// Define styles for the RelievingLetter
+// Initialize Firebase Storage
+const fireStorage = getStorage();
+
+// PDF Styles
 const relievingLetterStyles = StyleSheet.create({
   page: {
     padding: '30px 50px',
@@ -111,6 +116,36 @@ const relievingLetterStyles = StyleSheet.create({
   }
 });
 
+// Watermark styles
+const watermarkStyles = StyleSheet.create({
+  watermarkContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  watermarkImage: {
+    width: '80%',
+    height: 'auto',
+    opacity: 0.17,
+  }
+});
+
+// Watermark component
+const Watermark = ({ logoSrc }) => {
+  if (!logoSrc) return null;
+  
+  return (
+    <View style={watermarkStyles.watermarkContainer}>
+      <Image src={logoSrc} style={watermarkStyles.watermarkImage} />
+    </View>
+  );
+};
+
 // Relieving Letter PDF Document Component
 const RelievingLetterPDF = ({ formData }) => {
   // Helper to safely access formData
@@ -190,6 +225,9 @@ const RelievingLetterPDF = ({ formData }) => {
     <Document>
       {/* Page 1 - All text content with more compact styling */}
       <Page wrap={false} size="A4" style={{...commonStyles.page, ...relievingLetterStyles.page}}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeaderComponent />
         
@@ -312,6 +350,9 @@ const RelievingLetterPDF = ({ formData }) => {
       
       {/* Page 2 - Signature page only */}
       <Page wrap={false} size="A4" style={{...commonStyles.page, ...relievingLetterStyles.page}}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeaderComponent />
         
