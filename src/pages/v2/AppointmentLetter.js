@@ -8,6 +8,38 @@ import { CompanyHeader, FormattedDate, Paragraph, Signature, Footer } from '../.
 import { commonStyles } from '../../components/pdf/PDFStyles';
 import { formatIndianCurrency, numberToWords } from '../../components/pdf/SalaryUtilsV2';
 
+// Create watermark styles
+const watermarkStyles = StyleSheet.create({
+  watermarkContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  watermarkImage: {
+    width: '70%',
+    height: 'auto',
+    opacity: 0.17, // 17% opacity (more transparent than original)
+  }
+});
+
+// Watermark Component
+const Watermark = ({ logoSrc }) => {
+  // Only render if logo exists
+  if (!logoSrc) return null;
+  
+  return (
+    <View style={watermarkStyles.watermarkContainer}>
+      <Image src={logoSrc} style={watermarkStyles.watermarkImage} />
+    </View>
+  );
+};
+
 // Create a styled component for the appointment table
 const appointmentStyles = StyleSheet.create({
   table: {
@@ -336,6 +368,9 @@ const AppointmentLetterPDF = ({ formData }) => {
     <Document>
       {/* Page 1 - Introduction & Appointment Details */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
@@ -403,6 +438,9 @@ const AppointmentLetterPDF = ({ formData }) => {
 
       {/* Page 2 - Combined Benefits, Posting, and Responsibility */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
@@ -466,6 +504,9 @@ const AppointmentLetterPDF = ({ formData }) => {
 
       {/* Page 3 - Combined Training and Termination Sections */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
@@ -516,6 +557,9 @@ const AppointmentLetterPDF = ({ formData }) => {
 
       {/* Page 4 - Document Submission and Acceptance */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
@@ -582,6 +626,9 @@ const AppointmentLetterPDF = ({ formData }) => {
 
       {/* Page 5 - Combined Confidentiality and General Sections */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
@@ -640,6 +687,9 @@ const AppointmentLetterPDF = ({ formData }) => {
 
       {/* Page 6 - Final General Information and Salary Annexure */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
@@ -711,6 +761,9 @@ const AppointmentLetterPDF = ({ formData }) => {
 
       {/* Page 7 - Salary Annexure */}
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
