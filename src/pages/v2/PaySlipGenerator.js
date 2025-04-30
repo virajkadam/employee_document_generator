@@ -8,6 +8,38 @@ import { CompanyHeader, FormattedDate, Paragraph, Signature, Footer } from '../.
 import { commonStyles } from '../../components/pdf/PDFStyles';
 import { formatIndianCurrency } from '../../components/pdf/SalaryUtilsV2';
 
+// Create watermark styles
+const watermarkStyles = StyleSheet.create({
+  watermarkContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  watermarkImage: {
+    width: '70%',
+    height: 'auto',
+    opacity: 0.17, // 17% opacity (same as OfferLetter.js)
+  }
+});
+
+// Watermark Component
+const Watermark = ({ logoSrc }) => {
+  // Only render if logo exists
+  if (!logoSrc) return null;
+  
+  return (
+    <View style={watermarkStyles.watermarkContainer}>
+      <Image src={logoSrc} style={watermarkStyles.watermarkImage} />
+    </View>
+  );
+};
+
 // Define styles for the PaySlip
 const payslipStyles = StyleSheet.create({
   title: {
@@ -222,6 +254,9 @@ const PaySlipPDF = ({ formData }) => {
   return (
     <Document>
       <Page size="A4" style={commonStyles.page}>
+        {/* Watermark */}
+        <Watermark logoSrc={safeFormData.companyLogo} />
+        
         {/* Company Header */}
         <CompanyHeader
           companyName={safeFormData.companyName || 'COMPANY NAME'}
