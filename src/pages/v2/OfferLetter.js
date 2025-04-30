@@ -51,7 +51,7 @@ const watermarkStyles = StyleSheet.create({
   watermarkImage: {
     width: '70%',
     height: 'auto',
-    opacity: 0.3, // 70% opacity (0.3 = 30% opacity, 70% transparent)
+    opacity: 0.17, // 70% opacity (0.3 = 30% opacity, 70% transparent)
   }
 });
 
