@@ -128,23 +128,25 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
     <Document>
       <Page size="A4" style={commonStyles.page}>
         <AUStatementHeader auLogo={auLogo} purple={purple} />
-        {/* Info Section: Two columns, compact */}
+        {/* Info Section: Two columns, grid-like flexbox for pixel-perfect alignment */}
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
             width: '100%',
-            paddingLeft: 36,
-            paddingRight: 36,
+            paddingLeft: 2,
+            paddingRight: 2,
             paddingTop: 32,
             paddingBottom: 12,
             marginTop: 24,
             borderBottomWidth: 1,
             borderBottomColor: borderGray,
             borderBottomStyle: 'solid',
+            alignItems: 'flex-end',
           }}
         >
-          <View style={{ flex: 1, marginRight: 32 }}>
+          {/* Left Column */}
+          <View style={{ flex: 1, }}>
             {[
               ['Name', name],
               ['Customer ID', customerId],
@@ -153,18 +155,30 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               ['Statement Date', statementDate],
               ['Statement Period', statementPeriod],
             ].map(([label, value], idx) => (
-              <View key={label} style={{ flexDirection: 'row', marginBottom: 12 }}>
-                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', width: 100, textAlign: 'right' }}>{label}</Text>
-                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', marginHorizontal: 4 }}> : </Text>
+              <View
+                key={label}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  marginBottom: 6,
+                  minHeight: 2,
+                }}
+              >
+                <Text style={{ fontSize: 12, fontFamily: 'Calibri', color: '#2d3a5a', width: 120, textAlign: 'left' }}>{label}</Text>
+                <Text style={{ fontSize: 12, fontFamily: 'Calibri', color: '#2d3a5a', width: 18, textAlign: 'center' }}> : </Text>
                 <Text style={{
-                  fontSize: 11,
+                  fontSize: 12,
                   fontFamily: 'Calibri',
+                  color: '#111',
                   fontWeight: (label === 'Name' || label === 'Customer ID' || label === 'Customer Type' || label === 'Statement Date' || label === 'Statement Period') ? 700 : 400,
+                  flex: 1,
+                  textAlign: 'left',
                 }}>{value}</Text>
               </View>
             ))}
           </View>
-          <View style={{ flex: 1 }}>
+          {/* Right Column */}
+          <View style={{ flex: 1, alignItems: 'flex-start' }}>
             {[
               ['Account Number', accountNumber],
               ['Account Type', accountType],
@@ -173,42 +187,81 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               ['Opening Balance(₹)', openingBalance],
               ['Closing Balance(₹)', closingBalance],
             ].map(([label, value], idx) => (
-              <View key={label} style={{ flexDirection: 'row', marginBottom: 12 }}>
-                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', width: 120, textAlign: 'right' }}>{label}</Text>
-                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', marginHorizontal: 4 }}> : </Text>
+              <View
+                key={label}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  marginBottom: 6,
+                  minHeight: 20,
+                }}
+              >
+                <Text style={{ fontSize: 12, fontFamily: 'Calibri', color: '#2d3a5a', width: 130, textAlign: 'left' }}>{label}</Text>
+                <Text style={{ fontSize: 12, fontFamily: 'Calibri', color: '#2d3a5a', width: 18, textAlign: 'center' }}> : </Text>
                 <Text style={{
-                  fontSize: 11,
+                  fontSize: 12,
                   fontFamily: 'Calibri',
+                  color: '#111',
                   fontWeight: (label === 'Account Number' || label === 'Account Type' || label === 'Opening Balance(₹)' || label === 'Closing Balance(₹)') ? 700 : 400,
+                  flex: 1,
+                  textAlign: 'left',
                 }}>{value}</Text>
               </View>
             ))}
           </View>
         </View>
-        {/* Table Section */}
-        <View style={{ marginTop: 6 }}>
-          <View style={{ flexDirection: 'row', backgroundColor: '#f3f0ff', borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 10, fontFamily: 'Calibri' }}>
-            <Text style={{ flex: 1, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Transaction Date</Text>
-            <Text style={{ flex: 1, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Value Date</Text>
-            <Text style={{ flex: 2.2, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Description/Narration</Text>
-            <Text style={{ flex: 1.2, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Cheque/Ref No.</Text>
-            <Text style={{ flex: 0.9, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Debit (₹)</Text>
-            <Text style={{ flex: 0.9, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Credit (₹)</Text>
-            <Text style={{ flex: 1, padding: 4, fontFamily: 'Calibri', fontWeight: 700 }}>Balance (₹)</Text>
+        {/* Table Section: pixel-perfect header/row alignment and styling */}
+        <View style={{ marginTop: 12 }}>
+          <View style={{ flexDirection: 'row', backgroundColor: '#f3f0ff', borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 11, fontFamily: 'Calibri', minHeight: 24 }}>
+            <Text style={{ flex: 1, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Transaction Date</Text>
+            <Text style={{ flex: 1, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Value Date</Text>
+            <Text style={{ flex: 2.2, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Description/Narration</Text>
+            <Text style={{ flex: 1.2, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Cheque/Ref No.</Text>
+            <Text style={{ flex: 0.9, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Debit (₹)</Text>
+            <Text style={{ flex: 0.9, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Credit (₹)</Text>
+            <Text style={{ flex: 1, padding: 6, fontFamily: 'Calibri', fontWeight: 700, textAlign: 'center' }}>Balance (₹)</Text>
           </View>
           {transactions.map((txn, idx) => (
-            <View key={idx} style={{ flexDirection: 'row', borderLeftWidth: 1, borderLeftColor: borderGray, borderLeftStyle: 'solid', borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', borderBottomWidth: 1, borderBottomColor: borderGray, borderBottomStyle: 'solid', fontSize: 9, fontFamily: 'Calibri', minHeight: 18 }} wrap={false}>
-              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>{txn.transactionDate}</Text>
-              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>{txn.valueDate}</Text>
-              <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>{txn.description}</Text>
-              <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>{txn.chequeRefNo}</Text>
-              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>{txn.debit}</Text>
-              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>{txn.credit}</Text>
-              <Text style={{ flex: 1, padding: 3, fontFamily: 'Calibri' }}>{txn.balance}</Text>
+            <View key={idx} style={{ flexDirection: 'row', borderLeftWidth: 1, borderLeftColor: borderGray, borderLeftStyle: 'solid', borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', borderBottomWidth: 1, borderBottomColor: borderGray, borderBottomStyle: 'solid', fontSize: 11, fontFamily: 'Calibri', minHeight: 22, alignItems: 'center' }} wrap={false}>
+              <Text style={{ flex: 1, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', textAlign: 'center' }}>{txn.transactionDate}</Text>
+              <Text style={{ flex: 1, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', textAlign: 'center' }}>{txn.valueDate}</Text>
+              <Text style={{ flex: 2.2, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', textAlign: 'left' }}>{txn.description}</Text>
+              <Text style={{ flex: 1.2, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', textAlign: 'center' }}>{txn.chequeRefNo}</Text>
+              <Text style={{ flex: 0.9, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', textAlign: 'right' }}>{txn.debit}</Text>
+              <Text style={{ flex: 0.9, padding: 6, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', textAlign: 'right' }}>{txn.credit}</Text>
+              <Text style={{ flex: 1, padding: 6, fontFamily: 'Calibri', textAlign: 'right' }}>{txn.balance}</Text>
             </View>
           ))}
         </View>
-        <AUStatementFooter purple={purple} />
+        {/* Footer: pixel-perfect, purple bar, contact info, and page number */}
+        <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0 }}>
+          <View style={{ borderTopWidth: 2, borderTopColor: purple, borderTopStyle: 'solid', width: '100%' }} />
+          <Text style={{ fontSize: 9, color: '#888', textAlign: 'center', marginTop: 6, fontFamily: 'Calibri', fontWeight: 400, letterSpacing: 0.1 }}>
+            This is an auto generated statement and requires no signature
+          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 9, color: '#444', fontFamily: 'Calibri', marginTop: 4, paddingLeft: 36, paddingRight: 36 }}>
+            <View style={{ flex: 1, alignItems: 'flex-start' }}>
+              <Text>Call us at</Text>
+              <Text>1800 1200 1200</Text>
+              <Text style={{ marginTop: 2 }}>Website</Text>
+              <Text>www.aubank.in</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <Text>Email</Text>
+              <Text>customercare@aubank.in</Text>
+              <Text style={{ marginTop: 2 }}>Write to us at</Text>
+              <Text>Reg. office address</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              <Text>Follow us on</Text>
+              <Text>Facebook/Twitter</Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 9, color: '#444', textAlign: 'center', marginTop: 2, fontFamily: 'Calibri', fontWeight: 400, letterSpacing: 0.1 }}>
+            19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
+          </Text>
+          <Text style={{ fontSize: 9, color: '#444', textAlign: 'right', marginTop: 2, marginRight: 36, fontFamily: 'Calibri', fontWeight: 400, letterSpacing: 0.1 }} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
+        </View>
       </Page>
     </Document>
   );
