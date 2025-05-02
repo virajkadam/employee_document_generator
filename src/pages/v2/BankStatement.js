@@ -512,9 +512,8 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
-                  flex: 1,
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {accountNumber}
@@ -557,9 +556,8 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
-                  flex: 1,
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {accountType}
@@ -602,9 +600,8 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
-                  flex: 1,
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {branch}
@@ -647,15 +644,13 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
-                  flex: 1,
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {nominee}
               </Text>
             </View>
-            
           </View>
         </View>
         {/* Table Section: pixel-perfect header/row alignment and styling */}
@@ -1061,8 +1056,8 @@ const BankStatement = () => {
         customerType: "Individual - Full KYC",
         address: selectedCandidate.address || "N/A",
         accountNumber: selectedCandidate.accountNumber || "XXXXXXXXXXXX",
-        accountType: selectedBank.accountType || "Savings",
-        branch: selectedBank.branch,
+        accountType: "AU Salary Account-Value",
+        branch: "Pune East Street Camp",
         nominee: "Not Registered",
         statementDate: new Date(endDate).toLocaleDateString("en-GB"),
         statementPeriod: period,
