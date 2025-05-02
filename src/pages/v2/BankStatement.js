@@ -177,7 +177,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
       <Page
         size="A4"
         style={{
-          padding: '10mm 12mm 0mm 12mm',
+          padding: '10mm 8mm 0mm 8mm',
           backgroundColor: 'white',
           width: '210mm',
           height: '297mm',
@@ -192,8 +192,8 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             flexDirection: "row",
             justifyContent: "flex-start",
             width: "100%",
-            paddingLeft: 2,
-            paddingRight: 2,
+            paddingLeft: 0,
+            paddingRight: 0,
             paddingTop: 0,
             paddingBottom: 12,
             marginTop: 56,
