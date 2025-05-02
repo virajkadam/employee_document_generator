@@ -69,7 +69,15 @@ const AUStatementHeader = ({ auLogo, purple }) => (
 
 // AU Statement Footer Component
 const AUStatementFooter = ({ purple }) => (
-  <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, marginTop: 30 }}>
+  <View
+    style={{
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: 0,
+      marginTop: 30,
+    }}
+  >
     <Text
       style={{
         fontSize: 9,
@@ -84,7 +92,7 @@ const AUStatementFooter = ({ purple }) => (
         `Page ${pageNumber} of ${totalPages}`
       }
     />
-    
+
     <Text
       style={{
         fontSize: 9,
@@ -97,7 +105,7 @@ const AUStatementFooter = ({ purple }) => (
     >
       This is an auto generated statement and requires no signature
     </Text>
-    
+
     <Text
       style={{
         fontSize: 8,
@@ -108,9 +116,10 @@ const AUStatementFooter = ({ purple }) => (
         fontWeight: 400,
       }}
     >
-      Please review the information provided in the statement. In case of any discrepancy, please inform the Bank immediately
+      Please review the information provided in the statement. In case of any
+      discrepancy, please inform the Bank immediately
     </Text>
-    
+
     <View
       style={{
         flexDirection: "row",
@@ -137,11 +146,12 @@ const AUStatementFooter = ({ purple }) => (
         <Text style={styles.footerText}>Facebook/Twitter</Text>
       </View>
     </View>
-    
+
     {/* Bottom purple address bar */}
     <View style={{ backgroundColor: purple, padding: 8, width: "100%" }}>
       <Text style={styles.addressText}>
-        19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
+        19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA)
+        Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
       </Text>
     </View>
   </View>
@@ -151,12 +161,12 @@ const AUStatementFooter = ({ purple }) => (
 const AUBankStatementPDF = ({ statementData, logo }) => {
   // Format transaction data for display
   const formatTransactions = (transactions = []) => {
-    return transactions.map(transaction => {
+    return transactions.map((transaction) => {
       return {
         ...transaction,
         // No special formatting - let React-PDF handle wrapping
-        description: transaction.description || '',
-        chequeRefNo: transaction.chequeRefNo || ''
+        description: transaction.description || "",
+        chequeRefNo: transaction.chequeRefNo || "",
       };
     });
   };
@@ -192,12 +202,12 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
       <Page
         size="A4"
         style={{
-          padding: '10mm 8mm 20mm 8mm',
-          backgroundColor: 'white',
-          width: '210mm',
-          height: '297mm',
-          position: 'relative',
-          fontFamily: 'Calibri',
+          padding: "10mm 8mm 20mm 8mm",
+          backgroundColor: "white",
+          width: "210mm",
+          height: "297mm",
+          position: "relative",
+          fontFamily: "Calibri",
         }}
       >
         <AUStatementHeader auLogo={auLogo} purple={purple} />
@@ -212,9 +222,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             paddingTop: 0,
             paddingBottom: 12,
             marginTop: 56,
-            borderBottomWidth: 1,
-            borderBottomColor: borderGray,
-            borderBottomStyle: "solid",
+            marginBottom: 0,
             alignItems: "flex-start",
           }}
         >
@@ -612,8 +620,32 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             </View>
           </View>
         </View>
+        {/* Horizontal border line separating account info and table */}
+        <View
+          style={
+            {
+              // borderBottomWidth: 1,
+              // borderBottomColor: "#d1d5db",
+              // borderBottomStyle: "solid",
+              // width: "100%",
+              // marginBottom: 30,
+              marginTop: 110,
+            }
+          }
+        />
         {/* Table Section: pixel-perfect header/row alignment and styling */}
-        <View style={[styles.tableContainer, { marginTop: 110 }]}>
+        <View
+          style={[
+            styles.tableContainer,
+            {
+              
+              borderTopWidth: 1,
+              borderTopColor: "#d1d5db",
+              borderTopStyle: "solid",
+              width: "100%",
+            },
+          ]}
+        >
           <View style={styles.tableHeader}>
             <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Transaction Date</Text>
@@ -633,19 +665,28 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Credit</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0, padding: 0 }]}>
+            <View
+              style={[
+                styles.tableCell,
+                { flex: 1, borderRightWidth: 0, padding: 0 },
+              ]}
+            >
               <Text style={styles.tableHeaderText}>Balance</Text>
             </View>
           </View>
-          
+
           {/* Generate transaction rows */}
           {formattedTransactions.map((transaction, index) => (
             <View style={styles.tableRow} key={index}>
               <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
-                <Text style={styles.tableCellCenter}>{transaction.transactionDate}</Text>
+                <Text style={styles.tableCellCenter}>
+                  {transaction.transactionDate}
+                </Text>
               </View>
               <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
-                <Text style={styles.tableCellCenter}>{transaction.valueDate}</Text>
+                <Text style={styles.tableCellCenter}>
+                  {transaction.valueDate}
+                </Text>
               </View>
               <View style={[styles.tableCell, { flex: 2.2, padding: 0 }]}>
                 <View style={styles.cellWrapper}>
@@ -667,7 +708,12 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
                 <Text style={styles.tableCellRight}>{transaction.credit}</Text>
               </View>
-              <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0, padding: 0 }]}>
+              <View
+                style={[
+                  styles.tableCell,
+                  { flex: 1, borderRightWidth: 0, padding: 0 },
+                ]}
+              >
                 <Text style={styles.tableCellRight}>{transaction.balance}</Text>
               </View>
             </View>
@@ -685,7 +731,8 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               <View style={[styles.tableCell, { flex: 2.2, padding: 0 }]}>
                 <View style={styles.cellWrapper}>
                   <Text style={styles.wrapTextDescription}>
-                    UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA
+                    UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU
+                    JAGATPURA
                   </Text>
                 </View>
               </View>
@@ -702,7 +749,12 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
                 <Text style={styles.tableCellRight}>-</Text>
               </View>
-              <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0, padding: 0 }]}>
+              <View
+                style={[
+                  styles.tableCell,
+                  { flex: 1, borderRightWidth: 0, padding: 0 },
+                ]}
+              >
                 <Text style={styles.tableCellRight}>17,195.00</Text>
               </View>
             </View>
@@ -850,8 +902,7 @@ const styles = StyleSheet.create({
     fontFamily: "Calibri",
   },
   tableContainer: {
-    marginTop: 12,
-    marginBottom: 100, // Add space after table before footer
+    marginBottom: 100, // Keep space after table before footer
   },
 });
 
@@ -955,7 +1006,7 @@ const BankStatement = () => {
             debit: "120.00",
             credit: "-",
             balance: "17,025.00",
-          }
+          },
         ],
       });
     } else {
