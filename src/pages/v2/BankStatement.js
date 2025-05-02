@@ -215,7 +215,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 120,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -259,7 +259,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 120,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -303,7 +303,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 120,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -347,7 +347,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 120,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -391,7 +391,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 120,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -435,7 +435,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 120,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -482,7 +482,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 130,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -527,7 +527,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 130,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -571,7 +571,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 130,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -615,7 +615,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 130,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -659,7 +659,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 130,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
@@ -703,7 +703,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 130,
+                  width: 80,
                   textAlign: "left",
                 }}
               >
