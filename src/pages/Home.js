@@ -23,6 +23,7 @@ function Home() {
     // { title: "Increment Letter", path: "/increment-letter", v2Path: "/v2/increment-letter", icon: <Briefcase size={32} /> },
     { title: "Manage Company", path: "/manage-company", icon: <Briefcase size={32} /> },
     { title: "Manage Candidates", path: "/manage-student", icon: <User size={32} /> },
+    { title: "Manage Bank", v2Path: "/v2/manage-bank", icon: <File size={32} /> },
   ];
 
   const toggleVersion = () => {
@@ -55,6 +56,8 @@ function Home() {
         {documents.map((doc, index) => {
           // Skip rendering v2 options for management pages
           if (!doc.v2Path && useV2) return null;
+          // Hide Manage Bank from current version
+          if (doc.title === "Manage Bank" && !useV2) return null;
           
           return (
             <Link
