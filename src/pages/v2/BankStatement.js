@@ -120,7 +120,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
 
   // Use logo from bank db, fallback to AU static logo
   const auLogo = logo || 'https://www.aubank.in/themes/custom/au/images/logo.svg';
-  const purple = '#4B2563';
+  const purple = '#6d3076';
   const lightGray = '#f7f6fa';
   const borderGray = '#d1d5db';
 
