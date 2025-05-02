@@ -24,20 +24,17 @@ const AUStatementHeader = ({ auLogo, purple }) => (
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 68,
-    marginTop: -40,
-    marginLeft: -40,
-    marginRight: -40,
-    marginBottom: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   }}>
     <Text style={{
       color: 'white',
       fontSize: 27,
       fontWeight: 700,
-      letterSpacing: 0.5,   
+      letterSpacing: 0.5,
       fontFamily: 'Calibri',
       marginLeft: 36,
     }}>
@@ -132,7 +129,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
       <Page size="A4" style={commonStyles.page}>
         <AUStatementHeader auLogo={auLogo} purple={purple} />
         {/* Info Section: Two columns, compact */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 18, marginBottom: 6 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 86, marginBottom: 6 }}>
           <View style={{ flex: 1, marginRight: 8 }}>
             <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Name : {name}</Text>
             <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Customer ID : {customerId}</Text>
