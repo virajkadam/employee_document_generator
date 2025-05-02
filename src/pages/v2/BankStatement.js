@@ -202,7 +202,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 120,
@@ -213,7 +213,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -225,7 +225,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -246,7 +246,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 120,
@@ -257,7 +257,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -269,7 +269,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -290,7 +290,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 120,
@@ -301,7 +301,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -313,7 +313,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -334,7 +334,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 120,
@@ -345,7 +345,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -357,10 +357,10 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
-                  fontWeight: 400,
+                  fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
                 }}
@@ -378,7 +378,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 120,
@@ -389,7 +389,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -401,7 +401,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -422,7 +422,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 120,
@@ -433,7 +433,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -445,7 +445,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -469,7 +469,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 130,
@@ -480,7 +480,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -492,7 +492,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -514,7 +514,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 130,
@@ -525,7 +525,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -537,7 +537,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -558,7 +558,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 130,
@@ -569,7 +569,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -581,10 +581,10 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
-                  fontWeight: 400,
+                  fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
                 }}
@@ -602,7 +602,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 130,
@@ -613,7 +613,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -625,10 +625,10 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
-                  fontWeight: 400,
+                  fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
                 }}
@@ -646,7 +646,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 130,
@@ -657,7 +657,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -669,7 +669,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -690,7 +690,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             >
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 130,
@@ -701,7 +701,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
                   width: 18,
@@ -713,7 +713,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#111",
                   fontWeight: 700,
@@ -737,7 +737,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               borderStyle: "solid",
               borderBottomWidth: 0,
               fontWeight: "bold",
-              fontSize: 11,
+              fontSize: 9,
               fontFamily: "Calibri",
               minHeight: 24,
             }}
@@ -852,7 +852,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                 borderBottomWidth: 1,
                 borderBottomColor: borderGray,
                 borderBottomStyle: "solid",
-                fontSize: 11,
+                fontSize: 9,
                 fontFamily: "Calibri",
                 minHeight: 22,
                 alignItems: "center",
