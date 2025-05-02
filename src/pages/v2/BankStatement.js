@@ -7,6 +7,93 @@ import { Link } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { commonStyles } from '../../components/pdf/PDFStyles';
 
+// AU Statement Header Component
+const AUStatementHeader = ({ auLogo, purple }) => (
+  <View style={{
+    backgroundColor: purple,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 60,
+    marginTop: -40,
+    marginLeft: -40,
+    marginRight: -40,
+    marginBottom: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+  }}>
+    <Text style={{
+      color: 'white',
+      fontSize: 27,
+      fontWeight: 700,
+      letterSpacing: 0.5,
+      fontFamily: 'Calibri',
+      marginLeft: 36,
+    }}>
+      ACCOUNT STATEMENT
+    </Text>
+    <Image src={auLogo} style={{ width: 80, height: 40, objectFit: 'contain', marginRight: 36 }} />
+  </View>
+);
+
+// AU Statement Footer Component
+const AUStatementFooter = ({ purple }) => (
+  <View style={{
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingLeft: 36,
+    paddingRight: 36,
+    paddingBottom: 10,
+    paddingTop: 0,
+  }}>
+    <View style={{ borderTopWidth: 1, borderTopColor: purple, borderTopStyle: 'solid', width: '100%', marginBottom: 4 }} />
+    <Text style={{
+      fontSize: 8.5,
+      color: '#888',
+      textAlign: 'center',
+      marginBottom: 4,
+      fontFamily: 'Calibri',
+      fontWeight: 400,
+      letterSpacing: 0.1,
+    }}>
+      This is an auto generated statement and requires no signature
+    </Text>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 8.5, color: '#444', fontFamily: 'Calibri', marginBottom: 0 }}>
+      <View style={{ flex: 1, alignItems: 'flex-start' }}>
+        <Text>Call us at</Text>
+        <Text>1800 1200 1200</Text>
+        <Text style={{ marginTop: 2 }}>Website</Text>
+        <Text>www.aubank.in</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <Text>Email</Text>
+        <Text>customercare@aubank.in</Text>
+        <Text style={{ marginTop: 2 }}>Write to us at</Text>
+        <Text>Reg. office address</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: 'flex-end' }}>
+        <Text>Follow us on</Text>
+        <Text>Facebook/Twitter</Text>
+      </View>
+    </View>
+    <Text style={{
+      fontSize: 8.5,
+      color: '#444',
+      textAlign: 'center',
+      marginTop: 2,
+      fontFamily: 'Calibri',
+      fontWeight: 400,
+      letterSpacing: 0.1,
+    }}>
+      19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
+    </Text>
+  </View>
+);
+
 // Helper: AU Small Finance Bank PDF Template
 const AUBankStatementPDF = ({ statementData, logo }) => {
   const {
@@ -28,156 +115,58 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
 
   // Use logo from bank db, fallback to AU static logo
   const auLogo = logo || 'https://www.aubank.in/themes/custom/au/images/logo.svg';
-
-  // Colors
   const purple = '#4B2563';
-  const lightGray = '#f3f0ff';
+  const lightGray = '#f7f6fa';
   const borderGray = '#d1d5db';
 
   return (
     <Document>
       <Page size="A4" style={commonStyles.page}>
-        {/* HEADER - pixel-perfect match */}
-        <View style={{
-          backgroundColor: purple,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingLeft: 32,
-          paddingRight: 32,
-          height: 56,
-          marginTop: -40,
-          marginLeft: -40,
-          marginRight: -40,
-          marginBottom: 0,
-        }}>
-          <Text style={{
-            color: 'white',
-            fontSize: 24,
-            fontWeight: 700,
-            letterSpacing: 0.5,
-            fontFamily: 'Calibri',
-            marginLeft: 2,
-          }}>
-            ACCOUNT STATEMENT
-          </Text>
-          <View style={{
-            backgroundColor: '#fff',
-            borderRadius: 32,
-            padding: 6,
-            width: 56,
-            height: 56,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <View style={{
-              backgroundColor: purple,
-              borderRadius: 28,
-              width: 44,
-              height: 44,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <Image src={auLogo} style={{ width: 32, height: 32, objectFit: 'contain' }} />
-            </View>
-          </View>
-        </View>
+        <AUStatementHeader auLogo={auLogo} purple={purple} />
         {/* Info Section: Two columns, compact */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16, marginBottom: 8 }}>
-          <View style={{ flex: 1, marginRight: 12 }}>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Name : {name}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Customer ID : {customerId}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Customer Type : {customerType}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Address : {address}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Statement Date : {statementDate}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Statement Period : {statementPeriod}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 18, marginBottom: 6 }}>
+          <View style={{ flex: 1, marginRight: 8 }}>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Name : {name}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Customer ID : {customerId}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Customer Type : {customerType}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Address : {address}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Statement Date : {statementDate}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Statement Period : {statementPeriod}</Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Account Number : {accountNumber}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Account Type : {accountType}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Branch : {branch}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>IFSC : {ifsc}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Nominee : {nominee}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Opening Balance(₹) : {openingBalance}</Text>
-            <Text style={{ fontSize: 11, marginBottom: 2 }}>Closing Balance(₹) : {closingBalance}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Account Number : {accountNumber}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Account Type : {accountType}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Branch : {branch}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>IFSC : {ifsc}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Nominee : {nominee}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Opening Balance(₹) : {openingBalance}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Closing Balance(₹) : {closingBalance}</Text>
           </View>
         </View>
         {/* Table Section */}
-        <View style={{ marginTop: 8 }}>
-          <View style={{ flexDirection: 'row', backgroundColor: lightGray, border: `1pt solid ${borderGray}`, borderBottom: 'none', fontWeight: 'bold', fontSize: 10, fontFamily: 'Calibri' }}>
-            <Text style={{ flex: 1, padding: 4, borderRight: `1pt solid ${borderGray}` }}>Transaction Date</Text>
-            <Text style={{ flex: 1, padding: 4, borderRight: `1pt solid ${borderGray}` }}>Value Date</Text>
-            <Text style={{ flex: 2.2, padding: 4, borderRight: `1pt solid ${borderGray}` }}>Description/Narration</Text>
-            <Text style={{ flex: 1.2, padding: 4, borderRight: `1pt solid ${borderGray}` }}>Cheque/Ref No.</Text>
-            <Text style={{ flex: 0.9, padding: 4, borderRight: `1pt solid ${borderGray}` }}>Debit (₹)</Text>
-            <Text style={{ flex: 0.9, padding: 4, borderRight: `1pt solid ${borderGray}` }}>Credit (₹)</Text>
-            <Text style={{ flex: 1, padding: 4 }}>Balance (₹)</Text>
+        <View style={{ marginTop: 6 }}>
+          <View style={{ flexDirection: 'row', backgroundColor: lightGray, borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 9, fontFamily: 'Calibri' }}>
+            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Transaction Date</Text>
+            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Value Date</Text>
+            <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Description/Narration</Text>
+            <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Cheque/Ref No.</Text>
+            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Debit (₹)</Text>
+            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Credit (₹)</Text>
+            <Text style={{ flex: 1, padding: 3 }}>Balance (₹)</Text>
           </View>
           {transactions.map((txn, idx) => (
-            <View key={idx} style={{ flexDirection: 'row', borderLeft: `1pt solid ${borderGray}`, borderRight: `1pt solid ${borderGray}`, borderBottom: `1pt solid ${borderGray}`, fontSize: 10, fontFamily: 'Calibri', minHeight: 24 }} wrap={false}>
-              <Text style={{ flex: 1, padding: 4, borderRight: `1pt solid ${borderGray}` }}>{txn.transactionDate}</Text>
-              <Text style={{ flex: 1, padding: 4, borderRight: `1pt solid ${borderGray}` }}>{txn.valueDate}</Text>
-              <Text style={{ flex: 2.2, padding: 4, borderRight: `1pt solid ${borderGray}` }}>{txn.description}</Text>
-              <Text style={{ flex: 1.2, padding: 4, borderRight: `1pt solid ${borderGray}` }}>{txn.chequeRefNo}</Text>
-              <Text style={{ flex: 0.9, padding: 4, borderRight: `1pt solid ${borderGray}` }}>{txn.debit}</Text>
-              <Text style={{ flex: 0.9, padding: 4, borderRight: `1pt solid ${borderGray}` }}>{txn.credit}</Text>
-              <Text style={{ flex: 1, padding: 4 }}>{txn.balance}</Text>
+            <View key={idx} style={{ flexDirection: 'row', borderLeftWidth: 1, borderLeftColor: borderGray, borderLeftStyle: 'solid', borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', borderBottomWidth: 1, borderBottomColor: borderGray, borderBottomStyle: 'solid', fontSize: 9, fontFamily: 'Calibri', minHeight: 18 }} wrap={false}>
+              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.transactionDate}</Text>
+              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.valueDate}</Text>
+              <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.description}</Text>
+              <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.chequeRefNo}</Text>
+              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.debit}</Text>
+              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.credit}</Text>
+              <Text style={{ flex: 1, padding: 3 }}>{txn.balance}</Text>
             </View>
           ))}
         </View>
-        {/* FOOTER - pixel-perfect match */}
-        <View style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          paddingLeft: 32,
-          paddingRight: 32,
-          paddingBottom: 18,
-          paddingTop: 0,
-        }}>
-          <View style={{ borderTopWidth: 2, borderTopColor: purple, borderTopStyle: 'solid', width: '100%', marginBottom: 8 }} />
-          <Text style={{
-            fontSize: 10,
-            color: '#888',
-            textAlign: 'center',
-            marginBottom: 8,
-            fontFamily: 'Calibri',
-            fontWeight: 400,
-            letterSpacing: 0.1,
-          }}>
-            This is an auto generated statement and requires no signature
-          </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 10, color: '#444', fontFamily: 'Calibri', marginBottom: 2 }}>
-            <View style={{ flex: 1, alignItems: 'flex-start' }}>
-              <Text>Call us at</Text>
-              <Text>1800 1200 1200</Text>
-              <Text style={{ marginTop: 4 }}>Website</Text>
-              <Text>www.aubank.in</Text>
-            </View>
-            <View style={{ flex: 1, alignItems: 'center' }}>
-              <Text>Email</Text>
-              <Text>customercare@aubank.in</Text>
-              <Text style={{ marginTop: 4 }}>Write to us at</Text>
-              <Text>Reg. office address</Text>
-            </View>
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-              <Text>Follow us on</Text>
-              <Text>Facebook/Twitter</Text>
-            </View>
-          </View>
-          <Text style={{
-            fontSize: 10,
-            color: '#444',
-            textAlign: 'center',
-            marginTop: 4,
-            fontFamily: 'Calibri',
-            fontWeight: 400,
-            letterSpacing: 0.1,
-          }}>
-            19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
-          </Text>
-        </View>
+        <AUStatementFooter purple={purple} />
       </Page>
     </Document>
   );
