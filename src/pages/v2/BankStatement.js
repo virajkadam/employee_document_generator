@@ -147,6 +147,14 @@ const BankStatement = () => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [selectedBank, setSelectedBank] = useState(null);
   const [statementData, setStatementData] = useState(null);
+  const [startDate, setStartDate] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
+  });
+  const [endDate, setEndDate] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().slice(0, 10);
+  });
 
   useEffect(() => {
     fetchCandidates();
@@ -168,7 +176,12 @@ const BankStatement = () => {
   // Example: You would fetch/generate statement data based on candidate and bank
   useEffect(() => {
     if (selectedCandidate && selectedBank) {
-      // This is a placeholder. You should fetch/generate real statement data here.
+      // Format statement period
+      const formatDate = (dateStr) => {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      };
+      const period = `${formatDate(startDate)} to ${formatDate(endDate)}`;
       setStatementData({
         bankName: selectedBank.bankName,
         name: selectedCandidate.candidateName,
@@ -180,8 +193,8 @@ const BankStatement = () => {
         branch: selectedBank.branch,
         ifsc: selectedBank.ifsc,
         nominee: 'Not Registered',
-        statementDate: new Date().toLocaleDateString('en-GB'),
-        statementPeriod: '01 Apr 2025 to 30 Apr 2025',
+        statementDate: new Date(endDate).toLocaleDateString('en-GB'),
+        statementPeriod: period,
         openingBalance: '17,205.00',
         closingBalance: '13,766.52',
         transactions: [
@@ -200,7 +213,7 @@ const BankStatement = () => {
     } else {
       setStatementData(null);
     }
-  }, [selectedCandidate, selectedBank]);
+  }, [selectedCandidate, selectedBank, startDate, endDate]);
 
   // PDF document for preview/download
   const pdfDocument = statementData && statementData.bankName === 'AU Small Finance Bank'
@@ -260,6 +273,27 @@ const BankStatement = () => {
                   <option key={bank.id} value={bank.id}>{bank.bankName}</option>
                 ))}
               </select>
+            </div>
+          </div>
+          {/* Date Pickers */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-700">Statement Start Date</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={e => setStartDate(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-700">Statement End Date</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={e => setEndDate(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
             </div>
           </div>
         </div>
