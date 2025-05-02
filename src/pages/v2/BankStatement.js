@@ -129,34 +129,72 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
       <Page size="A4" style={commonStyles.page}>
         <AUStatementHeader auLogo={auLogo} purple={purple} />
         {/* Info Section: Two columns, compact */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 86, marginBottom: 6 }}>
-          <View style={{ flex: 1, marginRight: 8 }}>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Name : {name}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Customer ID : {customerId}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Customer Type : {customerType}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Address : {address}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Statement Date : {statementDate}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Statement Period : {statementPeriod}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            paddingLeft: 36,
+            paddingRight: 36,
+            paddingTop: 32,
+            paddingBottom: 12,
+            marginTop: 24,
+            borderBottomWidth: 1,
+            borderBottomColor: borderGray,
+            borderBottomStyle: 'solid',
+          }}
+        >
+          <View style={{ flex: 1, marginRight: 32 }}>
+            {[
+              ['Name', name],
+              ['Customer ID', customerId],
+              ['Customer Type', customerType],
+              ['Address', address],
+              ['Statement Date', statementDate],
+              ['Statement Period', statementPeriod],
+            ].map(([label, value], idx) => (
+              <View key={label} style={{ flexDirection: 'row', marginBottom: 12 }}>
+                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', width: 100, textAlign: 'right' }}>{label}</Text>
+                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', marginHorizontal: 4 }}> : </Text>
+                <Text style={{
+                  fontSize: 11,
+                  fontFamily: 'Calibri',
+                  fontWeight: (label === 'Name' || label === 'Customer ID' || label === 'Customer Type' || label === 'Statement Date' || label === 'Statement Period') ? 700 : 400,
+                }}>{value}</Text>
+              </View>
+            ))}
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Account Number : {accountNumber}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Account Type : {accountType}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Branch : {branch}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Nominee : {nominee}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Opening Balance(₹) : {openingBalance}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Calibri' }}>Closing Balance(₹) : {closingBalance}</Text>
+            {[
+              ['Account Number', accountNumber],
+              ['Account Type', accountType],
+              ['Branch', branch],
+              ['Nominee', nominee],
+              ['Opening Balance(₹)', openingBalance],
+              ['Closing Balance(₹)', closingBalance],
+            ].map(([label, value], idx) => (
+              <View key={label} style={{ flexDirection: 'row', marginBottom: 12 }}>
+                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', width: 120, textAlign: 'right' }}>{label}</Text>
+                <Text style={{ fontSize: 11, fontFamily: 'Calibri', color: '#2d3a5a', marginHorizontal: 4 }}> : </Text>
+                <Text style={{
+                  fontSize: 11,
+                  fontFamily: 'Calibri',
+                  fontWeight: (label === 'Account Number' || label === 'Account Type' || label === 'Opening Balance(₹)' || label === 'Closing Balance(₹)') ? 700 : 400,
+                }}>{value}</Text>
+              </View>
+            ))}
           </View>
         </View>
         {/* Table Section */}
         <View style={{ marginTop: 6 }}>
-          <View style={{ flexDirection: 'row', backgroundColor: lightGray, borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 9, fontFamily: 'Calibri' }}>
-            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>Transaction Date</Text>
-            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>Value Date</Text>
-            <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>Description/Narration</Text>
-            <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>Cheque/Ref No.</Text>
-            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>Debit (₹)</Text>
-            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri' }}>Credit (₹)</Text>
-            <Text style={{ flex: 1, padding: 3, fontFamily: 'Calibri' }}>Balance (₹)</Text>
+          <View style={{ flexDirection: 'row', backgroundColor: '#f3f0ff', borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 10, fontFamily: 'Calibri' }}>
+            <Text style={{ flex: 1, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Transaction Date</Text>
+            <Text style={{ flex: 1, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Value Date</Text>
+            <Text style={{ flex: 2.2, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Description/Narration</Text>
+            <Text style={{ flex: 1.2, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Cheque/Ref No.</Text>
+            <Text style={{ flex: 0.9, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Debit (₹)</Text>
+            <Text style={{ flex: 0.9, padding: 4, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Calibri', fontWeight: 700 }}>Credit (₹)</Text>
+            <Text style={{ flex: 1, padding: 4, fontFamily: 'Calibri', fontWeight: 700 }}>Balance (₹)</Text>
           </View>
           {transactions.map((txn, idx) => (
             <View key={idx} style={{ flexDirection: 'row', borderLeftWidth: 1, borderLeftColor: borderGray, borderLeftStyle: 'solid', borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', borderBottomWidth: 1, borderBottomColor: borderGray, borderBottomStyle: 'solid', fontSize: 9, fontFamily: 'Calibri', minHeight: 18 }} wrap={false}>
@@ -271,7 +309,60 @@ const BankStatement = () => {
             credit: '-',
             balance: '17,195.00',
           },
-          // ... more transactions or fetch from your backend
+          {
+            transactionDate: '01 Apr 2025',
+            valueDate: '01 Apr 2025',
+            description: 'UPI/DR/509132244631/VIK AS JALINDAR KALE/KBKB/0641091000053/2328609AU JAGATPURA',
+            chequeRefNo: 'AUS20250401TS0TE4E9767AB03304F2D883',
+            debit: '50.00',
+            credit: '-',
+            balance: '17,145.00',
+          },
+          {
+            transactionDate: '04 Apr 2025',
+            valueDate: '04 Apr 2025',
+            description: 'UPI/DR/509431982610/SHINDE GANESH BHANUDAS/YESB/002261100000025/UPI AU JAGATPURA',
+            chequeRefNo: 'AUS20250404TS0TE4EDB07CE82AF4224AFF',
+            debit: '120.00',
+            credit: '-',
+            balance: '17,025.00',
+          },
+          {
+            transactionDate: '04 Apr 2025',
+            valueDate: '04 Apr 2025',
+            description: 'UPI/DR/509487121216/SUGAT BHIMRAJ SARWADE/SBIN/00000032889570404/UPI AU JAGATPURA',
+            chequeRefNo: 'AUS20250404TS0TE66079CDF8D9D4D668DD',
+            debit: '500.00',
+            credit: '-',
+            balance: '16,525.00',
+          },
+          {
+            transactionDate: '04 Apr 2025',
+            valueDate: '04 Apr 2025',
+            description: 'SMS_ALERT_CHARGE_JA N25_Mar25',
+            chequeRefNo: '',
+            debit: '2.48',
+            credit: '-',
+            balance: '16,522.52',
+          },
+          {
+            transactionDate: '08 Apr 2025',
+            valueDate: '08 Apr 2025',
+            description: 'UPI/DR/509853502986/SHINDE GANESH BHANUDAS/YESB/00142500000051/UPI AU JAGATPURA',
+            chequeRefNo: 'AUS20250408TS0TE23443CA252724302AE6',
+            debit: '120.00',
+            credit: '-',
+            balance: '16,402.52',
+          },
+          {
+            transactionDate: '10 Apr 2025',
+            valueDate: '10 Apr 2025',
+            description: 'UPI/DR/510045139727/SUGAT BHIMRAJ SARWADE/SBIN/00000032889570404/UPI AU JAGATPURA',
+            chequeRefNo: 'AUS20250410TS0TE20612F8EC0324B7BCC',
+            debit: '500.00',
+            credit: '-',
+            balance: '15,902.52',
+          },
         ],
       });
     } else {
