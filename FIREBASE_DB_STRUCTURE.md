@@ -39,6 +39,43 @@ This document describes the current structure of the Firestore database as of th
 
 ---
 
+### 3. `bankStatements`
+- **Description:** Stores individual bank statement records for users.
+- **Sample Fields:**
+  - `name`: string (e.g., "Sugat Bhimraj Sarwade")
+  - `customerId`: string (e.g., "37875637")
+  - `customerType`: string (e.g., "Individual - Full KYC")
+  - `address`: string (e.g., full address)
+  - `statementDate`: timestamp or string (e.g., "2025-05-02")
+  - `statementPeriod`: map (e.g., `{ from: "2025-04-01", to: "2025-04-30" }`)
+  - `accountNumber`: string (e.g., "2401254461733954")
+  - `accountType`: string (e.g., "AU Salary Account-Value")
+  - `branch`: string (e.g., "Pune East Street Camp")
+  - `ifsc`: string (e.g., "AUBL0002544")
+  - `nominee`: string (e.g., "Not Registered")
+
+- **Sample Document:**
+```json
+{
+  "name": "Sugat Bhimraj Sarwade",
+  "customerId": "37875123",
+  "customerType": "Individual - Full KYC",
+  "address": "At.po.paranda Ta.paranda Osmanabad, Khandoba Chouk Paranda, Paranda - 413502, Maharashtra - India",
+  "statementDate": "2025-05-02",
+  "statementPeriod": {
+    "from": "2025-04-01",
+    "to": "2025-04-30"
+  },
+  "accountNumber": "2401254461733123",
+  "accountType": "AU Salary Account-Value",
+  "branch": "Pune East Street Camp",
+  "ifsc": "AUBL0002544",
+  "nominee": "Not Registered"
+}
+```
+
+---
+
 ## Notes
 - There are currently **only two collections**: `candidates` and `companies`.
 - Each document in a collection represents a single record (candidate or company).
