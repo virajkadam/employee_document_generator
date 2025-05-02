@@ -29,6 +29,9 @@ Font.register({
   ],
 });
 
+// Use built-in fonts that are guaranteed to work with React-PDF
+// Helvetica, Helvetica-Bold, etc. are built-in and don't need registration
+
 // AU Statement Header Component
 const AUStatementHeader = ({ auLogo, purple }) => (
   <View
@@ -235,13 +238,11 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {name}
@@ -280,13 +281,11 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {customerId}
@@ -325,61 +324,14 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {customerType}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 0,
-                minHeight: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#2d3a5a",
-                  width: 70,
-                  textAlign: "left",
-                }}
-              >
-                Address
-              </Text>
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#2d3a5a",
-                  width: 18,
-                  textAlign: "center",
-                }}
-              >
-                {" "}
-                :{" "}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
-                  textAlign: "left",
-                  wrap: false,
-                }}
-              >
-                {address}
               </Text>
             </View>
             <View
@@ -415,13 +367,11 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {statementDate}
@@ -460,13 +410,11 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
+                  width: 180,
                   textAlign: "left",
-                  wrap: false,
                 }}
               >
                 {statementPeriod}
@@ -508,10 +456,9 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
                   width: 180,
                   textAlign: "left",
                 }}
@@ -552,10 +499,9 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
                   width: 180,
                   textAlign: "left",
                 }}
@@ -596,10 +542,9 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
                   width: 180,
                   textAlign: "left",
                 }}
@@ -640,10 +585,9 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
+                  fontSize: 10,
+                  fontFamily: "Helvetica-Bold",
+                  color: "#000000",
                   width: 180,
                   textAlign: "left",
                 }}
