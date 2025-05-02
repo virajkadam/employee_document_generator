@@ -104,7 +104,6 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
     accountNumber,
     accountType,
     branch,
-    ifsc,
     nominee,
     statementDate,
     statementPeriod,
@@ -137,7 +136,6 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Account Number : {accountNumber}</Text>
             <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Account Type : {accountType}</Text>
             <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Branch : {branch}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>IFSC : {ifsc}</Text>
             <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Nominee : {nominee}</Text>
             <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Opening Balance(₹) : {openingBalance}</Text>
             <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Closing Balance(₹) : {closingBalance}</Text>
@@ -252,7 +250,6 @@ const BankStatement = () => {
         accountNumber: selectedCandidate.accountNumber || 'XXXXXXXXXXXX',
         accountType: selectedBank.accountType || 'Savings',
         branch: selectedBank.branch,
-        ifsc: selectedBank.ifsc,
         nominee: 'Not Registered',
         statementDate: new Date(endDate).toLocaleDateString('en-GB'),
         statementPeriod: period,

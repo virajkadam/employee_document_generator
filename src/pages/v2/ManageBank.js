@@ -7,7 +7,6 @@ import { ArrowLeft, Plus, Edit, Trash2 } from "lucide-react";
 const initialFormData = {
   bankName: "",
   branch: "",
-  ifsc: "",
   accountType: "",
   address: "",
   logo: ""
@@ -102,7 +101,6 @@ const ManageBank = () => {
                   <div>
                     <p className="text-lg font-semibold capitalize">{item.bankName}</p>
                     <p className="text-gray-600">Branch: {item.branch}</p>
-                    <p className="text-gray-600">IFSC: {item.ifsc}</p>
                     <p className="text-gray-600">Account Type: {item.accountType}</p>
                     {item.address && <p className="text-gray-600">Address: {item.address}</p>}
                     {item.logo && <img src={item.logo} alt="Bank Logo" className="h-10 mt-2" />}
@@ -140,9 +138,6 @@ const ManageBank = () => {
 
             <label className="text-gray-700">Branch</label>
             <input type="text" name="branch" value={formData.branch} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">IFSC</label>
-            <input type="text" name="ifsc" value={formData.ifsc} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
 
             <label className="text-gray-700">Account Type</label>
             <input type="text" name="accountType" value={formData.accountType} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
