@@ -149,21 +149,14 @@ const AUStatementFooter = ({ purple }) => (
 
 // Helper: AU Small Finance Bank PDF Template
 const AUBankStatementPDF = ({ statementData, logo }) => {
-  // Format transaction data to handle wrapping properly
+  // Format transaction data for display
   const formatTransactions = (transactions = []) => {
     return transactions.map(transaction => {
-      // Split the description at logical break points for better wrapping
-      const description = transaction.description ? 
-        transaction.description.split(/(?<=\/)/).join('\n') : '';
-      
-      // Split the reference number into chunks of appropriate length
-      const chequeRefNo = transaction.chequeRefNo ? 
-        (transaction.chequeRefNo.match(/.{1,12}/g)?.join('\n') || transaction.chequeRefNo) : '';
-      
       return {
         ...transaction,
-        description,
-        chequeRefNo
+        // No special formatting - let React-PDF handle wrapping
+        description: transaction.description || '',
+        chequeRefNo: transaction.chequeRefNo || ''
       };
     });
   };
@@ -622,56 +615,90 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
         {/* Table Section: pixel-perfect header/row alignment and styling */}
         <View style={{ marginTop: 12 }}>
           <View style={styles.tableHeader}>
-            <View style={[styles.tableCell, { flex: 1 }]}>
+            <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Transaction Date</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 1 }]}>
+            <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Value Date</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 2.2 }]}>
+            <View style={[styles.tableCell, { flex: 2.2, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Description/Narration</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 1.2 }]}>
+            <View style={[styles.tableCell, { flex: 1.2, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Cheque/Reference No.</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 0.9 }]}>
-              <Text style={styles.tableHeaderText}>Debit (Rs)</Text>
+            <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+              <Text style={styles.tableHeaderText}>Debit</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 0.9 }]}>
-              <Text style={styles.tableHeaderText}>Credit (Rs)</Text>
+            <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+              <Text style={styles.tableHeaderText}>Credit</Text>
             </View>
-            <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0 }]}>
-              <Text style={styles.tableHeaderText}>Balance (Rs)</Text>
-            </View>
-          </View>
-          {/* Sample transaction row for testing */}
-          <View style={styles.tableRow}>
-            <View style={[styles.tableCell, { flex: 1 }]}>
-              <Text>01 Apr 2025</Text>
-            </View>
-            <View style={[styles.tableCell, { flex: 1 }]}>
-              <Text>01 Apr 2025</Text>
-            </View>
-            <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start" }]}>
-              <Text style={styles.wrapText}>
-                {'UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA'.split(/(?<=\/)/).join('\n')}
-              </Text>
-            </View>
-            <View style={[styles.tableCell, { flex: 1.2 }]}>
-              <Text style={styles.wrapText}>
-                {'AUS20250401TS0TED6451FABCAE4289873'.match(/.{1,12}/g)?.join('\n') || ''}
-              </Text>
-            </View>
-            <View style={[styles.tableCell, { flex: 0.9, alignItems: "flex-end" }]}>
-              <Text>10.00</Text>
-            </View>
-            <View style={[styles.tableCell, { flex: 0.9, alignItems: "flex-end" }]}>
-              <Text>-</Text>
-            </View>
-            <View style={[styles.tableCell, { flex: 1, alignItems: "flex-end", borderRightWidth: 0 }]}>
-              <Text>17,195.00</Text>
+            <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0, padding: 0 }]}>
+              <Text style={styles.tableHeaderText}>Balance</Text>
             </View>
           </View>
+          
+          {/* Generate transaction rows */}
+          {formattedTransactions.map((transaction, index) => (
+            <View style={styles.tableRow} key={index}>
+              <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
+                <Text style={styles.tableCellCenter}>{transaction.transactionDate}</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
+                <Text style={styles.tableCellCenter}>{transaction.valueDate}</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start", padding: 0 }]}>
+                <Text style={[styles.wrapText, { margin: 8 }]}>
+                  {transaction.description}
+                </Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 1.2, padding: 0 }]}>
+                <Text style={[styles.wrapText, { margin: 8, textAlign: "center" }]}>
+                  {transaction.chequeRefNo}
+                </Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+                <Text style={styles.tableCellRight}>{transaction.debit}</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+                <Text style={styles.tableCellRight}>{transaction.credit}</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0, padding: 0 }]}>
+                <Text style={styles.tableCellRight}>{transaction.balance}</Text>
+              </View>
+            </View>
+          ))}
+
+          {/* Only show sample row if no transactions */}
+          {(!formattedTransactions || formattedTransactions.length === 0) && (
+            <View style={styles.tableRow}>
+              <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
+                <Text style={styles.tableCellCenter}>01 Apr 2025</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
+                <Text style={styles.tableCellCenter}>01 Apr 2025</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start", padding: 0 }]}>
+                <Text style={[styles.wrapText, { margin: 8 }]}>
+                  UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA
+                </Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 1.2, padding: 0 }]}>
+                <Text style={[styles.wrapText, { margin: 8, textAlign: "center" }]}>
+                  AUS20250401TS0TED6451FABCAE4289873
+                </Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+                <Text style={styles.tableCellRight}>10.00</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+                <Text style={styles.tableCellRight}>-</Text>
+              </View>
+              <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0, padding: 0 }]}>
+                <Text style={styles.tableCellRight}>17,195.00</Text>
+              </View>
+            </View>
+          )}
         </View>
         {/* Footer: pixel-perfect, purple bar, contact info, and page number */}
         <View style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
@@ -760,17 +787,25 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
   );
 };
 
-// Table styles for AU statement
+// Update styles for better text wrapping
 const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0f0f0", // Light gray matching reference
     borderWidth: 1,
     borderColor: "#d1d5db",
     borderStyle: "solid",
     borderBottomWidth: 0,
-    minHeight: 30,
+    minHeight: 35, // Slightly taller header
     fontFamily: "Calibri",
+  },
+  tableHeaderText: {
+    fontFamily: "Helvetica-Bold",
+    fontSize: 9,
+    color: "#000000",
+    textAlign: "center",
+    padding: 8, // Add padding to header text for better spacing
+    width: "100%",
   },
   tableRow: {
     flexDirection: "row",
@@ -783,37 +818,54 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#d1d5db",
     borderBottomStyle: "solid",
-    minHeight: 60,
+    minHeight: 70, // Increased to accommodate multi-line text
     fontSize: 9,
     fontFamily: "Calibri",
   },
   tableCell: {
-    padding: 6,
     borderRightWidth: 1,
     borderRightColor: "#d1d5db",
     borderRightStyle: "solid",
     fontFamily: "Calibri",
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
+    overflow: "hidden", // Critical for preventing text overflow
+  },
+  wrapText: {
+    width: "96%", // Slightly less than 100% to ensure text stays within bounds
+    fontSize: 8.5,
+    lineHeight: 1.5, // Improved readability for wrapped text
+    textAlign: "left",
+  },
+  tableCellCenter: {
+    padding: 8,
+    width: "100%",
+    textAlign: "center",
+    fontSize: 9,
+  },
+  tableCellRight: {
+    padding: 8,
+    width: "100%",
+    textAlign: "right",
+    fontSize: 9,
   },
   tableCellNarration: {
     flex: 2.2,
-    padding: 8,
+    padding: 0, // Remove padding from container
     borderRightWidth: 1,
     borderRightColor: "#d1d5db",
     borderRightStyle: "solid",
     fontFamily: "Calibri",
-    textAlign: "left",
+    overflow: "hidden",
   },
   tableCellRef: {
     flex: 1.2,
-    padding: 8,
+    padding: 0, // Remove padding from container
     borderRightWidth: 1,
     borderRightColor: "#d1d5db",
     borderRightStyle: "solid",
     fontFamily: "Calibri",
-    textAlign: "center",
+    overflow: "hidden",
   },
   tableCellAmount: {
     flex: 0.9,
@@ -838,18 +890,6 @@ const styles = StyleSheet.create({
     padding: 8,
     fontFamily: "Calibri",
     textAlign: "right",
-  },
-  tableHeaderText: {
-    fontFamily: "Helvetica-Bold",
-    fontSize: 9,
-    color: "#000000",
-    textAlign: "center",
-  },
-  wrapText: {
-    width: "100%",
-    maxWidth: "100%",
-    fontSize: 8.5,
-    wordBreak: "break-word",
   },
 });
 
