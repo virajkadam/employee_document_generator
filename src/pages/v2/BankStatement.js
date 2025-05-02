@@ -613,7 +613,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
           </View>
         </View>
         {/* Table Section: pixel-perfect header/row alignment and styling */}
-        <View style={{ marginTop: 12 }}>
+        <View style={{ marginTop: 110 }}>
           <View style={styles.tableHeader}>
             <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Transaction Date</Text>
@@ -647,15 +647,19 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
                 <Text style={styles.tableCellCenter}>{transaction.valueDate}</Text>
               </View>
-              <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start", padding: 0 }]}>
-                <Text style={[styles.wrapText, { margin: 8 }]}>
-                  {transaction.description}
-                </Text>
+              <View style={[styles.tableCell, { flex: 2.2, padding: 0 }]}>
+                <View style={styles.cellWrapper}>
+                  <Text style={styles.wrapTextDescription}>
+                    {transaction.description}
+                  </Text>
+                </View>
               </View>
               <View style={[styles.tableCell, { flex: 1.2, padding: 0 }]}>
-                <Text style={[styles.wrapText, { margin: 8, textAlign: "center" }]}>
-                  {transaction.chequeRefNo}
-                </Text>
+                <View style={styles.cellWrapper}>
+                  <Text style={styles.wrapTextReference}>
+                    {transaction.chequeRefNo}
+                  </Text>
+                </View>
               </View>
               <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
                 <Text style={styles.tableCellRight}>{transaction.debit}</Text>
@@ -678,15 +682,19 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
                 <Text style={styles.tableCellCenter}>01 Apr 2025</Text>
               </View>
-              <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start", padding: 0 }]}>
-                <Text style={[styles.wrapText, { margin: 8 }]}>
-                  UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA
-                </Text>
+              <View style={[styles.tableCell, { flex: 2.2, padding: 0 }]}>
+                <View style={styles.cellWrapper}>
+                  <Text style={styles.wrapTextDescription}>
+                    UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA
+                  </Text>
+                </View>
               </View>
               <View style={[styles.tableCell, { flex: 1.2, padding: 0 }]}>
-                <Text style={[styles.wrapText, { margin: 8, textAlign: "center" }]}>
-                  AUS20250401TS0TED6451FABCAE4289873
-                </Text>
+                <View style={styles.cellWrapper}>
+                  <Text style={styles.wrapTextReference}>
+                    AUS20250401TS0TED6451FABCAE4289873
+                  </Text>
+                </View>
               </View>
               <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
                 <Text style={styles.tableCellRight}>10.00</Text>
@@ -791,12 +799,12 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
 const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#f0f0f0", // Light gray matching reference
+    backgroundColor: "#f5f5f5", // Lighter gray matching reference image
     borderWidth: 1,
     borderColor: "#d1d5db",
     borderStyle: "solid",
     borderBottomWidth: 0,
-    minHeight: 35, // Slightly taller header
+    minHeight: 30, // Exact height from reference
     fontFamily: "Calibri",
   },
   tableHeaderText: {
@@ -804,7 +812,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: "#000000",
     textAlign: "center",
-    padding: 8, // Add padding to header text for better spacing
+    padding: 8, // Exact padding from reference
     width: "100%",
   },
   tableRow: {
@@ -818,7 +826,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#d1d5db",
     borderBottomStyle: "solid",
-    minHeight: 70, // Increased to accommodate multi-line text
+    minHeight: 50, // Adjusted height from reference
     fontSize: 9,
     fontFamily: "Calibri",
   },
@@ -831,35 +839,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden", // Critical for preventing text overflow
   },
-  wrapText: {
-    width: "96%", // Slightly less than 100% to ensure text stays within bounds
-    fontSize: 8.5,
-    lineHeight: 1.5, // Improved readability for wrapped text
+  cellWrapper: {
+    width: "100%",
+    height: "100%",
+    padding: 6, // Exact padding from reference
+    justifyContent: "center",
+  },
+  wrapTextDescription: {
+    width: "95%",
+    fontSize: 9, // Exact font size from reference
+    lineHeight: 1.4, // Exact line height from reference
     textAlign: "left",
+    hyphens: "auto", // Enable automatic hyphenation
+    wordBreak: "break-word", // Force word breaking to prevent overflow
+    color: "#000", // Exact text color from reference
+  },
+  wrapTextReference: {
+    width: "95%",
+    fontSize: 9, // Exact font size from reference
+    lineHeight: 1.4, // Exact line height from reference
+    textAlign: "center",
+    hyphens: "auto", // Enable automatic hyphenation
+    wordBreak: "break-word", // Force word breaking to prevent overflow
+    color: "#000", // Exact text color from reference
   },
   tableCellCenter: {
-    padding: 8,
-    width: "100%",
+    padding: 6, // Exact padding from reference
+    width: "95%", // Reduced to ensure margin from cell edges
     textAlign: "center",
-    fontSize: 9,
+    fontSize: 9, // Exact font size from reference
+    color: "#000", // Exact text color from reference
   },
   tableCellRight: {
-    padding: 8,
-    width: "100%",
+    padding: 6, // Exact padding from reference
+    width: "95%", // Reduced to ensure margin from cell edges
     textAlign: "right",
-    fontSize: 9,
+    fontSize: 9, // Exact font size from reference
+    color: "#000", // Exact text color from reference
   },
   tableCellNarration: {
     flex: 2.2,
-    padding: 0, // Remove padding from container
-    borderRightWidth: 1,
-    borderRightColor: "#d1d5db",
-    borderRightStyle: "solid",
-    fontFamily: "Calibri",
-    overflow: "hidden",
-  },
-  tableCellRef: {
-    flex: 1.2,
     padding: 0, // Remove padding from container
     borderRightWidth: 1,
     borderRightColor: "#d1d5db",
