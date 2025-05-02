@@ -37,13 +37,49 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
   return (
     <Document>
       <Page size="A4" style={commonStyles.page}>
-        {/* Purple Header Bar */}
-        <View style={{ backgroundColor: purple, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '10px 20px', margin: '-10mm -20mm 0 -20mm', height: 48 }}>
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', letterSpacing: 1, fontFamily: 'Calibri' }}>
+        {/* HEADER - pixel-perfect match */}
+        <View style={{
+          backgroundColor: purple,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingLeft: 32,
+          paddingRight: 32,
+          height: 56,
+          marginTop: -40,
+          marginLeft: -40,
+          marginRight: -40,
+          marginBottom: 0,
+        }}>
+          <Text style={{
+            color: 'white',
+            fontSize: 24,
+            fontWeight: 700,
+            letterSpacing: 0.5,
+            fontFamily: 'Calibri',
+            marginLeft: 2,
+          }}>
             ACCOUNT STATEMENT
           </Text>
-          <View style={{ backgroundColor: 'white', borderRadius: 8, padding: 4, height: 40, width: 100, justifyContent: 'center', alignItems: 'center' }}>
-            <Image src={auLogo} style={{ width: 80, height: 32, objectFit: 'contain' }} />
+          <View style={{
+            backgroundColor: '#fff',
+            borderRadius: 32,
+            padding: 6,
+            width: 56,
+            height: 56,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <View style={{
+              backgroundColor: purple,
+              borderRadius: 28,
+              width: 44,
+              height: 44,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <Image src={auLogo} style={{ width: 32, height: 32, objectFit: 'contain' }} />
+            </View>
           </View>
         </View>
         {/* Info Section: Two columns, compact */}
@@ -89,31 +125,56 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             </View>
           ))}
         </View>
-        {/* Footer: Purple separator, disclaimer, and contact info */}
-        <View style={{ position: 'absolute', bottom: 24, left: 0, right: 0, paddingHorizontal: 10 }}>
-          <View style={{ borderTop: `2pt solid ${purple}`, width: '100%', marginBottom: 6 }} />
-          <Text style={{ fontSize: 9, color: '#888', textAlign: 'center', marginBottom: 4 }}>
+        {/* FOOTER - pixel-perfect match */}
+        <View style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          paddingLeft: 32,
+          paddingRight: 32,
+          paddingBottom: 18,
+          paddingTop: 0,
+        }}>
+          <View style={{ borderTopWidth: 2, borderTopColor: purple, borderTopStyle: 'solid', width: '100%', marginBottom: 8 }} />
+          <Text style={{
+            fontSize: 10,
+            color: '#888',
+            textAlign: 'center',
+            marginBottom: 8,
+            fontFamily: 'Calibri',
+            fontWeight: 400,
+            letterSpacing: 0.1,
+          }}>
             This is an auto generated statement and requires no signature
           </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 8.5, color: '#444', marginTop: 4 }}>
-            <View style={{ flex: 1 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 10, color: '#444', fontFamily: 'Calibri', marginBottom: 2 }}>
+            <View style={{ flex: 1, alignItems: 'flex-start' }}>
               <Text>Call us at</Text>
               <Text>1800 1200 1200</Text>
-              <Text>Website</Text>
+              <Text style={{ marginTop: 4 }}>Website</Text>
               <Text>www.aubank.in</Text>
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Text>Email</Text>
               <Text>customercare@aubank.in</Text>
-              <Text>Write to us at</Text>
+              <Text style={{ marginTop: 4 }}>Write to us at</Text>
               <Text>Reg. office address</Text>
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
               <Text>Follow us on</Text>
               <Text>Facebook/Twitter</Text>
             </View>
           </View>
-          <Text style={{ fontSize: 8.5, color: '#444', textAlign: 'center', marginTop: 6 }}>
+          <Text style={{
+            fontSize: 10,
+            color: '#444',
+            textAlign: 'center',
+            marginTop: 4,
+            fontFamily: 'Calibri',
+            fontWeight: 400,
+            letterSpacing: 0.1,
+          }}>
             19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
           </Text>
         </View>
