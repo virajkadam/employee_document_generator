@@ -171,7 +171,17 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
 
   return (
     <Document>
-      <Page size="A4" style={commonStyles.page}>
+      <Page
+        size="A4"
+        style={{
+          padding: '10mm 12mm 0mm 12mm',
+          backgroundColor: 'white',
+          width: '210mm',
+          height: '297mm',
+          position: 'relative',
+          fontFamily: 'Calibri',
+        }}
+      >
         <AUStatementHeader auLogo={auLogo} purple={purple} />
         {/* Info Section: Two columns, grid-like flexbox for pixel-perfect alignment */}
         <View
