@@ -5,71 +5,70 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus, Edit, Trash2 } from "lucide-react";
 
 const initialFormData = {
-  name: "",
-  customerId: "",
-  customerType: "",
-  address: "",
-  statementDate: "",
-  statementPeriod: { from: "", to: "" },
-  accountNumber: "",
-  accountType: "",
+  bankName: "",
   branch: "",
   ifsc: "",
-  nominee: ""
+  accountType: "",
+  address: "",
+  logo: ""
 };
 
 const ManageBank = () => {
-  const [bankStatements, setBankStatements] = useState([]);
+  const [banks, setBanks] = useState([]);
   const [formData, setFormData] = useState(initialFormData);
   const [editId, setEditId] = useState(null);
   const [isListView, setIsListView] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchBankStatements();
+    fetchBanks();
   }, []);
 
-  const fetchBankStatements = async () => {
-    const querySnapshot = await getDocs(collection(db, "bankStatements"));
+  const fetchBanks = async () => {
+    const querySnapshot = await getDocs(collection(db, "banks"));
     const list = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setBankStatements(list);
+    setBanks(list);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "from" || name === "to") {
-      setFormData({
-        ...formData,
-        statementPeriod: { ...formData.statementPeriod, [name]: value }
-      });
-    } else {
-      setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, logo: reader.result });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editId) {
-      const bankDoc = doc(db, "bankStatements", editId);
+      const bankDoc = doc(db, "banks", editId);
       await updateDoc(bankDoc, formData);
     } else {
-      await addDoc(collection(db, "bankStatements"), formData);
+      await addDoc(collection(db, "banks"), formData);
     }
     setFormData(initialFormData);
     setEditId(null);
     setIsListView(true);
-    fetchBankStatements();
+    fetchBanks();
   };
 
   const handleEdit = (item) => {
-    setFormData({ ...item, statementPeriod: item.statementPeriod || { from: "", to: "" } });
+    setFormData(item);
     setEditId(item.id);
     setIsListView(false);
   };
 
   const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "bankStatements", id));
-    fetchBankStatements();
+    await deleteDoc(doc(db, "banks", id));
+    fetchBanks();
   };
 
   const handleAddNew = () => {
@@ -97,14 +96,16 @@ const ManageBank = () => {
         {isListView ? (
           <>
             <div className="mt-6">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Bank Statement List</h3>
-              {bankStatements.map((item) => (
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Bank List</h3>
+              {banks.map((item) => (
                 <div key={item.id} className="flex justify-between items-center p-4 mb-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                   <div>
-                    <p className="text-lg font-semibold capitalize">{item.name}</p>
-                    <p className="text-gray-600">Customer ID: {item.customerId}</p>
-                    <p className="text-gray-600">Account No: {item.accountNumber}</p>
-                    <p className="text-gray-600">Statement Date: {item.statementDate}</p>
+                    <p className="text-lg font-semibold capitalize">{item.bankName}</p>
+                    <p className="text-gray-600">Branch: {item.branch}</p>
+                    <p className="text-gray-600">IFSC: {item.ifsc}</p>
+                    <p className="text-gray-600">Account Type: {item.accountType}</p>
+                    {item.address && <p className="text-gray-600">Address: {item.address}</p>}
+                    {item.logo && <img src={item.logo} alt="Bank Logo" className="h-10 mt-2" />}
                   </div>
                   <div className="flex space-x-2">
                     <button
@@ -132,34 +133,10 @@ const ManageBank = () => {
           </>
         ) : (
           <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">{editId ? "Edit Bank Statement" : "Add New Bank Statement"}</h3>
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">{editId ? "Edit Bank" : "Add New Bank"}</h3>
 
-            <label className="text-gray-700">Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Customer ID</label>
-            <input type="text" name="customerId" value={formData.customerId} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Customer Type</label>
-            <input type="text" name="customerType" value={formData.customerType} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Address</label>
-            <textarea name="address" value={formData.address} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Statement Date</label>
-            <input type="date" name="statementDate" value={formData.statementDate} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Statement Period From</label>
-            <input type="date" name="from" value={formData.statementPeriod.from} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Statement Period To</label>
-            <input type="date" name="to" value={formData.statementPeriod.to} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Account Number</label>
-            <input type="text" name="accountNumber" value={formData.accountNumber} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
-
-            <label className="text-gray-700">Account Type</label>
-            <input type="text" name="accountType" value={formData.accountType} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
+            <label className="text-gray-700">Bank Name</label>
+            <input type="text" name="bankName" value={formData.bankName} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
 
             <label className="text-gray-700">Branch</label>
             <input type="text" name="branch" value={formData.branch} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
@@ -167,11 +144,18 @@ const ManageBank = () => {
             <label className="text-gray-700">IFSC</label>
             <input type="text" name="ifsc" value={formData.ifsc} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
 
-            <label className="text-gray-700">Nominee</label>
-            <input type="text" name="nominee" value={formData.nominee} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
+            <label className="text-gray-700">Account Type</label>
+            <input type="text" name="accountType" value={formData.accountType} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" required />
+
+            <label className="text-gray-700">Address (optional)</label>
+            <input type="text" name="address" value={formData.address} onChange={handleChange} className="p-3 border border-gray-300 rounded-md" />
+
+            <label className="text-gray-700">Logo (optional)</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} className="p-3 border border-gray-300 rounded-md" />
+            {formData.logo && <img src={formData.logo} alt="Bank Logo Preview" className="h-10 mt-2" />}
 
             <button type="submit" className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition-colors">
-              {editId ? "Update Bank Statement" : "Add Bank Statement"}
+              {editId ? "Update Bank" : "Add Bank"}
             </button>
           </form>
         )}
