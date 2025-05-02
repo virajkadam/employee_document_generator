@@ -149,6 +149,25 @@ const AUStatementFooter = ({ purple }) => (
 
 // Helper: AU Small Finance Bank PDF Template
 const AUBankStatementPDF = ({ statementData, logo }) => {
+  // Format transaction data to handle wrapping properly
+  const formatTransactions = (transactions = []) => {
+    return transactions.map(transaction => {
+      // Split the description at logical break points for better wrapping
+      const description = transaction.description ? 
+        transaction.description.split(/(?<=\/)/).join('\n') : '';
+      
+      // Split the reference number into chunks of appropriate length
+      const chequeRefNo = transaction.chequeRefNo ? 
+        (transaction.chequeRefNo.match(/.{1,12}/g)?.join('\n') || transaction.chequeRefNo) : '';
+      
+      return {
+        ...transaction,
+        description,
+        chequeRefNo
+      };
+    });
+  };
+
   const {
     name,
     customerId,
@@ -164,6 +183,9 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
     closingBalance,
     transactions = [],
   } = statementData;
+
+  // Process transactions for display
+  const formattedTransactions = formatTransactions(transactions);
 
   // Use logo from bank db, fallback to AU static logo
   const auLogo =
@@ -631,15 +653,14 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               <Text>01 Apr 2025</Text>
             </View>
             <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start" }]}>
-              <Text>UPI/DR/509157008024/K</Text>
-              <Text>HOSMAHAMMAD/YESB/00</Text>
-              <Text>226100000025/UPI AU</Text>
-              <Text>JAGATPURA</Text>
+              <Text style={styles.wrapText}>
+                {'UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA'.split(/(?<=\/)/).join('\n')}
+              </Text>
             </View>
             <View style={[styles.tableCell, { flex: 1.2 }]}>
-              <Text>AUS20250401TS0TE</Text>
-              <Text>D6451FABCAE4289</Text>
-              <Text>873</Text>
+              <Text style={styles.wrapText}>
+                {'AUS20250401TS0TED6451FABCAE4289873'.match(/.{1,12}/g)?.join('\n') || ''}
+              </Text>
             </View>
             <View style={[styles.tableCell, { flex: 0.9, alignItems: "flex-end" }]}>
               <Text>10.00</Text>
@@ -762,18 +783,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#d1d5db",
     borderBottomStyle: "solid",
-    minHeight: 40,
+    minHeight: 60,
     fontSize: 9,
     fontFamily: "Calibri",
   },
   tableCell: {
-    padding: 8,
+    padding: 6,
     borderRightWidth: 1,
     borderRightColor: "#d1d5db",
     borderRightStyle: "solid",
     fontFamily: "Calibri",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
   tableCellNarration: {
     flex: 2.2,
@@ -822,6 +844,12 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: "#000000",
     textAlign: "center",
+  },
+  wrapText: {
+    width: "100%",
+    maxWidth: "100%",
+    fontSize: 8.5,
+    wordBreak: "break-word",
   },
 });
 
