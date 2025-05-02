@@ -15,6 +15,7 @@ import AppointmentLetterV2 from "./pages/v2/AppointmentLetter";
 import PaySlipGeneratorV2 from "./pages/v2/PaySlipGenerator";
 import RelievingLetterV2 from "./pages/v2/RelievingLetter";
 import AppraisalLetterV2 from "./pages/v2/AppraisalLetter";
+import ManageBank from "./pages/v2/ManageBank";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/v2/payslip" element={<PaySlipGeneratorV2 />} />
         <Route path="/v2/relieving-letter" element={<RelievingLetterV2 />} />
         <Route path="/v2/appraisal-letter" element={<AppraisalLetterV2 />} />
+        <Route path="/v2/manage-bank" element={<ManageBank />} />
 
         <Route
           path="*"
