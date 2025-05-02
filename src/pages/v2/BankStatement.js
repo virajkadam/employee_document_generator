@@ -4,8 +4,17 @@ import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { ArrowLeft, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer';
 import { commonStyles } from '../../components/pdf/PDFStyles';
+
+// Register Quicksand font for AU statement
+Font.register({
+  family: 'Quicksand',
+  fonts: [
+    { src: '/fonts/Quicksand-Regular.ttf' },
+    { src: '/fonts/Quicksand-Bold.ttf', fontWeight: 700 },
+  ],
+});
 
 // AU Statement Header Component
 const AUStatementHeader = ({ auLogo, purple }) => (
@@ -14,7 +23,7 @@ const AUStatementHeader = ({ auLogo, purple }) => (
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 60,
+    height: 68,
     marginTop: -40,
     marginLeft: -40,
     marginRight: -40,
@@ -28,13 +37,13 @@ const AUStatementHeader = ({ auLogo, purple }) => (
       color: 'white',
       fontSize: 27,
       fontWeight: 700,
-      letterSpacing: 0.5,
-      fontFamily: 'Calibri',
+      letterSpacing: 0.5,   
+      fontFamily: 'Quicksand',
       marginLeft: 36,
     }}>
       ACCOUNT STATEMENT
     </Text>
-    <Image src={auLogo} style={{ width: 80, height: 40, objectFit: 'contain', marginRight: 36 }} />
+    <Image src={auLogo} style={{ width: 110, height: 90, objectFit: 'contain', marginRight: 36 }} />
   </View>
 );
 
@@ -56,13 +65,13 @@ const AUStatementFooter = ({ purple }) => (
       color: '#888',
       textAlign: 'center',
       marginBottom: 4,
-      fontFamily: 'Calibri',
+      fontFamily: 'Quicksand',
       fontWeight: 400,
       letterSpacing: 0.1,
     }}>
       This is an auto generated statement and requires no signature
     </Text>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 8.5, color: '#444', fontFamily: 'Calibri', marginBottom: 0 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', fontSize: 8.5, color: '#444', fontFamily: 'Quicksand', marginBottom: 0 }}>
       <View style={{ flex: 1, alignItems: 'flex-start' }}>
         <Text>Call us at</Text>
         <Text>1800 1200 1200</Text>
@@ -85,7 +94,7 @@ const AUStatementFooter = ({ purple }) => (
       color: '#444',
       textAlign: 'center',
       marginTop: 2,
-      fontFamily: 'Calibri',
+      fontFamily: 'Quicksand',
       fontWeight: 400,
       letterSpacing: 0.1,
     }}>
@@ -125,42 +134,42 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
         {/* Info Section: Two columns, compact */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 18, marginBottom: 6 }}>
           <View style={{ flex: 1, marginRight: 8 }}>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Name : {name}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Customer ID : {customerId}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Customer Type : {customerType}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Address : {address}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Statement Date : {statementDate}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Statement Period : {statementPeriod}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Name : {name}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Customer ID : {customerId}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Customer Type : {customerType}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Address : {address}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Statement Date : {statementDate}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Statement Period : {statementPeriod}</Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Account Number : {accountNumber}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Account Type : {accountType}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Branch : {branch}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Nominee : {nominee}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Opening Balance(₹) : {openingBalance}</Text>
-            <Text style={{ fontSize: 10, marginBottom: 1.5 }}>Closing Balance(₹) : {closingBalance}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Account Number : {accountNumber}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Account Type : {accountType}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Branch : {branch}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Nominee : {nominee}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Opening Balance(₹) : {openingBalance}</Text>
+            <Text style={{ fontSize: 10, marginBottom: 1.5, fontFamily: 'Quicksand' }}>Closing Balance(₹) : {closingBalance}</Text>
           </View>
         </View>
         {/* Table Section */}
         <View style={{ marginTop: 6 }}>
-          <View style={{ flexDirection: 'row', backgroundColor: lightGray, borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 9, fontFamily: 'Calibri' }}>
-            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Transaction Date</Text>
-            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Value Date</Text>
-            <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Description/Narration</Text>
-            <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Cheque/Ref No.</Text>
-            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Debit (₹)</Text>
-            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>Credit (₹)</Text>
-            <Text style={{ flex: 1, padding: 3 }}>Balance (₹)</Text>
+          <View style={{ flexDirection: 'row', backgroundColor: lightGray, borderWidth: 1, borderColor: borderGray, borderStyle: 'solid', borderBottomWidth: 0, fontWeight: 'bold', fontSize: 9, fontFamily: 'Quicksand' }}>
+            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>Transaction Date</Text>
+            <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>Value Date</Text>
+            <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>Description/Narration</Text>
+            <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>Cheque/Ref No.</Text>
+            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>Debit (₹)</Text>
+            <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>Credit (₹)</Text>
+            <Text style={{ flex: 1, padding: 3, fontFamily: 'Quicksand' }}>Balance (₹)</Text>
           </View>
           {transactions.map((txn, idx) => (
-            <View key={idx} style={{ flexDirection: 'row', borderLeftWidth: 1, borderLeftColor: borderGray, borderLeftStyle: 'solid', borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', borderBottomWidth: 1, borderBottomColor: borderGray, borderBottomStyle: 'solid', fontSize: 9, fontFamily: 'Calibri', minHeight: 18 }} wrap={false}>
-              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.transactionDate}</Text>
-              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.valueDate}</Text>
-              <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.description}</Text>
-              <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.chequeRefNo}</Text>
-              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.debit}</Text>
-              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid' }}>{txn.credit}</Text>
-              <Text style={{ flex: 1, padding: 3 }}>{txn.balance}</Text>
+            <View key={idx} style={{ flexDirection: 'row', borderLeftWidth: 1, borderLeftColor: borderGray, borderLeftStyle: 'solid', borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', borderBottomWidth: 1, borderBottomColor: borderGray, borderBottomStyle: 'solid', fontSize: 9, fontFamily: 'Quicksand', minHeight: 18 }} wrap={false}>
+              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>{txn.transactionDate}</Text>
+              <Text style={{ flex: 1, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>{txn.valueDate}</Text>
+              <Text style={{ flex: 2.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>{txn.description}</Text>
+              <Text style={{ flex: 1.2, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>{txn.chequeRefNo}</Text>
+              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>{txn.debit}</Text>
+              <Text style={{ flex: 0.9, padding: 3, borderRightWidth: 1, borderRightColor: borderGray, borderRightStyle: 'solid', fontFamily: 'Quicksand' }}>{txn.credit}</Text>
+              <Text style={{ flex: 1, padding: 3, fontFamily: 'Quicksand' }}>{txn.balance}</Text>
             </View>
           ))}
         </View>
