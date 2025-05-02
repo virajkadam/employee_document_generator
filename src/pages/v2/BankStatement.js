@@ -602,7 +602,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
           <View
             style={{
               flexDirection: "row",
-              backgroundColor: "#f3f0ff",
+              backgroundColor: "#f0f0f0",
               borderWidth: 1,
               borderColor: borderGray,
               borderStyle: "solid",
@@ -610,18 +610,19 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               fontWeight: "bold",
               fontSize: 9,
               fontFamily: "Calibri",
-              minHeight: 24,
+              minHeight: 30,
             }}
           >
             <Text
               style={{
                 flex: 1,
-                padding: 6,
+                padding: 8,
+                paddingVertical: 10,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
@@ -630,12 +631,13 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             <Text
               style={{
                 flex: 1,
-                padding: 6,
+                padding: 8,
+                paddingVertical: 10,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
@@ -644,12 +646,13 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             <Text
               style={{
                 flex: 2.2,
-                padding: 6,
+                padding: 8,
+                paddingVertical: 10,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
@@ -658,168 +661,170 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             <Text
               style={{
                 flex: 1.2,
-                padding: 6,
+                padding: 8,
+                paddingVertical: 10,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
-              Cheque/Ref No.
+              Cheque/Reference No.
             </Text>
             <Text
               style={{
                 flex: 0.9,
-                padding: 6,
+                padding: 8,
+                paddingVertical: 10,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
-              Debit (₹)
+              Debit (Rs)
             </Text>
             <Text
               style={{
                 flex: 0.9,
-                padding: 6,
+                padding: 8,
+                paddingVertical: 10,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
-              Credit (₹)
+              Credit (Rs)
             </Text>
             <Text
               style={{
                 flex: 1,
-                padding: 6,
-                fontFamily: "Calibri",
-                fontWeight: 700,
+                padding: 8,
+                paddingVertical: 10,
+                fontFamily: "Helvetica-Bold",
+                color: "#000000",
                 textAlign: "center",
               }}
             >
-              Balance (₹)
+              Balance (Rs)
             </Text>
           </View>
-          {transactions.map((txn, idx) => (
-            <View
-              key={idx}
+          {/* Sample transaction row for testing */}
+          <View
+            style={{
+              flexDirection: "row",
+              borderLeftWidth: 1,
+              borderLeftColor: borderGray,
+              borderLeftStyle: "solid",
+              borderRightWidth: 1,
+              borderRightColor: borderGray,
+              borderRightStyle: "solid",
+              borderBottomWidth: 1,
+              borderBottomColor: borderGray,
+              borderBottomStyle: "solid",
+              fontSize: 9,
+              fontFamily: "Calibri",
+              minHeight: 22,
+            }}
+          >
+            <Text
               style={{
-                flexDirection: "row",
-                borderLeftWidth: 1,
-                borderLeftColor: borderGray,
-                borderLeftStyle: "solid",
+                flex: 1,
+                padding: 8,
                 borderRightWidth: 1,
                 borderRightColor: borderGray,
                 borderRightStyle: "solid",
-                borderBottomWidth: 1,
-                borderBottomColor: borderGray,
-                borderBottomStyle: "solid",
-                fontSize: 9,
                 fontFamily: "Calibri",
-                minHeight: 22,
-                alignItems: "center",
+                textAlign: "center",
               }}
-              wrap={false}
             >
-              <Text
-                style={{
-                  flex: 1,
-                  padding: 6,
-                  borderRightWidth: 1,
-                  borderRightColor: borderGray,
-                  borderRightStyle: "solid",
-                  fontFamily: "Calibri",
-                  textAlign: "center",
-                }}
-              >
-                {txn.transactionDate}
-              </Text>
-              <Text
-                style={{
-                  flex: 1,
-                  padding: 6,
-                  borderRightWidth: 1,
-                  borderRightColor: borderGray,
-                  borderRightStyle: "solid",
-                  fontFamily: "Calibri",
-                  textAlign: "center",
-                }}
-              >
-                {txn.valueDate}
-              </Text>
-              <Text
-                style={{
-                  flex: 2.2,
-                  padding: 6,
-                  borderRightWidth: 1,
-                  borderRightColor: borderGray,
-                  borderRightStyle: "solid",
-                  fontFamily: "Calibri",
-                  textAlign: "left",
-                }}
-              >
-                {txn.description}
-              </Text>
-              <Text
-                style={{
-                  flex: 1.2,
-                  padding: 6,
-                  borderRightWidth: 1,
-                  borderRightColor: borderGray,
-                  borderRightStyle: "solid",
-                  fontFamily: "Calibri",
-                  textAlign: "center",
-                }}
-              >
-                {txn.chequeRefNo}
-              </Text>
-              <Text
-                style={{
-                  flex: 0.9,
-                  padding: 6,
-                  borderRightWidth: 1,
-                  borderRightColor: borderGray,
-                  borderRightStyle: "solid",
-                  fontFamily: "Calibri",
-                  textAlign: "right",
-                }}
-              >
-                {txn.debit}
-              </Text>
-              <Text
-                style={{
-                  flex: 0.9,
-                  padding: 6,
-                  borderRightWidth: 1,
-                  borderRightColor: borderGray,
-                  borderRightStyle: "solid",
-                  fontFamily: "Calibri",
-                  textAlign: "right",
-                }}
-              >
-                {txn.credit}
-              </Text>
-              <Text
-                style={{
-                  flex: 1,
-                  padding: 6,
-                  fontFamily: "Calibri",
-                  textAlign: "right",
-                }}
-              >
-                {txn.balance}
-              </Text>
-            </View>
-          ))}
+              01 Apr 2025
+            </Text>
+            <Text
+              style={{
+                flex: 1,
+                padding: 8,
+                borderRightWidth: 1,
+                borderRightColor: borderGray,
+                borderRightStyle: "solid",
+                fontFamily: "Calibri",
+                textAlign: "center",
+              }}
+            >
+              01 Apr 2025
+            </Text>
+            <Text
+              style={{
+                flex: 2.2,
+                padding: 8,
+                borderRightWidth: 1,
+                borderRightColor: borderGray,
+                borderRightStyle: "solid",
+                fontFamily: "Calibri",
+                textAlign: "left",
+                whiteSpace: "normal",
+              }}
+            >
+              UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA
+            </Text>
+            <Text
+              style={{
+                flex: 1.2,
+                padding: 8,
+                borderRightWidth: 1,
+                borderRightColor: borderGray,
+                borderRightStyle: "solid",
+                fontFamily: "Calibri",
+                textAlign: "center",
+                whiteSpace: "normal",
+              }}
+            >
+              AUS20250401TS0TED6451FABCAE4289873
+            </Text>
+            <Text
+              style={{
+                flex: 0.9,
+                padding: 8,
+                borderRightWidth: 1,
+                borderRightColor: borderGray,
+                borderRightStyle: "solid",
+                fontFamily: "Calibri",
+                textAlign: "right",
+              }}
+            >
+              10.00
+            </Text>
+            <Text
+              style={{
+                flex: 0.9,
+                padding: 8,
+                borderRightWidth: 1,
+                borderRightColor: borderGray,
+                borderRightStyle: "solid",
+                fontFamily: "Calibri",
+                textAlign: "right",
+              }}
+            >
+              -
+            </Text>
+            <Text
+              style={{
+                flex: 1,
+                padding: 8,
+                fontFamily: "Calibri",
+                textAlign: "right",
+              }}
+            >
+              17,195.00
+            </Text>
+          </View>
         </View>
         {/* Footer: pixel-perfect, purple bar, contact info, and page number */}
         <View style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
