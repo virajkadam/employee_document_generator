@@ -69,81 +69,81 @@ const AUStatementHeader = ({ auLogo, purple }) => (
 
 // AU Statement Footer Component
 const AUStatementFooter = ({ purple }) => (
-  <View
-    style={{
-      position: "absolute",
-      left: 0,
-      right: 0,
-      bottom: 0,
-      paddingLeft: 36,
-      paddingRight: 36,
-      paddingBottom: 10,
-      paddingTop: 0,
-    }}
-  >
-    <View
-      style={{
-        borderTopWidth: 1,
-        borderTopColor: purple,
-        borderTopStyle: "solid",
-        width: "100%",
-        marginBottom: 4,
-      }}
-    />
+  <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, marginTop: 30 }}>
     <Text
       style={{
-        fontSize: 8.5,
-        color: "#888",
-        textAlign: "center",
-        marginBottom: 4,
+        fontSize: 9,
+        color: "#444",
+        textAlign: "right",
+        marginRight: 36,
+        marginBottom: 10,
         fontFamily: "Calibri",
         fontWeight: 400,
-        letterSpacing: 0.1,
+      }}
+      render={({ pageNumber, totalPages }) =>
+        `Page ${pageNumber} of ${totalPages}`
+      }
+    />
+    
+    <Text
+      style={{
+        fontSize: 9,
+        color: "#000",
+        textAlign: "center",
+        marginBottom: 8,
+        fontFamily: "Calibri",
+        fontWeight: 400,
       }}
     >
       This is an auto generated statement and requires no signature
     </Text>
+    
+    <Text
+      style={{
+        fontSize: 8,
+        color: purple,
+        textAlign: "center",
+        marginBottom: 10,
+        fontFamily: "Calibri",
+        fontWeight: 400,
+      }}
+    >
+      Please review the information provided in the statement. In case of any discrepancy, please inform the Bank immediately
+    </Text>
+    
     <View
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        fontSize: 8.5,
-        color: "#444",
-        fontFamily: "Calibri",
-        marginBottom: 0,
+        paddingLeft: 36,
+        paddingRight: 36,
+        marginBottom: 10,
       }}
     >
-      <View style={{ flex: 1, alignItems: "flex-start" }}>
-        <Text>Call us at</Text>
-        <Text>1800 1200 1200</Text>
-        <Text style={{ marginTop: 2 }}>Website</Text>
-        <Text>www.aubank.in</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.footerText}>Call us at</Text>
+        <Text style={styles.footerText}>1800 1200 1200</Text>
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
-        <Text>Email</Text>
-        <Text>customercare@aubank.in</Text>
-        <Text style={{ marginTop: 2 }}>Write to us at</Text>
-        <Text>Reg. office address</Text>
+        <Text style={styles.footerText}>Website</Text>
+        <Text style={styles.footerText}>www.aubank.in</Text>
+        <Text style={[styles.footerText, { marginTop: 4 }]}>Email</Text>
+        <Text style={styles.footerText}>customercare@aubank.in</Text>
       </View>
       <View style={{ flex: 1, alignItems: "flex-end" }}>
-        <Text>Follow us on</Text>
-        <Text>Facebook/Twitter</Text>
+        <Text style={styles.footerText}>Write to us at</Text>
+        <Text style={styles.footerText}>Reg. office address</Text>
+        <Text style={[styles.footerText, { marginTop: 4 }]}>Follow us on</Text>
+        <Text style={styles.footerText}>Facebook/Twitter</Text>
       </View>
     </View>
-    <Text
-      style={{
-        fontSize: 8.5,
-        color: "#444",
-        textAlign: "center",
-        marginTop: 2,
-        fontFamily: "Calibri",
-        fontWeight: 400,
-        letterSpacing: 0.1,
-      }}
-    >
-      19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA)
-      Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
-    </Text>
+    
+    {/* Bottom purple address bar */}
+    <View style={{ backgroundColor: purple, padding: 8, width: "100%" }}>
+      <Text style={styles.addressText}>
+        19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
+      </Text>
+    </View>
   </View>
 );
 
@@ -192,7 +192,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
       <Page
         size="A4"
         style={{
-          padding: '10mm 8mm 0mm 8mm',
+          padding: '10mm 8mm 20mm 8mm',
           backgroundColor: 'white',
           width: '210mm',
           height: '297mm',
@@ -613,7 +613,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
           </View>
         </View>
         {/* Table Section: pixel-perfect header/row alignment and styling */}
-        <View style={{ marginTop: 110 }}>
+        <View style={[styles.tableContainer, { marginTop: 110 }]}>
           <View style={styles.tableHeader}>
             <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
               <Text style={styles.tableHeaderText}>Transaction Date</Text>
@@ -708,94 +708,14 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             </View>
           )}
         </View>
-        {/* Footer: pixel-perfect, purple bar, contact info, and page number */}
-        <View style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
-          <View
-            style={{
-              borderTopWidth: 2,
-              borderTopColor: purple,
-              borderTopStyle: "solid",
-              width: "100%",
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 9,
-              color: "#888",
-              textAlign: "center",
-              marginTop: 6,
-              fontFamily: "Calibri",
-              fontWeight: 400,
-              letterSpacing: 0.1,
-            }}
-          >
-            This is an auto generated statement and requires no signature
-          </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              fontSize: 9,
-              color: "#444",
-              fontFamily: "Calibri",
-              marginTop: 4,
-              paddingLeft: 36,
-              paddingRight: 36,
-            }}
-          >
-            <View style={{ flex: 1, alignItems: "flex-start" }}>
-              <Text>Call us at</Text>
-              <Text>1800 1200 1200</Text>
-              <Text style={{ marginTop: 2 }}>Website</Text>
-              <Text>www.aubank.in</Text>
-            </View>
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <Text>Email</Text>
-              <Text>customercare@aubank.in</Text>
-              <Text style={{ marginTop: 2 }}>Write to us at</Text>
-              <Text>Reg. office address</Text>
-            </View>
-            <View style={{ flex: 1, alignItems: "flex-end" }}>
-              <Text>Follow us on</Text>
-              <Text>Facebook/Twitter</Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              fontSize: 9,
-              color: "#444",
-              textAlign: "center",
-              marginTop: 2,
-              fontFamily: "Calibri",
-              fontWeight: 400,
-              letterSpacing: 0.1,
-            }}
-          >
-            19A, DHULESHWAR GARDEN, AJMER ROAD, JAIPUR - 302001, RAJASTHAN
-            (INDIA) Ph.: +91 141 4110060/61, TOLL-FREE: 1800 1200 1200
-          </Text>
-          <Text
-            style={{
-              fontSize: 9,
-              color: "#444",
-              textAlign: "right",
-              marginTop: 2,
-              marginRight: 36,
-              fontFamily: "Calibri",
-              fontWeight: 400,
-              letterSpacing: 0.1,
-            }}
-            render={({ pageNumber, totalPages }) =>
-              `Page ${pageNumber} of ${totalPages}`
-            }
-          />
-        </View>
+        {/* Footer: updated to match exact design from reference image */}
+        <AUStatementFooter purple={purple} />
       </Page>
     </Document>
   );
 };
 
-// Update styles for better text wrapping
+// Update styles to add footer-specific styles
 const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: "row",
@@ -842,36 +762,38 @@ const styles = StyleSheet.create({
   cellWrapper: {
     width: "100%",
     height: "100%",
-    padding: 6, // Exact padding from reference
+    padding: 4, // Reduced padding to match reference
     justifyContent: "center",
   },
   wrapTextDescription: {
     width: "95%",
     fontSize: 9, // Exact font size from reference
-    lineHeight: 1.4, // Exact line height from reference
+    lineHeight: 1.3, // Reduced line height to match reference
     textAlign: "left",
     hyphens: "auto", // Enable automatic hyphenation
     wordBreak: "break-word", // Force word breaking to prevent overflow
     color: "#000", // Exact text color from reference
+    padding: 3, // Added padding inside text element
   },
   wrapTextReference: {
     width: "95%",
     fontSize: 9, // Exact font size from reference
-    lineHeight: 1.4, // Exact line height from reference
+    lineHeight: 1.3, // Reduced line height to match reference
     textAlign: "center",
     hyphens: "auto", // Enable automatic hyphenation
     wordBreak: "break-word", // Force word breaking to prevent overflow
     color: "#000", // Exact text color from reference
+    padding: 3, // Added padding inside text element
   },
   tableCellCenter: {
-    padding: 6, // Exact padding from reference
+    padding: 4, // Reduced padding to match reference
     width: "95%", // Reduced to ensure margin from cell edges
     textAlign: "center",
     fontSize: 9, // Exact font size from reference
     color: "#000", // Exact text color from reference
   },
   tableCellRight: {
-    padding: 6, // Exact padding from reference
+    padding: 4, // Reduced padding to match reference
     width: "95%", // Reduced to ensure margin from cell edges
     textAlign: "right",
     fontSize: 9, // Exact font size from reference
@@ -909,6 +831,27 @@ const styles = StyleSheet.create({
     padding: 8,
     fontFamily: "Calibri",
     textAlign: "right",
+  },
+  footerText: {
+    fontSize: 9,
+    color: "#444",
+    fontFamily: "Calibri",
+    lineHeight: 1.3,
+  },
+  purpleAddressBar: {
+    backgroundColor: "#6d3076",
+    padding: 8,
+    width: "100%",
+  },
+  addressText: {
+    fontSize: 9,
+    color: "white",
+    textAlign: "center",
+    fontFamily: "Calibri",
+  },
+  tableContainer: {
+    marginTop: 12,
+    marginBottom: 100, // Add space after table before footer
   },
 });
 
@@ -1012,46 +955,7 @@ const BankStatement = () => {
             debit: "120.00",
             credit: "-",
             balance: "17,025.00",
-          },
-          {
-            transactionDate: "04 Apr 2025",
-            valueDate: "04 Apr 2025",
-            description:
-              "UPI/DR/509487121216/SUGAT BHIMRAJ SARWADE/SBIN/00000032889570404/UPI AU JAGATPURA",
-            chequeRefNo: "AUS20250404TS0TE66079CDF8D9D4D668DD",
-            debit: "500.00",
-            credit: "-",
-            balance: "16,525.00",
-          },
-          {
-            transactionDate: "04 Apr 2025",
-            valueDate: "04 Apr 2025",
-            description: "SMS_ALERT_CHARGE_JA N25_Mar25",
-            chequeRefNo: "",
-            debit: "2.48",
-            credit: "-",
-            balance: "16,522.52",
-          },
-          {
-            transactionDate: "08 Apr 2025",
-            valueDate: "08 Apr 2025",
-            description:
-              "UPI/DR/509853502986/SHINDE GANESH BHANUDAS/YESB/00142500000051/UPI AU JAGATPURA",
-            chequeRefNo: "AUS20250408TS0TE23443CA252724302AE6",
-            debit: "120.00",
-            credit: "-",
-            balance: "16,402.52",
-          },
-          {
-            transactionDate: "10 Apr 2025",
-            valueDate: "10 Apr 2025",
-            description:
-              "UPI/DR/510045139727/SUGAT BHIMRAJ SARWADE/SBIN/00000032889570404/UPI AU JAGATPURA",
-            chequeRefNo: "AUS20250410TS0TE20612F8EC0324B7BCC",
-            debit: "500.00",
-            credit: "-",
-            balance: "15,902.52",
-          },
+          }
         ],
       });
     } else {
