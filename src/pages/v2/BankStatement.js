@@ -599,231 +599,57 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
         </View>
         {/* Table Section: pixel-perfect header/row alignment and styling */}
         <View style={{ marginTop: 12 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              backgroundColor: "#f0f0f0",
-              borderWidth: 1,
-              borderColor: borderGray,
-              borderStyle: "solid",
-              borderBottomWidth: 0,
-              fontWeight: "bold",
-              fontSize: 9,
-              fontFamily: "Calibri",
-              minHeight: 30,
-            }}
-          >
-            <Text
-              style={{
-                flex: 1,
-                padding: 8,
-                paddingVertical: 10,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Transaction Date
-            </Text>
-            <Text
-              style={{
-                flex: 1,
-                padding: 8,
-                paddingVertical: 10,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Value Date
-            </Text>
-            <Text
-              style={{
-                flex: 2.2,
-                padding: 8,
-                paddingVertical: 10,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Description/Narration
-            </Text>
-            <Text
-              style={{
-                flex: 1.2,
-                padding: 8,
-                paddingVertical: 10,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Cheque/Reference No.
-            </Text>
-            <Text
-              style={{
-                flex: 0.9,
-                padding: 8,
-                paddingVertical: 10,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Debit (Rs)
-            </Text>
-            <Text
-              style={{
-                flex: 0.9,
-                padding: 8,
-                paddingVertical: 10,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Credit (Rs)
-            </Text>
-            <Text
-              style={{
-                flex: 1,
-                padding: 8,
-                paddingVertical: 10,
-                fontFamily: "Helvetica-Bold",
-                color: "#000000",
-                textAlign: "center",
-              }}
-            >
-              Balance (Rs)
-            </Text>
+          <View style={styles.tableHeader}>
+            <View style={[styles.tableCell, { flex: 1 }]}>
+              <Text style={styles.tableHeaderText}>Transaction Date</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1 }]}>
+              <Text style={styles.tableHeaderText}>Value Date</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 2.2 }]}>
+              <Text style={styles.tableHeaderText}>Description/Narration</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1.2 }]}>
+              <Text style={styles.tableHeaderText}>Cheque/Reference No.</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 0.9 }]}>
+              <Text style={styles.tableHeaderText}>Debit (Rs)</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 0.9 }]}>
+              <Text style={styles.tableHeaderText}>Credit (Rs)</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1, borderRightWidth: 0 }]}>
+              <Text style={styles.tableHeaderText}>Balance (Rs)</Text>
+            </View>
           </View>
           {/* Sample transaction row for testing */}
-          <View
-            style={{
-              flexDirection: "row",
-              borderLeftWidth: 1,
-              borderLeftColor: borderGray,
-              borderLeftStyle: "solid",
-              borderRightWidth: 1,
-              borderRightColor: borderGray,
-              borderRightStyle: "solid",
-              borderBottomWidth: 1,
-              borderBottomColor: borderGray,
-              borderBottomStyle: "solid",
-              fontSize: 9,
-              fontFamily: "Calibri",
-              minHeight: 22,
-            }}
-          >
-            <Text
-              style={{
-                flex: 1,
-                padding: 8,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                textAlign: "center",
-              }}
-            >
-              01 Apr 2025
-            </Text>
-            <Text
-              style={{
-                flex: 1,
-                padding: 8,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                textAlign: "center",
-              }}
-            >
-              01 Apr 2025
-            </Text>
-            <Text
-              style={{
-                flex: 2.2,
-                padding: 8,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                textAlign: "left",
-                whiteSpace: "normal",
-              }}
-            >
-              UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA
-            </Text>
-            <Text
-              style={{
-                flex: 1.2,
-                padding: 8,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                textAlign: "center",
-                whiteSpace: "normal",
-              }}
-            >
-              AUS20250401TS0TED6451FABCAE4289873
-            </Text>
-            <Text
-              style={{
-                flex: 0.9,
-                padding: 8,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                textAlign: "right",
-              }}
-            >
-              10.00
-            </Text>
-            <Text
-              style={{
-                flex: 0.9,
-                padding: 8,
-                borderRightWidth: 1,
-                borderRightColor: borderGray,
-                borderRightStyle: "solid",
-                fontFamily: "Calibri",
-                textAlign: "right",
-              }}
-            >
-              -
-            </Text>
-            <Text
-              style={{
-                flex: 1,
-                padding: 8,
-                fontFamily: "Calibri",
-                textAlign: "right",
-              }}
-            >
-              17,195.00
-            </Text>
+          <View style={styles.tableRow}>
+            <View style={[styles.tableCell, { flex: 1 }]}>
+              <Text>01 Apr 2025</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1 }]}>
+              <Text>01 Apr 2025</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 2.2, alignItems: "flex-start" }]}>
+              <Text>UPI/DR/509157008024/K</Text>
+              <Text>HOSMAHAMMAD/YESB/00</Text>
+              <Text>226100000025/UPI AU</Text>
+              <Text>JAGATPURA</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1.2 }]}>
+              <Text>AUS20250401TS0TE</Text>
+              <Text>D6451FABCAE4289</Text>
+              <Text>873</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 0.9, alignItems: "flex-end" }]}>
+              <Text>10.00</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 0.9, alignItems: "flex-end" }]}>
+              <Text>-</Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1, alignItems: "flex-end", borderRightWidth: 0 }]}>
+              <Text>17,195.00</Text>
+            </View>
           </View>
         </View>
         {/* Footer: pixel-perfect, purple bar, contact info, and page number */}
@@ -917,28 +743,85 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
 const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: "row",
-    borderBottom: "1pt solid #7c3aed",
-    backgroundColor: "#f3f0ff",
-    fontWeight: "bold",
-    fontSize: 10,
-    fontFamily: "Calibri",
-  },
-  th: {
-    flex: 1,
-    padding: 2,
+    backgroundColor: "#f0f0f0",
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    borderStyle: "solid",
+    borderBottomWidth: 0,
+    minHeight: 30,
     fontFamily: "Calibri",
   },
   tableRow: {
     flexDirection: "row",
-    borderBottom: "0.5pt solid #eee",
-    fontSize: 9.5,
+    borderLeftWidth: 1,
+    borderLeftColor: "#d1d5db",
+    borderLeftStyle: "solid",
+    borderRightWidth: 1,
+    borderRightColor: "#d1d5db",
+    borderRightStyle: "solid",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d1d5db",
+    borderBottomStyle: "solid",
+    minHeight: 40,
+    fontSize: 9,
     fontFamily: "Calibri",
   },
-  td: {
-    flex: 1,
-    padding: 2,
+  tableCell: {
+    padding: 8,
+    borderRightWidth: 1,
+    borderRightColor: "#d1d5db",
+    borderRightStyle: "solid",
     fontFamily: "Calibri",
-    wordBreak: "break-all",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tableCellNarration: {
+    flex: 2.2,
+    padding: 8,
+    borderRightWidth: 1,
+    borderRightColor: "#d1d5db",
+    borderRightStyle: "solid",
+    fontFamily: "Calibri",
+    textAlign: "left",
+  },
+  tableCellRef: {
+    flex: 1.2,
+    padding: 8,
+    borderRightWidth: 1,
+    borderRightColor: "#d1d5db",
+    borderRightStyle: "solid",
+    fontFamily: "Calibri",
+    textAlign: "center",
+  },
+  tableCellAmount: {
+    flex: 0.9,
+    padding: 8,
+    borderRightWidth: 1,
+    borderRightColor: "#d1d5db",
+    borderRightStyle: "solid",
+    fontFamily: "Calibri",
+    textAlign: "right",
+  },
+  tableCellDateValue: {
+    flex: 1,
+    padding: 8,
+    borderRightWidth: 1,
+    borderRightColor: "#d1d5db",
+    borderRightStyle: "solid",
+    fontFamily: "Calibri",
+    textAlign: "center",
+  },
+  tableCellBalance: {
+    flex: 1,
+    padding: 8,
+    fontFamily: "Calibri",
+    textAlign: "right",
+  },
+  tableHeaderText: {
+    fontFamily: "Helvetica-Bold",
+    fontSize: 9,
+    color: "#000000",
+    textAlign: "center",
   },
 });
 
