@@ -215,7 +215,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 70,
                   textAlign: "left",
                 }}
               >
@@ -241,6 +241,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {name}
@@ -259,7 +260,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 70,
                   textAlign: "left",
                 }}
               >
@@ -285,6 +286,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {customerId}
@@ -303,7 +305,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 70,
                   textAlign: "left",
                 }}
               >
@@ -329,6 +331,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {customerType}
@@ -347,7 +350,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 70,
                   textAlign: "left",
                 }}
               >
@@ -373,6 +376,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {address}
@@ -391,7 +395,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 70,
                   textAlign: "left",
                 }}
               >
@@ -417,6 +421,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {statementDate}
@@ -435,7 +440,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 70,
                   textAlign: "left",
                 }}
               >
@@ -461,6 +466,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {statementPeriod}
@@ -482,7 +488,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 60,
                   textAlign: "left",
                 }}
               >
@@ -508,7 +514,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
-                  width: 100,
+                  wrap: false,
                 }}
               >
                 {accountNumber}
@@ -527,7 +533,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 60,
                   textAlign: "left",
                 }}
               >
@@ -553,6 +559,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {accountType}
@@ -571,7 +578,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 60,
                   textAlign: "left",
                 }}
               >
@@ -597,6 +604,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {branch}
@@ -615,7 +623,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontSize: 9,
                   fontFamily: "Calibri",
                   color: "#2d3a5a",
-                  width: 80,
+                  width: 60,
                   textAlign: "left",
                 }}
               >
@@ -641,99 +649,13 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
                   fontWeight: 700,
                   flex: 1,
                   textAlign: "left",
+                  wrap: false,
                 }}
               >
                 {nominee}
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 0,
-                minHeight: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#2d3a5a",
-                  width: 80,
-                  textAlign: "left",
-                }}
-              >
-                Opening Balance(₹)
-              </Text>
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#2d3a5a",
-                  width: 18,
-                  textAlign: "center",
-                }}
-              >
-                {" "}
-                :{" "}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
-                  textAlign: "left",
-                }}
-              >
-                {openingBalance}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 0,
-                minHeight: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#2d3a5a",
-                  width: 80,
-                  textAlign: "left",
-                }}
-              >
-                Closing Balance(₹)
-              </Text>
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#2d3a5a",
-                  width: 18,
-                  textAlign: "center",
-                }}
-              >
-                {" "}
-                :{" "}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 9,
-                  fontFamily: "Calibri",
-                  color: "#111",
-                  fontWeight: 700,
-                  flex: 1,
-                  textAlign: "left",
-                }}
-              >
-                {closingBalance}
-              </Text>
-            </View>
+            
           </View>
         </View>
         {/* Table Section: pixel-perfect header/row alignment and styling */}
