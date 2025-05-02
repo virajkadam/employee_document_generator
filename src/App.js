@@ -16,6 +16,7 @@ import PaySlipGeneratorV2 from "./pages/v2/PaySlipGenerator";
 import RelievingLetterV2 from "./pages/v2/RelievingLetter";
 import AppraisalLetterV2 from "./pages/v2/AppraisalLetter";
 import ManageBank from "./pages/v2/ManageBank";
+import BankStatement from "./pages/v2/BankStatement";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/v2/relieving-letter" element={<RelievingLetterV2 />} />
         <Route path="/v2/appraisal-letter" element={<AppraisalLetterV2 />} />
         <Route path="/v2/manage-bank" element={<ManageBank />} />
+        <Route path="/v2/bank-statement" element={<BankStatement />} />
 
         <Route
           path="*"
