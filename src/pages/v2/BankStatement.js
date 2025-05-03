@@ -825,7 +825,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#d1d5db",
     borderBottomStyle: "solid",
-    minHeight: 50, // Adjusted height from reference
+    minHeight: 30, // Reduced from 50 to make rows more compact
     fontSize: 9,
     fontFamily: "Calibri",
   },
@@ -841,42 +841,42 @@ const styles = StyleSheet.create({
   cellWrapper: {
     width: "100%",
     height: "100%",
-    padding: 4, // Reduced padding to match reference
+    padding: 2, // Reduced from 4 to make content fit better
     justifyContent: "center",
   },
   wrapTextDescription: {
     width: "95%",
-    fontSize: 9, // Exact font size from reference
-    lineHeight: 1.3, // Reduced line height to match reference
+    fontSize: 9, 
+    lineHeight: 1.2, // Reduced from 1.3 for tighter text
     textAlign: "left",
-    hyphens: "auto", // Enable automatic hyphenation
-    wordBreak: "break-word", // Force word breaking to prevent overflow
-    color: "#000", // Exact text color from reference
-    padding: 3, // Added padding inside text element
+    hyphens: "auto",
+    wordBreak: "break-word",
+    color: "#000",
+    padding: 2, // Reduced from 3
   },
   wrapTextReference: {
     width: "95%",
-    fontSize: 9, // Exact font size from reference
-    lineHeight: 1.3, // Reduced line height to match reference
+    fontSize: 9,
+    lineHeight: 1.2, // Reduced from 1.3
     textAlign: "center",
-    hyphens: "auto", // Enable automatic hyphenation
-    wordBreak: "break-word", // Force word breaking to prevent overflow
-    color: "#000", // Exact text color from reference
-    padding: 3, // Added padding inside text element
+    hyphens: "auto",
+    wordBreak: "break-word",
+    color: "#000",
+    padding: 2, // Reduced from 3
   },
   tableCellCenter: {
-    padding: 4, // Reduced padding to match reference
-    width: "95%", // Reduced to ensure margin from cell edges
+    padding: 2, // Reduced from 4
+    width: "95%",
     textAlign: "center",
-    fontSize: 9, // Exact font size from reference
-    color: "#000", // Exact text color from reference
+    fontSize: 9,
+    color: "#000",
   },
   tableCellRight: {
-    padding: 4, // Reduced padding to match reference
-    width: "95%", // Reduced to ensure margin from cell edges
+    padding: 2, // Reduced from 4
+    width: "95%",
     textAlign: "right",
-    fontSize: 9, // Exact font size from reference
-    color: "#000", // Exact text color from reference
+    fontSize: 9,
+    color: "#000",
   },
   tableCellNarration: {
     flex: 2.2,
