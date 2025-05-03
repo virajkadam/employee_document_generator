@@ -15,6 +15,154 @@ import {
 } from "@react-pdf/renderer";
 import { commonStyles } from "../../components/pdf/PDFStyles";
 
+// Add utility functions for generating random data
+// These would normally come from faker.js, but we'll implement them here
+const fakeFinance = {
+  // Generate a random transaction description
+  transactionDescription: () => {
+    const types = [
+      "UPI/DR/",
+      "UPI/CR/",
+      "NEFT/",
+      "IMPS/",
+      "ATM/WDL/",
+      "POS/",
+      "SALARY/",
+      "CHQ/",
+      "RTGS/",
+      "INTERNET BANKING/",
+      "MOBILE BANKING/"
+    ];
+    
+    const merchants = [
+      "AMAZON PAY",
+      "FLIPKART",
+      "SWIGGY",
+      "ZOMATO",
+      "UBER",
+      "OLA",
+      "AIRTEL",
+      "JIO",
+      "VODAFONE",
+      "NETFLIX",
+      "HOTSTAR",
+      "BIGBASKET",
+      "DOMINOS",
+      "KFC",
+      "MCDONALDS",
+      "FOOD DELIVERY",
+      "ELECTRICITY BILL",
+      "WATER BILL",
+      "GAS BILL",
+      "RENT PAYMENT",
+      "SHOPPING"
+    ];
+    
+    const banks = [
+      "HDFC",
+      "ICICI",
+      "SBI",
+      "AXIS",
+      "KOTAK",
+      "YESB",
+      "UBI",
+      "BOB",
+      "PNB",
+      "CANARA"
+    ];
+    
+    const randomType = types[Math.floor(Math.random() * types.length)];
+    const randomMerchant = merchants[Math.floor(Math.random() * merchants.length)];
+    const randomBank = banks[Math.floor(Math.random() * banks.length)];
+    const randomRef = Math.floor(Math.random() * 1000000000000).toString().padStart(12, '0');
+    
+    return `${randomType}${randomRef}/${randomMerchant}/${randomBank}/${Math.floor(Math.random() * 1000000000).toString().padStart(9, '0')}`;
+  },
+  
+  // Generate a random reference number
+  referenceNumber: () => {
+    const prefixes = ["AUS", "REF", "TXN", "CHQ", "NEFT", "UTR", "PAY"];
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    const date = new Date();
+    const year = date.getFullYear();
+    
+    // Generate a random alphanumeric string
+    const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < 10; i++) {
+      result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    
+    return `${prefix}${year}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}${result}`;
+  },
+  
+  // Generate a random amount between 10 and max
+  amount: (max = 10000) => {
+    // Generate random amount with 2 decimal places
+    return Math.floor(Math.random() * max * 100) / 100;
+  },
+  
+  // Format number with commas and 2 decimal places
+  formatCurrency: (number) => {
+    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+};
+
+// Add a function to generate random transactions for a date range
+const generateRandomTransactions = (startDate, endDate, startingBalance = 50000) => {
+  const transactions = [];
+  let currentDate = new Date(startDate);
+  const end = new Date(endDate);
+  let runningBalance = startingBalance;
+  
+  while (currentDate <= end) {
+    // Generate 5-8 transactions per day
+    const transactionsPerDay = 5 + Math.floor(Math.random() * 4);
+    
+    for (let i = 0; i < transactionsPerDay; i++) {
+      // 70% chance of debit, 30% chance of credit
+      const isDebit = Math.random() < 0.7;
+      
+      // Generate a random amount (higher range for credits)
+      const amount = isDebit ? 
+        fakeFinance.amount(5000) : 
+        fakeFinance.amount(15000);
+      
+      // Update running balance
+      runningBalance = isDebit ? 
+        runningBalance - amount : 
+        runningBalance + amount;
+      
+      // Format the date
+      const formattedDate = currentDate.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+      
+      // Create the transaction
+      transactions.push({
+        transactionDate: formattedDate,
+        valueDate: formattedDate,
+        description: fakeFinance.transactionDescription(),
+        chequeRefNo: isDebit ? fakeFinance.referenceNumber() : "",
+        debit: isDebit ? fakeFinance.formatCurrency(amount) : "-",
+        credit: isDebit ? "-" : fakeFinance.formatCurrency(amount),
+        balance: fakeFinance.formatCurrency(runningBalance)
+      });
+    }
+    
+    // Move to the next day
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  return {
+    transactions,
+    openingBalance: fakeFinance.formatCurrency(startingBalance),
+    closingBalance: fakeFinance.formatCurrency(runningBalance)
+  };
+};
+
 // Register Quicksand font for AU statement
 Font.register({
   family: "Quicksand",
@@ -1040,7 +1188,8 @@ const BankStatement = () => {
     setBanks(bankList);
   };
 
-  // Example: You would fetch/generate statement data based on candidate and bank
+  // Replace or modify the useEffect for generating statement data
+  // Replace the section that creates the statementData object (around line ~1130)
   useEffect(() => {
     if (selectedCandidate && selectedBank) {
       // Format statement period
@@ -1053,6 +1202,12 @@ const BankStatement = () => {
         });
       };
       const period = `${formatDate(startDate)} to ${formatDate(endDate)}`;
+      
+      // Generate random transactions for the date range
+      const initialBalance = 50000; // Starting balance of 50,000
+      const { transactions, openingBalance, closingBalance } = 
+        generateRandomTransactions(new Date(startDate), new Date(endDate), initialBalance);
+      
       setStatementData({
         bankName: selectedBank.bankName,
         name: selectedCandidate.candidateName,
@@ -1060,71 +1215,14 @@ const BankStatement = () => {
         customerType: "Individual - Full KYC",
         address: selectedCandidate.address || "N/A",
         accountNumber: selectedCandidate.accountNumber || "XXXXXXXXXXXX",
-        accountType: "AU Salary Account-Value",
-        branch: "Pune East Street Camp",
+        accountType: selectedBank.accountType || "Salary Account",
+        branch: selectedBank.branch || "Main Branch",
         nominee: "Not Registered",
         statementDate: new Date(endDate).toLocaleDateString("en-GB"),
         statementPeriod: period,
-        openingBalance: "16,146.52",
-        closingBalance: "13,554.00",
-        transactions: [
-          {
-            transactionDate: "01 Apr 2025",
-            valueDate: "01 Apr 2025",
-            description:
-              "UPI/DR/509157008024/K HOSMAHAMMAD/YESB/00226100000025/UPI AU JAGATPURA",
-            chequeRefNo: "AUS20250401TS0TED6451FABCAA4289873",
-            debit: "10.00",
-            credit: "-",
-            balance: "16,136.52",
-          },
-          {
-            transactionDate: "04 Apr 2025",
-            valueDate: "04 Apr 2025",
-            description:
-              "UPI/DR/509431982610/SHINDE GANESH BHANUDAS/YESB/002261100000025/UPI AU JAGATPURA",
-            chequeRefNo: "AUS20250404TS0TE4EDB07CE82AF4224AFF",
-            debit: "120.00",
-            credit: "-",
-            balance: "16,016.52",
-          },
-          {
-            transactionDate: "15 Apr 2025",
-            valueDate: "15 Apr 2025",
-            description: "ONLINE TRANSFER - FOOD DELIVERY",
-            chequeRefNo: "AUS20250415TS089274FE",
-            debit: "106.52",
-            credit: "-",
-            balance: "15,910.00",
-          },
-          {
-            transactionDate: "27 Apr 2025",
-            valueDate: "27 Apr 2025",
-            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
-            chequeRefNo: "511712021180",
-            debit: "2,000.00",
-            credit: "-",
-            balance: "13,910.00",
-          },
-          {
-            transactionDate: "27 Apr 2025",
-            valueDate: "27 Apr 2025",
-            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
-            chequeRefNo: "511712001621",
-            debit: "400.00",
-            credit: "-",
-            balance: "13,510.00",
-          },
-          {
-            transactionDate: "01 May 2025",
-            valueDate: "30 Apr 2025",
-            description: "MONTHLY INTEREST PAYOUT",
-            chequeRefNo: "",
-            debit: "-",
-            credit: "44.00",
-            balance: "13,554.00",
-          },
-        ],
+        openingBalance: openingBalance,
+        closingBalance: closingBalance,
+        transactions: transactions,
       });
     } else {
       setStatementData(null);
