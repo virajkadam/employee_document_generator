@@ -145,7 +145,7 @@ const AUStatementFooter = ({ purple }) => (
       discrepancy, please inform the Bank immediately
     </Text>
     
-    {/* Contact information in three columns */}
+    {/* Contact information with labels at top, values at bottom */}
     <View
       style={{
         flexDirection: "row",
@@ -155,25 +155,28 @@ const AUStatementFooter = ({ purple }) => (
         marginBottom: 15,
       }}
     >
-      {/* Left column */}
-      <View style={{ flex: 1, alignItems: "flex-start" }}>
+      <View style={{ alignItems: "flex-start" }}>
         <Text style={styles.footerText}>Call us at</Text>
         <Text style={styles.footerText}>1800 1200 1200</Text>
       </View>
       
-      {/* Center column */}
-      <View style={{ flex: 1, alignItems: "center" }}>
+      <View style={{ alignItems: "center" }}>
         <Text style={styles.footerText}>Website</Text>
         <Text style={styles.footerText}>www.aubank.in</Text>
-        <Text style={[styles.footerText, { marginTop: 4 }]}>Email</Text>
+      </View>
+      
+      <View style={{ alignItems: "center" }}>
+        <Text style={styles.footerText}>Email</Text>
         <Text style={styles.footerText}>customercare@aubank.in</Text>
       </View>
       
-      {/* Right column */}
-      <View style={{ flex: 1, alignItems: "flex-end" }}>
+      <View style={{ alignItems: "center" }}>
         <Text style={styles.footerText}>Write to us at</Text>
         <Text style={styles.footerText}>Reg. office address</Text>
-        <Text style={[styles.footerText, { marginTop: 4 }]}>Follow us on</Text>
+      </View>
+      
+      <View style={{ alignItems: "flex-end" }}>
+        <Text style={styles.footerText}>Follow us on</Text>
         <Text style={styles.footerText}>Facebook/Twitter</Text>
       </View>
     </View>
