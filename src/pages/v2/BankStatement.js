@@ -88,35 +88,46 @@ const AUStatementFooter = ({ purple }) => (
       }}
     />
     
-    {/* Page number - right aligned */}
-    <Text
-      style={{
-        fontSize: 9,
-        color: "#444",
-        textAlign: "right",
-        marginRight: 24,
-        marginBottom: 15,
-        fontFamily: "Calibri",
-        fontWeight: 400,
-      }}
-      render={({ pageNumber, totalPages }) =>
-        `Page ${pageNumber} of ${totalPages}`
-      }
-    />
-    
-    {/* Auto-generated statement text - centered */}
-    <Text
-      style={{
-        fontSize: 9,
-        color: "#000",
-        textAlign: "center",
-        marginBottom: 8,
-        fontFamily: "Calibri",
-        fontWeight: 400,
-      }}
-    >
-      This is an auto generated statement and requires no signature
-    </Text>
+    {/* Auto-generated statement text and page number on the same line */}
+    <View style={{ 
+      flexDirection: "row", 
+      width: "100%", 
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8,
+      paddingHorizontal: 24
+    }}>
+      <View style={{ width: 24 }}>
+        {/* Empty space to balance the layout */}
+      </View>
+      
+      <Text
+        style={{
+          fontSize: 9,
+          color: "#000",
+          textAlign: "center",
+          fontFamily: "Calibri",
+          fontWeight: 400,
+          flex: 1
+        }}
+      >
+        This is an auto generated statement and requires no signature
+      </Text>
+      
+      <Text
+        style={{
+          fontSize: 9,
+          color: "#444",
+          textAlign: "right",
+          fontFamily: "Calibri",
+          fontWeight: 400,
+          width: 70,
+        }}
+        render={({ pageNumber, totalPages }) =>
+          `Page ${pageNumber} of ${totalPages}`
+        }
+      />
+    </View>
     
     <View style={{ borderTopWidth: 1,
         borderTopColor: "#b043ac",
