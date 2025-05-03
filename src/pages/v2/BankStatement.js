@@ -88,9 +88,7 @@ const AUStatementFooter = ({ purple }) => (
       marginBottom: 8,
       paddingHorizontal: 24
     }}>
-      <View style={{ width: 24 }}>
-        {/* Empty space to balance the layout */}
-      </View>
+     
       
       <Text
         style={{
@@ -1067,37 +1065,9 @@ const BankStatement = () => {
         nominee: "Not Registered",
         statementDate: new Date(endDate).toLocaleDateString("en-GB"),
         statementPeriod: period,
-        openingBalance: "17,205.00",
-        closingBalance: "13,766.52",
+        openingBalance: "16,146.52",
+        closingBalance: "13,554.00",
         transactions: [
-          {
-            transactionDate: "27 Apr 2025",
-            valueDate: "27 Apr 2025",
-            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
-            chequeRefNo: "511712021180",
-            debit: "2,000.00",
-            credit: "-",
-            balance: "14,122.52",
-          },
-          {
-            transactionDate: "27 Apr 2025",
-            valueDate: "27 Apr 2025",
-            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
-            chequeRefNo: "511712001621",
-            debit: "400.00",
-            credit: "-",
-            balance: "13,722.52",
-          },
-          {
-            transactionDate: "01 May 2025",
-            valueDate: "30 Apr 2025",
-            description: "MONTHLY INTEREST PAYOUT",
-            chequeRefNo: "",
-            debit: "-",
-            credit: "44.00",
-            balance: "13,766.52",
-          },
-          // Keep some of the original examples for variety
           {
             transactionDate: "01 Apr 2025",
             valueDate: "01 Apr 2025",
@@ -1106,7 +1076,7 @@ const BankStatement = () => {
             chequeRefNo: "AUS20250401TS0TED6451FABCAA4289873",
             debit: "10.00",
             credit: "-",
-            balance: "17,195.00",
+            balance: "16,136.52",
           },
           {
             transactionDate: "04 Apr 2025",
@@ -1116,7 +1086,43 @@ const BankStatement = () => {
             chequeRefNo: "AUS20250404TS0TE4EDB07CE82AF4224AFF",
             debit: "120.00",
             credit: "-",
-            balance: "17,025.00",
+            balance: "16,016.52",
+          },
+          {
+            transactionDate: "15 Apr 2025",
+            valueDate: "15 Apr 2025",
+            description: "ONLINE TRANSFER - FOOD DELIVERY",
+            chequeRefNo: "AUS20250415TS089274FE",
+            debit: "106.52",
+            credit: "-",
+            balance: "15,910.00",
+          },
+          {
+            transactionDate: "27 Apr 2025",
+            valueDate: "27 Apr 2025",
+            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
+            chequeRefNo: "511712021180",
+            debit: "2,000.00",
+            credit: "-",
+            balance: "13,910.00",
+          },
+          {
+            transactionDate: "27 Apr 2025",
+            valueDate: "27 Apr 2025",
+            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
+            chequeRefNo: "511712001621",
+            debit: "400.00",
+            credit: "-",
+            balance: "13,510.00",
+          },
+          {
+            transactionDate: "01 May 2025",
+            valueDate: "30 Apr 2025",
+            description: "MONTHLY INTEREST PAYOUT",
+            chequeRefNo: "",
+            debit: "-",
+            credit: "44.00",
+            balance: "13,554.00",
           },
         ],
       });
