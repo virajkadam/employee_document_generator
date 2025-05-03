@@ -993,7 +993,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.3,
   },
   tableContainer: {
-    marginBottom: 100, // Keep space after table before footer
+    marginBottom: 50, // Keep space after table before footer
   },
 });
 
