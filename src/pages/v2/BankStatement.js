@@ -78,15 +78,6 @@ const AUStatementFooter = ({ purple }) => (
     }}
   >
     {/* Border line at the top of footer */}
-    <View
-      style={{
-        borderTopWidth: 1,
-        borderTopColor: "#e4e4e4",
-        borderTopStyle: "solid",
-        width: "100%",
-        marginBottom: 15,
-      }}
-    />
     
     {/* Auto-generated statement text and page number on the same line */}
     <View style={{ 
@@ -677,13 +668,6 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
         <View
           style={[
             styles.tableContainer,
-            {
-              
-              borderTopWidth: 1,
-              borderTopColor: "#d1d5db",
-              borderTopStyle: "solid",
-              width: "100%",
-            },
           ]}
         >
           <View style={styles.tableHeader}>
