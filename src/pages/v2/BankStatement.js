@@ -94,7 +94,7 @@ const AUStatementFooter = ({ purple }) => (
       
       <Text
         style={{
-          fontSize: 9,
+          fontSize: 10,
           color: "#000",
           textAlign: "center",
           fontFamily: "Calibri",
@@ -124,7 +124,7 @@ const AUStatementFooter = ({ purple }) => (
         borderTopColor: "#b043ac",
         borderTopStyle: "solid",
         width: "100%",
-        marginBottom: 15, }}>
+        marginBottom: 5, }}>
 
 
     </View>
@@ -132,10 +132,10 @@ const AUStatementFooter = ({ purple }) => (
     {/* Review information text - purple and centered */}
     <Text
       style={{
-        fontSize: 8,
-        color: purple,
+        fontSize: 10,
+        color: "#6d3078",
         textAlign: "center",
-        marginBottom: 15,
+        marginBottom: 10,
         fontFamily: "Calibri",
         fontWeight: 400,
         paddingHorizontal: 20,
@@ -913,7 +913,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 9,
-    color: "#444",
+    color: "#6d3078",
     fontFamily: "Calibri",
     lineHeight: 1.3,
   },
