@@ -811,7 +811,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: "#000000",
     textAlign: "center",
-    padding: 8, // Exact padding from reference
+    padding: 4, // Exact padding from reference
     width: "100%",
   },
   tableRow: {
