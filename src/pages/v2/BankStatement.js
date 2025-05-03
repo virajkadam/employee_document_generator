@@ -75,16 +75,27 @@ const AUStatementFooter = ({ purple }) => (
       left: 0,
       right: 0,
       bottom: 0,
-      marginTop: 30,
     }}
   >
+    {/* Border line at the top of footer */}
+    <View
+      style={{
+        borderTopWidth: 1,
+        borderTopColor: "#e4e4e4",
+        borderTopStyle: "solid",
+        width: "100%",
+        marginBottom: 15,
+      }}
+    />
+    
+    {/* Page number - right aligned */}
     <Text
       style={{
         fontSize: 9,
         color: "#444",
         textAlign: "right",
-        marginRight: 36,
-        marginBottom: 10,
+        marginRight: 24,
+        marginBottom: 15,
         fontFamily: "Calibri",
         fontWeight: 400,
       }}
@@ -92,7 +103,8 @@ const AUStatementFooter = ({ purple }) => (
         `Page ${pageNumber} of ${totalPages}`
       }
     />
-
+    
+    {/* Auto-generated statement text - centered */}
     <Text
       style={{
         fontSize: 9,
@@ -105,40 +117,57 @@ const AUStatementFooter = ({ purple }) => (
     >
       This is an auto generated statement and requires no signature
     </Text>
+    
+    <View style={{ borderTopWidth: 1,
+        borderTopColor: "#b043ac",
+        borderTopStyle: "solid",
+        width: "100%",
+        marginBottom: 15, }}>
 
+
+    </View>
+
+    {/* Review information text - purple and centered */}
     <Text
       style={{
         fontSize: 8,
         color: purple,
         textAlign: "center",
-        marginBottom: 10,
+        marginBottom: 15,
         fontFamily: "Calibri",
         fontWeight: 400,
+        paddingHorizontal: 20,
       }}
     >
       Please review the information provided in the statement. In case of any
       discrepancy, please inform the Bank immediately
     </Text>
-
+    
+    {/* Contact information in three columns */}
     <View
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
         paddingLeft: 36,
         paddingRight: 36,
-        marginBottom: 10,
+        marginBottom: 15,
       }}
     >
-      <View style={{ flex: 1 }}>
+      {/* Left column */}
+      <View style={{ flex: 1, alignItems: "flex-start" }}>
         <Text style={styles.footerText}>Call us at</Text>
         <Text style={styles.footerText}>1800 1200 1200</Text>
       </View>
+      
+      {/* Center column */}
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text style={styles.footerText}>Website</Text>
         <Text style={styles.footerText}>www.aubank.in</Text>
         <Text style={[styles.footerText, { marginTop: 4 }]}>Email</Text>
         <Text style={styles.footerText}>customercare@aubank.in</Text>
       </View>
+      
+      {/* Right column */}
       <View style={{ flex: 1, alignItems: "flex-end" }}>
         <Text style={styles.footerText}>Write to us at</Text>
         <Text style={styles.footerText}>Reg. office address</Text>
@@ -146,7 +175,7 @@ const AUStatementFooter = ({ purple }) => (
         <Text style={styles.footerText}>Facebook/Twitter</Text>
       </View>
     </View>
-
+    
     {/* Bottom purple address bar */}
     <View style={{ backgroundColor: purple, padding: 8, width: "100%" }}>
       <Text style={styles.addressText}>
@@ -890,16 +919,12 @@ const styles = StyleSheet.create({
     fontFamily: "Calibri",
     lineHeight: 1.3,
   },
-  purpleAddressBar: {
-    backgroundColor: "#6d3076",
-    padding: 8,
-    width: "100%",
-  },
   addressText: {
     fontSize: 9,
     color: "white",
     textAlign: "center",
     fontFamily: "Calibri",
+    lineHeight: 1.3,
   },
   tableContainer: {
     marginBottom: 100, // Keep space after table before footer
@@ -996,6 +1021,16 @@ const BankStatement = () => {
             debit: "50.00",
             credit: "-",
             balance: "17,145.00",
+          },
+          {
+            transactionDate: "04 Apr 2025",
+            valueDate: "04 Apr 2025",
+            description:
+              "UPI/DR/509431982610/SHINDE GANESH BHANUDAS/YESB/002261100000025/UPI AU JAGATPURA",
+            chequeRefNo: "AUS20250404TS0TE4EDB07CE82AF4224AFF",
+            debit: "120.00",
+            credit: "-",
+            balance: "17,025.00",
           },
           {
             transactionDate: "04 Apr 2025",
