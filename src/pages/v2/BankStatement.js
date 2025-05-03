@@ -663,7 +663,7 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
               // borderBottomStyle: "solid",
               // width: "100%",
               // marginBottom: 30,
-              marginTop: 110,
+              marginTop: 10,
             }
           }
         />
