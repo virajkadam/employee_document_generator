@@ -840,8 +840,8 @@ const styles = StyleSheet.create({
   },
   cellWrapper: {
     width: "100%",
-    height: "100%",
-    padding: 2, // Reduced from 4 to make content fit better
+    height: "60px",
+    padding: 0, // Reduced from 4 to make content fit better
     justifyContent: "center",
   },
   wrapTextDescription: {
