@@ -224,6 +224,38 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
   // Process transactions for display
   const formattedTransactions = formatTransactions(transactions);
 
+  // Calculate totals for debit and credit
+  const calculateTotals = () => {
+    let totalDebit = 0;
+    let totalCredit = 0;
+    
+    formattedTransactions.forEach(transaction => {
+      // Convert string amounts to numbers, removing commas and handling "-" values
+      const debitAmount = transaction.debit && transaction.debit !== "-" 
+        ? parseFloat(transaction.debit.replace(/,/g, '')) 
+        : 0;
+        
+      const creditAmount = transaction.credit && transaction.credit !== "-" 
+        ? parseFloat(transaction.credit.replace(/,/g, '')) 
+        : 0;
+        
+      totalDebit += debitAmount;
+      totalCredit += creditAmount;
+    });
+    
+    // Format back to string with commas
+    const formatNumber = (num) => {
+      return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+    
+    return {
+      totalDebit: formatNumber(totalDebit),
+      totalCredit: formatNumber(totalCredit)
+    };
+  };
+  
+  const { totalDebit, totalCredit } = calculateTotals();
+
   // Use logo from bank db, fallback to AU static logo
   const auLogo =
     logo || "https://www.aubank.in/themes/custom/au/images/logo.svg";
@@ -746,6 +778,44 @@ const AUBankStatementPDF = ({ statementData, logo }) => {
             </View>
           ))}
 
+          {/* Total row */}
+          <View style={[styles.tableRow, { backgroundColor: "#f9f9f9" }]}>
+            <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
+              <Text style={styles.tableCellCenter}></Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1, padding: 0 }]}>
+              <Text style={styles.tableCellCenter}></Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 2.2, padding: 0 }]}>
+              <Text style={[styles.tableCellCenter, { fontFamily: "Helvetica-Bold", fontSize: 10 }]}>
+                Total
+              </Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 1.2, padding: 0 }]}>
+              <Text style={styles.tableCellCenter}></Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+              <Text style={[styles.tableCellRight, { fontFamily: "Helvetica-Bold", fontSize: 10 }]}>
+                {totalDebit}
+              </Text>
+            </View>
+            <View style={[styles.tableCell, { flex: 0.9, padding: 0 }]}>
+              <Text style={[styles.tableCellRight, { fontFamily: "Helvetica-Bold", fontSize: 10 }]}>
+                {totalCredit}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.tableCell,
+                { flex: 1, borderRightWidth: 0, padding: 0 },
+              ]}
+            >
+              <Text style={[styles.tableCellRight, { fontFamily: "Helvetica-Bold", fontSize: 10 }]}>
+                {/* {statementData.closingBalance} */}
+              </Text>
+            </View>
+          </View>
+
           {/* Only show sample row if no transactions */}
           {(!formattedTransactions || formattedTransactions.length === 0) && (
             <View style={styles.tableRow}>
@@ -1001,6 +1071,34 @@ const BankStatement = () => {
         closingBalance: "13,766.52",
         transactions: [
           {
+            transactionDate: "27 Apr 2025",
+            valueDate: "27 Apr 2025",
+            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
+            chequeRefNo: "511712021180",
+            debit: "2,000.00",
+            credit: "-",
+            balance: "14,122.52",
+          },
+          {
+            transactionDate: "27 Apr 2025",
+            valueDate: "27 Apr 2025",
+            description: "NDA-3322-00454045 - PARVATI DASHAAN PUNE     MHIN",
+            chequeRefNo: "511712001621",
+            debit: "400.00",
+            credit: "-",
+            balance: "13,722.52",
+          },
+          {
+            transactionDate: "01 May 2025",
+            valueDate: "30 Apr 2025",
+            description: "MONTHLY INTEREST PAYOUT",
+            chequeRefNo: "",
+            debit: "-",
+            credit: "44.00",
+            balance: "13,766.52",
+          },
+          // Keep some of the original examples for variety
+          {
             transactionDate: "01 Apr 2025",
             valueDate: "01 Apr 2025",
             description:
@@ -1009,26 +1107,6 @@ const BankStatement = () => {
             debit: "10.00",
             credit: "-",
             balance: "17,195.00",
-          },
-          {
-            transactionDate: "01 Apr 2025",
-            valueDate: "01 Apr 2025",
-            description:
-              "UPI/DR/509132244631/VIK AS JALINDAR KALE/KBKB/0641091000053/2328609AU JAGATPURA",
-            chequeRefNo: "AUS20250401TS0TE4E9767AB03304F2D883",
-            debit: "50.00",
-            credit: "-",
-            balance: "17,145.00",
-          },
-          {
-            transactionDate: "04 Apr 2025",
-            valueDate: "04 Apr 2025",
-            description:
-              "UPI/DR/509431982610/SHINDE GANESH BHANUDAS/YESB/002261100000025/UPI AU JAGATPURA",
-            chequeRefNo: "AUS20250404TS0TE4EDB07CE82AF4224AFF",
-            debit: "120.00",
-            credit: "-",
-            balance: "17,025.00",
           },
           {
             transactionDate: "04 Apr 2025",
